@@ -54,7 +54,7 @@ uses
 
 procedure TSourceFileEditor.AddUsesToImplementation(UseUnit: string);
 begin
-  WriteInformationAtPostion(FImplementationPos.EndLine, FImplementationPos.EndPos -1, UseUnit);
+  WriteInformationAtPostion(FImpUses.EndLine, FImpUses.EndPos -1, UseUnit);
 end;
 
 procedure TSourceFileEditor.AddUsesToInterface(UseUnit: string);

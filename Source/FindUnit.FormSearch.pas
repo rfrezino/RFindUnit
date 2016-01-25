@@ -19,15 +19,18 @@ type
     grpSearch: TGroupBox;
     pnlResultBottom: TPanel;
     btnAdd: TButton;
-    rgUsesAddTo: TRadioGroup;
     edtSearch: TEdit;
     chkDelphiFiles: TCheckBox;
+    lblWhere: TLabel;
+    rbInterface: TRadioButton;
+    rbImplementation: TRadioButton;
     procedure lstResultKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
     procedure edtSearchChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure lstResultDblClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
 
@@ -61,7 +64,10 @@ begin
   FileEditor := TSourceFileEditor.Create(CurEditor);
   try
     FileEditor.Prepare;
-    FileEditor.AddUsesToInterface(GetSelectedItem);
+    if rbInterface.Checked then
+      FileEditor.AddUsesToInterface(GetSelectedItem)
+    else
+      FileEditor.AddUsesToImplementation(GetSelectedItem);
   finally
     FileEditor.Free;
   end;
@@ -92,8 +98,9 @@ begin
     lstResult.ItemIndex := lstResult.ItemIndex +1;
   end
   else if (Key = VK_RETURN) then
-    AddUnit;
-       
+    AddUnit
+  else if (Key = VK_ESCAPE) then
+    Close;
 end;
 
 procedure TfrmFindUnit.FilterItem(SearchString: string);
@@ -148,6 +155,12 @@ begin
   end;
 
   Result := lstResult.Items[0];
+end;
+
+procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);
+begin
+  AddUnit;
+  Close;
 end;
 
 procedure TfrmFindUnit.lstResultKeyPress(Sender: TObject; var Key: Char);

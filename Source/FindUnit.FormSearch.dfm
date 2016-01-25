@@ -26,6 +26,7 @@ object frmFindUnit: TfrmFindUnit
     Align = alBottom
     Caption = 'Search Options'
     TabOrder = 2
+    Visible = False
     object chkSearchLibraryPath: TCheckBox
       Left = 19
       Top = 45
@@ -59,9 +60,9 @@ object frmFindUnit: TfrmFindUnit
   end
   object grpResult: TGroupBox
     Left = 0
-    Top = 54
+    Top = 73
     Width = 359
-    Height = 247
+    Height = 228
     Align = alClient
     Caption = 'Result'
     TabOrder = 1
@@ -69,44 +70,31 @@ object frmFindUnit: TfrmFindUnit
       Left = 2
       Top = 15
       Width = 355
-      Height = 169
+      Height = 178
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
+      OnDblClick = lstResultDblClick
       OnKeyPress = lstResultKeyPress
     end
     object pnlResultBottom: TPanel
       Left = 2
-      Top = 184
+      Top = 193
       Width = 355
-      Height = 61
+      Height = 33
       Align = alBottom
       BevelOuter = bvNone
       BiDiMode = bdLeftToRight
       ParentBiDiMode = False
       TabOrder = 1
       object btnAdd: TButton
-        Left = 213
-        Top = 19
+        Left = 244
+        Top = 4
         Width = 110
         Height = 25
         Caption = 'Add'
-        TabOrder = 1
-        OnClick = btnAddClick
-      end
-      object rgUsesAddTo: TRadioGroup
-        Left = 0
-        Top = 0
-        Width = 164
-        Height = 61
-        Margins.Top = 10
-        Align = alLeft
-        Caption = 'Add To'
-        ItemIndex = 0
-        Items.Strings = (
-          'Interface'
-          'Implementation')
         TabOrder = 0
+        OnClick = btnAddClick
       end
     end
   end
@@ -114,19 +102,44 @@ object frmFindUnit: TfrmFindUnit
     Left = 0
     Top = 0
     Width = 359
-    Height = 54
+    Height = 73
     Align = alTop
     Caption = 'Search'
     TabOrder = 0
+    object lblWhere: TLabel
+      Left = 16
+      Top = 46
+      Width = 32
+      Height = 13
+      Caption = 'Add to'
+    end
     object edtSearch: TEdit
-      Left = 19
+      Left = 16
       Top = 18
       Width = 330
       Height = 21
       TabOrder = 0
-      Text = 'edtSearch'
+      Text = 'Type your search...'
       OnChange = edtSearchChange
       OnKeyDown = edtSearchKeyDown
+    end
+    object rbInterface: TRadioButton
+      Left = 84
+      Top = 45
+      Width = 113
+      Height = 17
+      Caption = 'Interface'
+      Checked = True
+      TabOrder = 1
+      TabStop = True
+    end
+    object rbImplementation: TRadioButton
+      Left = 203
+      Top = 45
+      Width = 113
+      Height = 17
+      Caption = 'Implementation'
+      TabOrder = 2
     end
   end
 end
