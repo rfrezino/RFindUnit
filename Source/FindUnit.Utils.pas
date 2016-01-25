@@ -36,7 +36,7 @@ type
 implementation
 
 uses
-  Types, SysUtils, FindUnit.Logger;
+  Types, SysUtils, Log4PAscal;
 
 function FetchCaseInsensitive(var AInput: string; const ADelim: string;
   const ADelete: Boolean): string; inline;

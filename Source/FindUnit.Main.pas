@@ -27,7 +27,7 @@ type
 implementation
 
 uses
-  FindUnit.FormSearch, FindUnit.SearchString, FindUnit.Logger, FindUnit.Utils;
+  FindUnit.FormSearch, FindUnit.SearchString, Log4PAscal, FindUnit.Utils;
 
 var
   vKbIndex: Integer;
@@ -35,7 +35,7 @@ var
 
 procedure Register;
 begin
-  Logger := THelperLog.Create(FindUnitDir);
+  Logger := TLogger.Create(FindUnitDirLogger + '\Logs.txt');
 
   VFindUnit := TRFindUnitMain.Create;
   with (BorlandIDEServices as IOTAKeyboardServices) do
@@ -103,12 +103,11 @@ begin
   begin
     RemoveKeyboardBinding(vKbIndex);
   end;
-
 end;
 
 initialization
 
 finalization
-  Clear;
+//  Clear;
 
 end.

@@ -3,7 +3,7 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes;
+  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors;
 
 type
   CharPosition = record
@@ -54,12 +54,12 @@ uses
 
 procedure TSourceFileEditor.AddUsesToImplementation(UseUnit: string);
 begin
-  WriteInformationAtPostion(FImplementationPos.StartLine, FImplementationPos.EndPos -1, UseUnit);
+  WriteInformationAtPostion(FImplementationPos.EndLine, FImplementationPos.EndPos -1, UseUnit);
 end;
 
 procedure TSourceFileEditor.AddUsesToInterface(UseUnit: string);
 begin
-  WriteInformationAtPostion(FIntUsesPos.StartLine, FIntUsesPos.EndPos -1, UseUnit);
+  WriteInformationAtPostion(FIntUsesPos.EndLine, FIntUsesPos.EndPos -1, UseUnit);
 end;
 
 constructor TSourceFileEditor.Create(SourceEditor: IOTASourceEditor);
@@ -166,7 +166,7 @@ begin
   InfoPosition.Line := Line;
   InfoPosition.CharIndex := Position;
 
-  SetPosition := FSource.EditViews[0].CharPosToPos(InfoPosition) + Position;
+  SetPosition := FSource.EditViews[0].CharPosToPos(InfoPosition);
 
   FileWriter := FSource.CreateUndoableWriter;
   try

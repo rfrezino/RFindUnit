@@ -4,7 +4,7 @@ interface
 
 uses
   OtlComm, OtlCommon, OtlTask, OtlThreadPool, OtlParallel, OtlCollections,
-  Classes,FindUnit.Parser, Generics.Collections;
+  Classes,FindUnit.Parser, Generics.Collections, FindUnit.IncluderHandlerInc;
 
 type
   TOnFinished = procedure(FindUnits: TObjectList<TFindUnitItem>) of object;
@@ -15,6 +15,7 @@ type
     FOnFinished: TOnFinished;
     FPasFiles: TStringList;
     FFindUnits: TObjectList<TFindUnitItem>;
+    FIncluder: TIncludeHandlerInc;
 
     procedure ListPasFiles;
     procedure ParseFiles;
@@ -42,12 +43,15 @@ begin
   FPasFiles.Duplicates := dupIgnore;
 
   FFindUnits := TObjectList<TFindUnitItem>.Create;
+
+  FIncluder := TIncludeHandlerInc.Create(FDirectoriesPath.Text);
 end;
 
 destructor TParserWorker.Destroy;
 begin
   FPasFiles.Free;
   FDirectoriesPath.Free;
+  FIncluder.Free;
   inherited;
 end;
 
@@ -102,6 +106,7 @@ begin
         Parser := TFindUnitParser.Create(FPasFiles[index]);
         try
           try
+            Parser.SetIncluder(FIncluder);
             Item := Parser.Process;
             if Item <> nil then
               ResultList.Add(Item);
@@ -119,6 +124,7 @@ end;
 
 procedure TParserWorker.Start;
 begin
+  FIncluder.Process;
   ListPasFiles;
   ParseFiles;
   CallBack(FFindUnits);

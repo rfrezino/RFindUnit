@@ -3,7 +3,8 @@ unit FindUnit.Parser;
 interface
 
 uses
-  ComCtrls, Classes, SysUtils, DelphiAST.Classes, Generics.Collections, FindUnit.Utils;
+  ComCtrls, Classes, SysUtils, DelphiAST.Classes, Generics.Collections, FindUnit.Utils,
+  SimpleParser.Lexer.Types;
 
 type
   TFindUnitItem = class(TObject)
@@ -47,6 +48,8 @@ type
     FUnitNode: TSyntaxNode;
     FInterfaceNode: TSyntaxNode;
 
+    FIncluder: IIncludeHandler;
+
     procedure GetUnitName;
     procedure GetFileLastModification;
     procedure GetClasses;
@@ -59,13 +62,15 @@ type
     constructor Create(FilePath: string);
 
     function Process: TFindUnitItem;
+
+    procedure SetIncluder(Includer: IIncludeHandler);
   end;
 
 
 implementation
 
 uses
-  SimpleParser.Lexer.Types, IOUtils, DelphiAST.Writer, DelphiAST.Consts, DelphiAST, FindUnit.Logger;
+  IOUtils, DelphiAST.Writer, DelphiAST.Consts, DelphiAST, Log4PAscal;
 
 { TFindUnitItem }
 
@@ -151,6 +156,7 @@ var
   TypeNode: TSyntaxNode;
   TypeDesc: TSyntaxNode;
   Description: string[50];
+  ItemClassName: string;
 begin
   SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
   if SectionTypesNode = nil then
@@ -159,17 +165,23 @@ begin
   TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
   while TypeNode <> nil do
   begin
-    TypeDesc := TypeNode.FindNode(ntType);
-    Description := TypeDesc.GetAttribute(anType);
+    try
+      Description := ' - Class';
+      ItemClassName := TypeNode.GetAttribute(anName);
 
-    if Description = '' then
-      FResultItem.FClasses.Add(TypeNode.GetAttribute(anName))
-    else
-    begin
-      Description[1] := UpCase(Description[1]);
-      FResultItem.FClasses.Add(TypeNode.GetAttribute(anName) + ' - ' + Description);
+      TypeDesc := TypeNode.FindNode(ntType);
+      if TypeDesc <> nil then
+      begin
+        Description := TypeDesc.GetAttribute(anType);
+        Description[1] := UpCase(Description[1]);
+        Description := ' - ' + Description;
+      end;
+      FResultItem.FClasses.Add(ItemClassName + Description);
+    except
+      on e: exception do
+        Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
+
     end;
-
     SectionTypesNode.DeleteChild(TypeNode);
     TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
   end;
@@ -256,10 +268,14 @@ function TFindUnitParser.Process: TFindUnitItem;
 begin
   Result := nil;
   if not FileExists(FFilePath) then
+  begin
+    Logger.Debug('TFindUnitParser.Process: File do not exists %s', [FFilePath]);
     Exit;
+  end;
 
+  Logger.Debug('TFindUnitParser.Process: Parsing file %s', [FFilePath]);
   try
-    FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, TIncludeHandler.Create(ExtractFilePath(FFilePath)));
+    FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, FIncluder);
     if FUnitNode = nil then
       Exit;
 
@@ -288,5 +304,10 @@ begin
   end;
 end;
 
+
+procedure TFindUnitParser.SetIncluder(Includer: IIncludeHandler);
+begin
+  FIncluder := Includer;
+end;
 
 end.

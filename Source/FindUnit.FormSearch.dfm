@@ -72,20 +72,6 @@ object frmFindUnit: TfrmFindUnit
       Height = 169
       Align = alClient
       ItemHeight = 13
-      Items.Strings = (
-        'asfsafsad'
-        'ff'
-        'fsadf'
-        'asf'
-        'asd'
-        'fas'
-        'f'
-        'asd'
-        'fsad'
-        'f'
-        'sad'
-        'f'
-        'asdf')
       TabOrder = 0
       OnKeyPress = lstResultKeyPress
     end

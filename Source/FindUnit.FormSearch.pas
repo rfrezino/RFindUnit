@@ -59,9 +59,12 @@ var
 begin
   CurEditor := OtaGetCurrentSourceEditor;
   FileEditor := TSourceFileEditor.Create(CurEditor);
-
-  FileEditor.Prepare;
-  FileEditor.AddUsesToInterface(GetSelectedItem);
+  try
+    FileEditor.Prepare;
+    FileEditor.AddUsesToInterface(GetSelectedItem);
+  finally
+    FileEditor.Free;
+  end;
 
   Close;
 end;
@@ -131,6 +134,9 @@ var
   I: Integer;
 begin
   Result := '';
+  if lstResult.Count = 0 then
+    Exit;
+
   for I := 0 to lstResult.Items.Count -1 do
   begin
     if lstResult.Selected[i] then
@@ -140,6 +146,8 @@ begin
       Exit;
     end;
   end;
+
+  Result := lstResult.Items[0];
 end;
 
 procedure TfrmFindUnit.lstResultKeyPress(Sender: TObject; var Key: Char);

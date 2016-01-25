@@ -52,7 +52,7 @@ begin
     Paths.Delimiter := ';';
     Paths.StrictDelimiter := True;
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'];
+    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
     TParserWorker.Create(Paths).Start(OnFinishedLibraryPathScan);
   finally
@@ -115,3 +115,4 @@ begin
 end;
 
 end.
+
