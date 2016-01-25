@@ -14,11 +14,20 @@ type
     function GetIncludeFileContent(const FileName: string): string;
   end;
 
+  TPathConverter = class(TObject)
+  private
+    const
+      VAR_INIT = '$(';
+      VAR_END = ')';
+  public
+    class function ConvertPathsToFullPath(Paths: string): string;
+  end;
+
   function GetAllFilesFromPath(Path, Filter: string): TStringList;
   function GetAllPasFilesFromPath(Path: string): TStringList;
 
   function Fetch(var AInput: string; const ADelim: string = '';
-    const ADelete: Boolean = False; const ACaseSensitive: Boolean = False): string; inline;
+    const ADelete: Boolean = True; const ACaseSensitive: Boolean = False): string; inline;
 
   var
     FindUnitDir: string;
@@ -27,7 +36,7 @@ type
 implementation
 
 uses
-  Types, SysUtils;
+  Types, SysUtils, FindUnit.Logger;
 
 function FetchCaseInsensitive(var AInput: string; const ADelim: string;
   const ADelete: Boolean): string; inline;
@@ -57,7 +66,7 @@ begin
 end;
 
 function Fetch(var AInput: string; const ADelim: string = '';
-  const ADelete: Boolean = False;
+  const ADelete: Boolean = True;
   const ACaseSensitive: Boolean = False): string; inline;
 var
   LPos: Integer;
@@ -134,6 +143,30 @@ begin
 
   CreateDir(FindUnitDir);
   CreateDir(FindUnitDirLogger);
+end;
+
+{ TPathConverter }
+
+class function TPathConverter.ConvertPathsToFullPath(Paths: string): string;
+var
+  CurVariable: string;
+  CurPaths: string;
+  FullPath: string;
+begin
+  while Pos(VAR_INIT, Paths) > 0 do
+  begin
+    CurPaths := Paths;
+    Fetch(CurPaths, VAR_INIT);
+    CurVariable := Fetch(CurPaths, VAR_END, False);
+
+    Logger.Debug('TPathConverter.ConvertPathsToFullPath: %s', [CurVariable]);
+
+    FullPath := GetEnvironmentVariable(CurVariable);
+
+    Paths := StringReplace(Paths, VAR_INIT + CurVariable + VAR_END, FullPath, [rfReplaceAll]);
+  end;
+
+  Result := Paths;
 end;
 
 initialization

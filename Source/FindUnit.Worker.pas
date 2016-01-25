@@ -35,6 +35,7 @@ uses
 constructor TParserWorker.Create(DirectoriesPath: TStringList);
 begin
   FDirectoriesPath := DirectoriesPath;
+  FDirectoriesPath.Text := TPathConverter.ConvertPathsToFullPath(FDirectoriesPath.Text);
 
   FPasFiles := TStringList.Create;
   FPasFiles.Sorted := True;
