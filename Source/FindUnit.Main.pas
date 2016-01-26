@@ -72,7 +72,7 @@ end;
 
 function TRFindUnitMain.GetBindingType: TBindingType;
 begin
-  Result := btComplete;
+  Result := btPartial;
 end;
 
 function TRFindUnitMain.GetDisplayName: string;

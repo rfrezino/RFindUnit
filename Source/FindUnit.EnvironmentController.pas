@@ -70,7 +70,9 @@ var
   FileDesc: string;
   Files: TStringList;
 begin
-  Sleep(2000);
+  while GetCurrentProject = nil do
+    Sleep(1000);
+
   FProjectUnits := TUnitsController.Create;
   CurProject :=  GetCurrentProject;
 
