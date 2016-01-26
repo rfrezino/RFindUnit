@@ -3,7 +3,7 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.Parser, OtlParallel, ToolsAPI, XMLIntf, FindUnit.FileCache;
+  Classes, Generics.Collections, FindUnit.Parser, OtlParallel, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -16,6 +16,7 @@ type
     procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TFindUnitItem>);
 
     procedure CreateProjectPathUnits;
+    procedure OnFinishedProjectPathScan(FindUnits: TObjectList<TFindUnitItem>);
 
     procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
@@ -63,14 +64,38 @@ begin
 end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
+var
+  Files: TStringList;
+  I: Integer;
+  FilePas: IOTAEditor;
+  CurProject: IOTAProject;
+  OtaModule: IOTAModuleServices;
 begin
+  Sleep(2000);
   FProjectUnits := TUnitsController.Create;
+  OtaModule := (BorlandIDEServices as IOTAModuleServices);
+  CurProject :=  GetCurrentProject;
+  try
+    Files := TStringList.Create;
+    CurProject.GetAssociatedFilesFromModule(Files);
+    for I := 0 to CurProject.ModuleFileCount -1 do
+    begin
+      Files.Add(CurProject.GetModule(i).FileName);
+      CurProject.GetModule(i).GetAdditionalFiles(Files);
+    end;
+    TParserWorker.Create(Files).Start(OnFinishedProjectPathScan);
+  finally
+    Files.Free;
+  end;
 end;
 
 procedure TEnvironmentController.CreatingProject(const ProjectOrGroup: IOTAModule);
 begin
   if FLibraryPath = nil then
     Parallel.Async(CreateLibraryPathUnits);
+
+  FreeAndNil(FProjectUnits);
+  Parallel.Async(CreateProjectPathUnits);
 end;
 
 destructor TEnvironmentController.Destroy;
@@ -105,6 +130,11 @@ procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectLis
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
+end;
+
+procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TFindUnitItem>);
+begin
+
 end;
 
 procedure TEnvironmentController.ProjectClosing(const ProjectOrGroup: IOTAModule);

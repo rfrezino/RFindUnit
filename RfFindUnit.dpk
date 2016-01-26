@@ -42,6 +42,6 @@ contains
   FindUnit.FileCache in 'Source\FindUnit.FileCache.pas',
   FindUnit.Logger in 'Source\FindUnit.Logger.pas',
   FindUnit.IncluderHandlerInc in 'Source\FindUnit.IncluderHandlerInc.pas',
-  uFindUnit.Header in 'Source\uFindUnit.Header.pas';
+  FindUnit.Header in 'Source\FindUnit.Header.pas';
 
 end.

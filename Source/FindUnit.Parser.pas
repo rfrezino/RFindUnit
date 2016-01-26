@@ -4,7 +4,7 @@ interface
 
 uses
   ComCtrls, Classes, SysUtils, DelphiAST.Classes, Generics.Collections, FindUnit.Utils,
-  SimpleParser.Lexer.Types, uFindUnit.Header;
+  SimpleParser.Lexer.Types, FindUnit.Header;
 
 type
 
