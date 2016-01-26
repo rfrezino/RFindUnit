@@ -9,8 +9,11 @@ type
   TSearchString = class(TObject)
   protected
     FCandidates: TObjectList<TFindUnitItem>;
-    function GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: string; List: TStringList; const Sufix: string; var ItensFound: integer): string;
-    function GetMatchesOnItem(Item: TFindUnitItem; SearchString: string; var ItensFound: integer): string;
+
+    function FoundAllEntries(Entries: TStringList; Text: string): Boolean;
+
+    function GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
+    function GetMatchesOnItem(Item: TFindUnitItem; SearchString: TStringList; var ItensFound: integer): string;
   public
     constructor Create(Candidates: TObjectList<TFindUnitItem>);
     destructor Destroy; override;
@@ -34,39 +37,62 @@ begin
   inherited;
 end;
 
+function TSearchString.FoundAllEntries(Entries: TStringList; Text: string): Boolean;
+var
+  I: Integer;
+  Entry: string;
+begin
+  Result := True;
+  for I := 0 to Entries.Count -1 do
+  begin
+    Entry := Entries[i];
+    Result := Pos(Entry, Text) <> 0;
+    if not Result then
+      Exit;
+  end;
+end;
+
 function TSearchString.GetMatch(SearchString: string): TStringList;
 var
   I: Integer;
   Item: TFindUnitItem;
   ItensFound: Integer;
+  SearchList: TStringList;
 begin
   ItensFound := 0;
   Result := TStringList.Create;
-  SearchString := UpperCase(SearchString);
 
+  SearchList := TStringList.Create;
+  try
+    SearchList.Delimiter := ' ';
+    SearchList.DelimitedText := UpperCase(SearchString);
 
-  for I := 0 to FCandidates.Count - 1 do
-  begin
-    Item := FCandidates[I];
-
-    if Pos(SearchString, UpperCase(Item.OriginUnitName)) > 0 then
+    for I := 0 to FCandidates.Count - 1 do
     begin
-      Result.Text := Result.Text + Item.OriginUnitName + '.* - Unit';
-      Inc(ItensFound);
-    end;
+      Item := FCandidates[I];
 
-    Result.Text := Result.Text + GetMatchesOnItem(Item, SearchString, ItensFound);
-    if ItensFound >= MAX_RETURN_ITEMS then
-      Exit;
+      if FoundAllEntries(SearchList, UpperCase(Item.OriginUnitName) + '.') then
+      begin
+        Result.Text := Result.Text + Item.OriginUnitName + '.* - Unit';
+        Inc(ItensFound);
+      end;
+
+      Result.Text := Result.Text + GetMatchesOnItem(Item, SearchList, ItensFound);
+      if ItensFound >= MAX_RETURN_ITEMS then
+        Exit;
+    end;
+  finally
+    SearchList.Free;
   end;
 end;
 
-function TSearchString.GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: string; List: TStringList; const Sufix: string; var ItensFound: integer): string;
+function TSearchString.GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
 var
   LocalSearchUpperCase: TStringList;
   iString: Integer;
   ItemToFind: string;
   MatchList: TStringList;
+  FoundAll: Boolean;
 begin
   MatchList := TStringList.Create;
   LocalSearchUpperCase := TStringList.Create;
@@ -75,8 +101,9 @@ begin
 
     for iString := 0 to LocalSearchUpperCase.Count - 1 do
     begin
-      ItemToFind :=  LocalSearchUpperCase[iString];
-      if Pos(SearchString, ItemToFind) > 0 then
+      ItemToFind :=  UpperCase(Item.OriginUnitName) + '.' + LocalSearchUpperCase[iString];
+
+      if FoundAllEntries(SearchString, ItemToFind) then
       begin
         MatchList.Add(Item.OriginUnitName + '.' + List[iString] + Sufix);
         Inc(ItensFound);
@@ -91,7 +118,7 @@ begin
   end;
 end;
 
-function TSearchString.GetMatchesOnItem(Item: TFindUnitItem; SearchString: string; var ItensFound: integer): string;
+function TSearchString.GetMatchesOnItem(Item: TFindUnitItem; SearchString: TStringList; var ItensFound: integer): string;
 var
   ListType: TListType;
   List: TStringList;

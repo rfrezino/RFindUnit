@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, FindUnit.SearchString, ToolsAPI, Menus,
-  FindUnit.EnvironmentController;
+  FindUnit.EnvironmentController, StrUtils;
 
 type
 
@@ -139,6 +139,15 @@ end;
 function TfrmFindUnit.GetSelectedItem: string;
 var
   I: Integer;
+
+  function CorrectUses(Item: string): string;
+  begin
+    Result := Item;
+    Result := Trim(Fetch(Result, '-'));
+    Result := ReverseString(Result);
+    Fetch(Result,'.');
+    Result := ReverseString(Result);
+  end;
 begin
   Result := '';
   if lstResult.Count = 0 then
@@ -148,13 +157,12 @@ begin
   begin
     if lstResult.Selected[i] then
     begin
-      Result := lstResult.Items[i];
-      Result := Fetch(Result, '.');
+      Result := CorrectUses(lstResult.Items[i]);
       Exit;
     end;
   end;
 
-  Result := lstResult.Items[0];
+  Result := CorrectUses(lstResult.Items[0])
 end;
 
 procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);
