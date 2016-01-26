@@ -3,7 +3,7 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.Parser, OtlParallel, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
+  Classes, Generics.Collections, FindUnit.PasParser, FindUnit.DprParser, OtlParallel, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -13,10 +13,10 @@ type
     FLastItem: string;
 
     procedure CreateLibraryPathUnits;
-    procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TFindUnitItem>);
+    procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
 
     procedure CreateProjectPathUnits;
-    procedure OnFinishedProjectPathScan(FindUnits: TObjectList<TFindUnitItem>);
+    procedure OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 
     procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
@@ -57,7 +57,7 @@ begin
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
     Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
-    TParserWorker.Create(Paths).Start(OnFinishedLibraryPathScan);
+    TParserWorker.Create(Paths, nil).Start(OnFinishedLibraryPathScan);
   finally
     Paths.Free;
   end;
@@ -65,28 +65,25 @@ end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
 var
-  Files: TStringList;
   I: Integer;
-  FilePas: IOTAEditor;
   CurProject: IOTAProject;
-  OtaModule: IOTAModuleServices;
+  FileDesc: string;
+  Files: TStringList;
 begin
   Sleep(2000);
   FProjectUnits := TUnitsController.Create;
-  OtaModule := (BorlandIDEServices as IOTAModuleServices);
   CurProject :=  GetCurrentProject;
-  try
-    Files := TStringList.Create;
-    CurProject.GetAssociatedFilesFromModule(Files);
-    for I := 0 to CurProject.ModuleFileCount -1 do
-    begin
-      Files.Add(CurProject.GetModule(i).FileName);
-      CurProject.GetModule(i).GetAdditionalFiles(Files);
-    end;
-    TParserWorker.Create(Files).Start(OnFinishedProjectPathScan);
-  finally
-    Files.Free;
+
+  Files := TStringList.Create;
+  for I := 0 to CurProject.GetModuleCount -1 do
+  begin
+    FileDesc := CurProject.GetModule(i).FileName;
+    if FileDesc = '' then
+      Continue;
+
+    Files.Add(FileDesc);
   end;
+  TParserWorker.Create(nil, Files).Start(OnFinishedProjectPathScan);
 end;
 
 procedure TEnvironmentController.CreatingProject(const ProjectOrGroup: IOTAModule);
@@ -126,15 +123,16 @@ begin
     Result := TStringList.Create;
 end;
 
-procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TFindUnitItem>);
+procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
 end;
 
-procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TFindUnitItem>);
+procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 begin
-
+  FProjectUnits.Ready := True;
+  FProjectUnits.Units := FindUnits;
 end;
 
 procedure TEnvironmentController.ProjectClosing(const ProjectOrGroup: IOTAModule);

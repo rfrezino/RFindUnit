@@ -4,23 +4,23 @@ interface
 
 uses
   OtlComm, OtlCommon, OtlTask, OtlThreadPool, OtlParallel, OtlCollections,
-  Classes,FindUnit.Parser, Generics.Collections, FindUnit.IncluderHandlerInc;
+  Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc;
 
 type
-  TOnFinished = procedure(FindUnits: TObjectList<TFindUnitItem>) of object;
+  TOnFinished = procedure(FindUnits: TObjectList<TPasFile>) of object;
 
   TParserWorker = class(TObject)
   private
     FDirectoriesPath: TStringList;
     FOnFinished: TOnFinished;
     FPasFiles: TStringList;
-    FFindUnits: TObjectList<TFindUnitItem>;
+    FFindUnits: TObjectList<TPasFile>;
     FIncluder: TIncludeHandlerInc;
 
     procedure ListPasFiles;
     procedure ParseFiles;
   public
-    constructor Create(DirectoriesPath: TStringList);
+    constructor Create(DirectoriesPath: TStringList; Files: TStringList);
     destructor Destroy; override;
 
     procedure Start(CallBack: TOnFinished);
@@ -33,16 +33,21 @@ uses
 
 { TParserWorker }
 
-constructor TParserWorker.Create(DirectoriesPath: TStringList);
+constructor TParserWorker.Create(DirectoriesPath: TStringList; Files: TStringList);
 begin
-  FDirectoriesPath := DirectoriesPath;
-  FDirectoriesPath.Text := TPathConverter.ConvertPathsToFullPath(FDirectoriesPath.Text);
+  FDirectoriesPath := TStringList.Create;
+  if DirectoriesPath <> nil then
+    FDirectoriesPath.Text := TPathConverter.ConvertPathsToFullPath(DirectoriesPath.Text);
+  DirectoriesPath.Free;
 
   FPasFiles := TStringList.Create;
   FPasFiles.Sorted := True;
   FPasFiles.Duplicates := dupIgnore;
+  if Files <> nil then
+    FPasFiles.AddStrings(Files);
+  Files.Free;
 
-  FFindUnits := TObjectList<TFindUnitItem>.Create;
+  FFindUnits := TObjectList<TPasFile>.Create;
 
   FIncluder := TIncludeHandlerInc.Create(FDirectoriesPath.Text);
 end;
@@ -64,6 +69,9 @@ begin
   //DEBUG
 //  FPasFiles.Add('C:\Program Files (x86)\Embarcadero\RAD Studio\8.0\source\rtl\common\Classes.pas');
 //  Exit;
+
+  if FPasFiles.Count > 0 then
+    Exit;
 
   ResultList := TOmniBlockingCollection.Create;
 
@@ -104,10 +112,10 @@ begin
     .Execute(
       procedure (const index: Integer; var result: TOmniValue)
       var
-        Parser: TFindUnitParser;
-        Item: TFindUnitItem;
+        Parser: TPasFileParser;
+        Item: TPasFile;
       begin
-        Parser := TFindUnitParser.Create(FPasFiles[index]);
+        Parser := TPasFileParser.Create(FPasFiles[index]);
         try
           try
             Parser.SetIncluder(FIncluder);
@@ -123,7 +131,7 @@ begin
     );
 
   while ResultList.Take(PasValue) do
-    FFindUnits.Add(TFindUnitItem(PasValue.AsObject));
+    FFindUnits.Add(TPasFile(PasValue.AsObject));
 end;
 
 procedure TParserWorker.Start;

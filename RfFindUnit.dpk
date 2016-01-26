@@ -31,7 +31,7 @@ requires
 
 contains
   FindUnit.FormSearch in 'Source\FindUnit.FormSearch.pas' {frmFindUnit},
-  FindUnit.Parser in 'Source\FindUnit.Parser.pas',
+  FindUnit.PasParser in 'Source\FindUnit.PasParser.pas',
   FindUnit.SearchString in 'Source\FindUnit.SearchString.pas',
   FindUnit.EnvironmentController in 'Source\FindUnit.EnvironmentController.pas',
   FindUnit.Utils in 'Source\FindUnit.Utils.pas',
@@ -42,6 +42,7 @@ contains
   FindUnit.FileCache in 'Source\FindUnit.FileCache.pas',
   FindUnit.Logger in 'Source\FindUnit.Logger.pas',
   FindUnit.IncluderHandlerInc in 'Source\FindUnit.IncluderHandlerInc.pas',
-  FindUnit.Header in 'Source\FindUnit.Header.pas';
+  FindUnit.Header in 'Source\FindUnit.Header.pas',
+  FindUnit.DprParser in 'Source\FindUnit.DprParser.pas';
 
 end.

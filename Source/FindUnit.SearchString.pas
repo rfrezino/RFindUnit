@@ -3,19 +3,19 @@ unit FindUnit.SearchString;
 interface
 
 uses
-  Classes, FindUnit.Parser, Generics.Collections, FindUnit.Header;
+  Classes, FindUnit.PasParser, Generics.Collections, FindUnit.Header;
 
 type
   TSearchString = class(TObject)
   protected
-    FCandidates: TObjectList<TFindUnitItem>;
+    FCandidates: TObjectList<TPasFile>;
 
     function FoundAllEntries(Entries: TStringList; Text: string): Boolean;
 
-    function GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
-    function GetMatchesOnItem(Item: TFindUnitItem; SearchString: TStringList; var ItensFound: integer): string;
+    function GetMatcherOnItemListType(Item: TPasFile; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
+    function GetMatchesOnItem(Item: TPasFile; SearchString: TStringList; var ItensFound: integer): string;
   public
-    constructor Create(Candidates: TObjectList<TFindUnitItem>);
+    constructor Create(Candidates: TObjectList<TPasFile>);
     destructor Destroy; override;
     function GetMatch(SearchString: string): TStringList;
   end;
@@ -27,7 +27,7 @@ uses
 
 { TSearchString }
 
-constructor TSearchString.Create(Candidates: TObjectList<TFindUnitItem>);
+constructor TSearchString.Create(Candidates: TObjectList<TPasFile>);
 begin
   FCandidates := Candidates;
 end;
@@ -55,7 +55,7 @@ end;
 function TSearchString.GetMatch(SearchString: string): TStringList;
 var
   I: Integer;
-  Item: TFindUnitItem;
+  Item: TPasFile;
   ItensFound: Integer;
   SearchList: TStringList;
 begin
@@ -86,7 +86,7 @@ begin
   end;
 end;
 
-function TSearchString.GetMatcherOnItemListType(Item: TFindUnitItem; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
+function TSearchString.GetMatcherOnItemListType(Item: TPasFile; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
 var
   LocalSearchUpperCase: TStringList;
   iString: Integer;
@@ -118,7 +118,7 @@ begin
   end;
 end;
 
-function TSearchString.GetMatchesOnItem(Item: TFindUnitItem; SearchString: TStringList; var ItensFound: integer): string;
+function TSearchString.GetMatchesOnItem(Item: TPasFile; SearchString: TStringList; var ItensFound: integer): string;
 var
   ListType: TListType;
   List: TStringList;

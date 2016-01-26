@@ -3,13 +3,13 @@ unit FindUnit.FileCache;
 interface
 
 uses
-  Generics.Collections, Classes, FindUnit.Parser;
+  Generics.Collections, Classes, FindUnit.PasParser;
 
 type
   TUnitsController = class(TObject)
   private
     FNeedGenerateFindInfo: Boolean;
-    FUnits: TObjectList<TFindUnitItem>;
+    FUnits: TObjectList<TPasFile>;
     FContent: TStringList;
     FReady: Boolean;
   public
@@ -18,7 +18,7 @@ type
 
     function GetFindInfo(SearchString: string): TStringList;
 
-    property Units: TObjectList<TFindUnitItem> read FUnits write FUnits;
+    property Units: TObjectList<TPasFile> read FUnits write FUnits;
     property Ready: Boolean read FReady write FReady;
   end;
 

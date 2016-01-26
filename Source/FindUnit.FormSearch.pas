@@ -107,18 +107,20 @@ procedure TfrmFindUnit.FilterItem(SearchString: string);
 var
   Return: TStringList;
 begin
-  Return := nil;
   lstResult.Items.BeginUpdate;
   try
     lstResult.Clear;
     if FEnvControl = nil then
       Exit;
 
-    Return := FEnvControl.GetLibraryPathUnits(SearchString);
-
-    lstResult.Items.Text := Return.Text;
-  finally
+    Return := FEnvControl.GetProjectUnits(SearchString);
+    lstResult.Items.Text := lstResult.Items.Text + Return.Text;
     Return.Free;
+
+    Return := FEnvControl.GetLibraryPathUnits(SearchString);
+    lstResult.Items.Text := lstResult.Items.Text + Return.Text;
+    Return.Free;
+  finally
     lstResult.Items.EndUpdate;
   end;
 end;
