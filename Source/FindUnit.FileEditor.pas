@@ -53,13 +53,43 @@ uses
 { TSourceFileEditor }
 
 procedure TSourceFileEditor.AddUsesToImplementation(UseUnit: string);
+var
+  PosChar: Integer;
+  Line: Integer;
 begin
-  WriteInformationAtPostion(FImpUses.EndLine, FImpUses.EndPos -1, UseUnit);
+  Line := FImpUses.EndLine;
+  PosChar := FImpUses.EndPos -1;
+  if not FHaveImplementationUses then
+  begin
+    Line := FImplementationPos.StartLine + 1;
+    PosChar := 0;
+
+    UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
+  end
+  else
+    UseUnit := ', ' + UseUnit;
+
+  WriteInformationAtPostion(Line, PosChar, UseUnit);
 end;
 
 procedure TSourceFileEditor.AddUsesToInterface(UseUnit: string);
+var
+  Line: Integer;
+  PosChar: Integer;
 begin
-  WriteInformationAtPostion(FIntUsesPos.EndLine, FIntUsesPos.EndPos -1, UseUnit);
+  Line := FIntUsesPos.EndLine;
+  PosChar := FIntUsesPos.EndPos -1;
+  if not FHaveInterfaceUses then
+  begin
+    Line := FInterfacePos.StartLine + 1;
+    PosChar := 0;
+
+    UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
+  end
+  else
+    UseUnit := ', ' + UseUnit;
+
+  WriteInformationAtPostion(Line, PosChar, UseUnit);
 end;
 
 constructor TSourceFileEditor.Create(SourceEditor: IOTASourceEditor);
@@ -134,6 +164,9 @@ begin
 
   if FImplementationPos.StartLine > -1 then
     FImpUses := GetInformationsFor('uses', True, FImplementationPos.StartLine, FFileContent.Count -1);
+
+  FHaveImplementationUses := FImpUses.StartLine > 0;
+  FHaveInterfaceUses := FIntUsesPos.StartLine > 0;
 end;
 
 procedure TSourceFileEditor.ParseInformations;
@@ -171,7 +204,7 @@ begin
   FileWriter := FSource.CreateUndoableWriter;
   try
     FileWriter.CopyTo(SetPosition);
-    FileWriter.Insert(PAnsiChar(AnsiString(', ' +Information)));
+    FileWriter.Insert(PAnsiChar(AnsiString(Information)));
   finally
     FileWriter := nil;
   end;
