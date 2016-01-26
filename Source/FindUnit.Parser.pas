@@ -4,15 +4,15 @@ interface
 
 uses
   ComCtrls, Classes, SysUtils, DelphiAST.Classes, Generics.Collections, FindUnit.Utils,
-  SimpleParser.Lexer.Types;
+  SimpleParser.Lexer.Types, uFindUnit.Header;
 
 type
+
   TFindUnitItem = class(TObject)
   private
     FHashKey: string;
     FLastModification: TDateTime;
     FOriginUnitName: string;
-    FPrepared: Boolean;
 
     FLists: TObjectList<TStringList>;
 
@@ -23,7 +23,6 @@ type
     FVariables: TStringList;
 
     procedure PrepareList(List: TStringList; const Description: string);
-    procedure PrepareLists;
   public
     constructor Create;
     destructor Destroy; override;
@@ -37,7 +36,7 @@ type
     property Constants: TStringList read FConstants;
     property Variables: TStringList read FVariables;
 
-    function PrepareToFind: string;
+    function GetListFromType(ListType: TListType): TStringList;
   end;
 
   TFindUnitParser = class(TObject)
@@ -97,6 +96,17 @@ begin
   inherited;
 end;
 
+function TFindUnitItem.GetListFromType(ListType: TListType): TStringList;
+begin
+  case ListType of
+    ltClasses: Result := FClasses;
+    ltProcedures: Result := FProcedures;
+    ltFunctions: Result := FFunctions;
+    ltContants: Result := FConstants;
+    ltVariables: Result := FVariables;
+  end;
+end;
+
 procedure TFindUnitItem.PrepareList(List: TStringList; const Description: string);
 var
   I: Integer;
@@ -120,29 +130,6 @@ const
   'Variable'
   );
 
-procedure TFindUnitItem.PrepareLists;
-var
-  I: Integer;
-begin
-  if not FPrepared then
-  begin
-    for I := 0 to Length(Identifications) -1 do
-      PrepareList(FLists.Items[i], Identifications[i]);
-
-    FPrepared := True;
-  end;
-end;
-
-function TFindUnitItem.PrepareToFind: string;
-var
-  I: Integer;
-begin
-  Result := '';
-  PrepareLists;
-  for I := 0 to FLists.Count -1 do
-    Result := Result + FLists.Items[i].Text;
-end;
-
 { TFindUnitParser }
 
 constructor TFindUnitParser.Create(FilePath: string);
@@ -159,31 +146,35 @@ var
   ItemClassName: string;
 begin
   SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
-  if SectionTypesNode = nil then
-    Exit;
 
-  TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
-  while TypeNode <> nil do
+  while SectionTypesNode <> nil do
   begin
-    try
-      Description := ' - Class';
-      ItemClassName := TypeNode.GetAttribute(anName);
-
-      TypeDesc := TypeNode.FindNode(ntType);
-      if TypeDesc <> nil then
-      begin
-        Description := TypeDesc.GetAttribute(anType);
-        Description[1] := UpCase(Description[1]);
-        Description := ' - ' + Description;
-      end;
-      FResultItem.FClasses.Add(ItemClassName + Description);
-    except
-      on e: exception do
-        Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
-
-    end;
-    SectionTypesNode.DeleteChild(TypeNode);
     TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
+    while TypeNode <> nil do
+    begin
+      try
+        Description := ' - Class';
+        ItemClassName := TypeNode.GetAttribute(anName);
+
+        TypeDesc := TypeNode.FindNode(ntType);
+        if TypeDesc <> nil then
+        begin
+          Description := TypeDesc.GetAttribute(anType);
+          Description[1] := UpCase(Description[1]);
+          Description := ' - ' + Description;
+        end;
+        FResultItem.FClasses.Add(ItemClassName + Description);
+      except
+        on e: exception do
+          Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
+
+      end;
+      SectionTypesNode.DeleteChild(TypeNode);
+      TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
+    end;
+
+    FInterfaceNode.DeleteChild(SectionTypesNode);
+    SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
   end;
 end;
 
@@ -194,18 +185,21 @@ var
   Name: TSyntaxNode;
 begin
   ConstantsNode := FInterfaceNode.FindNode(ntConstants);
-  if ConstantsNode = nil then
-    Exit;
-
-  ConstantItem := ConstantsNode.FindNode(ntConstant);
-  while ConstantItem <> nil do
+  while ConstantsNode <> nil do
   begin
-    Name := ConstantItem.FindNode(ntName);
-
-    FResultItem.FConstants.Add(TValuedSyntaxNode(Name).Value);
-
-    ConstantsNode.DeleteChild(ConstantItem);
     ConstantItem := ConstantsNode.FindNode(ntConstant);
+    while ConstantItem <> nil do
+    begin
+      Name := ConstantItem.FindNode(ntName);
+
+      FResultItem.FConstants.Add(TValuedSyntaxNode(Name).Value);
+
+      ConstantsNode.DeleteChild(ConstantItem);
+      ConstantItem := ConstantsNode.FindNode(ntConstant);
+    end;
+
+    FInterfaceNode.DeleteChild(ConstantsNode);
+    ConstantsNode := FInterfaceNode.FindNode(ntConstants);
   end;
 end;
 
@@ -244,17 +238,20 @@ var
   Attr: TPair<TAttributeName, string>;
 begin
   VariablesNode := FInterfaceNode.FindNode(ntVariables);
-  if VariablesNode = nil then
-    Exit;
-
-  Variable := VariablesNode.FindNode(ntVariable);
-  while Variable <> nil do
+  while VariablesNode <> nil do
   begin
-    VariableName := Variable.FindNode(ntName);
-    FResultItem.FVariables.Add(TValuedSyntaxNode(VariableName).Value);
-
-    VariablesNode.DeleteChild(Variable);
     Variable := VariablesNode.FindNode(ntVariable);
+    while Variable <> nil do
+    begin
+      VariableName := Variable.FindNode(ntName);
+      FResultItem.FVariables.Add(TValuedSyntaxNode(VariableName).Value);
+
+      VariablesNode.DeleteChild(Variable);
+      Variable := VariablesNode.FindNode(ntVariable);
+    end;
+
+    FInterfaceNode.DeleteChild(VariablesNode);
+    VariablesNode := FInterfaceNode.FindNode(ntVariables);
   end;
 end;
 

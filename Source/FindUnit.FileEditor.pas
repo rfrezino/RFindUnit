@@ -3,7 +3,7 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors;
+  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics;
 
 type
   CharPosition = record

@@ -61,6 +61,10 @@ var
   RetunrValue: TObject;
   PasValue: TOmniValue;
 begin
+  //DEBUG
+//  FPasFiles.Add('C:\Program Files (x86)\Embarcadero\RAD Studio\8.0\source\rtl\common\Classes.pas');
+//  Exit;
+
   ResultList := TOmniBlockingCollection.Create;
 
   Parallel.ForEach(0, FDirectoriesPath.Count -1)

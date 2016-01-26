@@ -15,6 +15,8 @@ type
     procedure CreateLibraryPathUnits;
     procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TFindUnitItem>);
 
+    procedure CreateProjectPathUnits;
+
     procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
     procedure ProjectSaving(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
@@ -38,8 +40,7 @@ uses
 
 constructor TEnvironmentController.Create;
 begin
-  FProjectUnits := TUnitsController.Create;
-  FLibraryPath := TUnitsController.Create;
+
 end;
 
 procedure TEnvironmentController.CreateLibraryPathUnits;
@@ -47,6 +48,7 @@ var
   Paths: TStringList;
   EnvironmentOptions: IOTAEnvironmentOptions;
 begin
+  FLibraryPath := TUnitsController.Create;
   Paths := TStringList.Create;
   try
     Paths.Delimiter := ';';
@@ -60,9 +62,15 @@ begin
   end;
 end;
 
+procedure TEnvironmentController.CreateProjectPathUnits;
+begin
+  FProjectUnits := TUnitsController.Create;
+end;
+
 procedure TEnvironmentController.CreatingProject(const ProjectOrGroup: IOTAModule);
 begin
-  Parallel.Async(CreateLibraryPathUnits);
+  if FLibraryPath = nil then
+    Parallel.Async(CreateLibraryPathUnits);
 end;
 
 destructor TEnvironmentController.Destroy;

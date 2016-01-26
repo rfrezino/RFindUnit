@@ -40,6 +40,8 @@ contains
   FindUnit.FileEditor in 'Source\FindUnit.FileEditor.pas',
   FindUnit.Main in 'Source\FindUnit.Main.pas',
   FindUnit.FileCache in 'Source\FindUnit.FileCache.pas',
-  FindUnit.Logger in 'Source\FindUnit.Logger.pas';
+  FindUnit.Logger in 'Source\FindUnit.Logger.pas',
+  FindUnit.IncluderHandlerInc in 'Source\FindUnit.IncluderHandlerInc.pas',
+  uFindUnit.Header in 'Source\uFindUnit.Header.pas';
 
 end.
