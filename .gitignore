@@ -1,2 +1,4 @@
 *.~*
 *.dcu
+*.dproj*
+*.identcache
