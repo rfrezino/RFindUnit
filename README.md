@@ -1,2 +1,14 @@
 # RFindUnit
-Replace the Delphi FindUnit 
+  Find unit is a very simple tool and very used, but, as you know Delphi Find Unit doesn't work very well, In general it creshes or it's very slow.
+  I gave up of waiting for Delphi's team solve the problem and I decided to create this project to replace the Delphi's Find Unit default.
+Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions. 
+If you help, it'll be very good.
+
+##Delphi Version
+It requires Delphi XE and above.
+
+###Instalation
+Delphi XE: Download [ReplaceFindUnit.zip](http://1drv.ms/1SKw2wN) 
+Other versions: I didn't create installer for every version. You can get the source code, and install it normaly. Just remember to add the "Thirdy" directory to library path.
+
+![RFindUnit Screen](http://i.imgur.com/zT23uKE.png)
