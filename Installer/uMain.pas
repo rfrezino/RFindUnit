@@ -40,11 +40,11 @@ begin
     BplPath := Reg.ReadString('RootDir');
     Reg.CloseKey;
 
-    BplPath := BplPath + 'bin\' + 'DcuRemover.bpl';
+    BplPath := BplPath + 'bin\' + BPL_FILENAME;
 
     Reg.RootKey := HKEY_CURRENT_USER;
     Reg.OpenKey('SOFTWARE\Embarcadero\BDS\8.0\Known Packages', False);
-    Reg.WriteString('$(BDS)\bin\DcuRemover.bpl', 'RfUtils');
+    Reg.WriteString('$(BDS)\bin\' + BPL_FILENAME, 'RfUtils');
     Reg.CloseKey;
 
     InstalFile := ExtractFilePath(ParamStr(0)) + '\DelphiXE\' + BPL_FILENAME;
