@@ -17,6 +17,7 @@ type
   public
     constructor Create(Candidates: TObjectList<TPasFile>);
     destructor Destroy; override;
+
     function GetMatch(SearchString: string): TStringList;
   end;
 
