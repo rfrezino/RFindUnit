@@ -19,8 +19,6 @@ It requires Delphi XE or above.
 </br>**Other versions**: I didn't create installer for every version. You can get the source code, and install it normaly. Just remember to add the "Thirdy" directory to library path.
 </br>If you have access to another Delphi Version and can send me the BPL I can add on the installer.
 
-![RFindUnit Screen](http://i.imgur.com/zT23uKE.png)
-
 #### Contact
 Rodrigo Farias Rezino
 </br> rodrigofrezino@gmail.com
