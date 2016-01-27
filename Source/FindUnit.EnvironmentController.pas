@@ -3,7 +3,7 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.PasParser, FindUnit.DprParser, OtlParallel, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
+  Classes, Generics.Collections, FindUnit.PasParser, FindUnit.DprParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)

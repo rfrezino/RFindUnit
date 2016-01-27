@@ -1,4 +1,4 @@
-unit OtlAsyncStreams;
+unit OtlAsyncStreamsFU;
 
 // file stream
 // any stream (threaded worker wrapper)
@@ -15,7 +15,7 @@ interface
 
 uses
   System.SysUtils,
-  GpStuff;
+  GpStuffFU;
 
 const
   OTL_READ_ALL = -1;

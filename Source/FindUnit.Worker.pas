@@ -3,7 +3,7 @@ unit FindUnit.Worker;
 interface
 
 uses
-  OtlComm, OtlCommon, OtlTask, OtlThreadPool, OtlParallel, OtlCollections,
+  OtlCommFU, OtlCommonFU, OtlTaskFU, OtlThreadPoolFU, OtlParallelFU, OtlCollectionsFU,
   Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc;
 
 type
