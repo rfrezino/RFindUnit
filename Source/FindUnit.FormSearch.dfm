@@ -40,6 +40,24 @@ object frmFindUnit: TfrmFindUnit
       Height = 13
       Caption = 'Loading...'
     end
+    object btnRefreshProject: TSpeedButton
+      Left = 188
+      Top = 17
+      Width = 54
+      Height = 22
+      Caption = 'Refresh'
+      Visible = False
+      OnClick = btnRefreshProjectClick
+    end
+    object btnRefreshLibraryPath: TSpeedButton
+      Left = 188
+      Top = 40
+      Width = 54
+      Height = 22
+      Caption = 'Refresh'
+      Visible = False
+      OnClick = btnRefreshLibraryPathClick
+    end
     object chkSearchLibraryPath: TCheckBox
       Left = 19
       Top = 45
@@ -49,6 +67,7 @@ object frmFindUnit: TfrmFindUnit
       Checked = True
       State = cbChecked
       TabOrder = 1
+      OnClick = chkSearchLibraryPathClick
     end
     object chkSearchProjectFiles: TCheckBox
       Left = 19
@@ -59,6 +78,7 @@ object frmFindUnit: TfrmFindUnit
       Checked = True
       State = cbChecked
       TabOrder = 0
+      OnClick = chkSearchProjectFilesClick
     end
   end
   object grpResult: TGroupBox

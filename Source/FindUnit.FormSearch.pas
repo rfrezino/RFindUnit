@@ -5,10 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, FindUnit.SearchString, ToolsAPI, Menus,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts;
+  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons;
 
 type
-
   TFuncBoolean = function: Boolean of object;
 
   TfrmFindUnit = class(TForm)
@@ -28,6 +27,8 @@ type
     tmrLoadedItens: TTimer;
     lblProjectUnitsStatus: TLabel;
     lblLibraryUnitsStatus: TLabel;
+    btnRefreshProject: TSpeedButton;
+    btnRefreshLibraryPath: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -37,6 +38,10 @@ type
     procedure edtSearchClick(Sender: TObject);
     procedure aevKeysMessage(var Msg: tagMSG; var Handled: Boolean);
     procedure tmrLoadedItensTimer(Sender: TObject);
+    procedure chkSearchProjectFilesClick(Sender: TObject);
+    procedure chkSearchLibraryPathClick(Sender: TObject);
+    procedure btnRefreshProjectClick(Sender: TObject);
+    procedure btnRefreshLibraryPathClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
 
@@ -45,9 +50,12 @@ type
 
     procedure ProcessKeyCommand(var Msg: tagMSG; var Handled: Boolean);
 
-    procedure CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel);
+    procedure CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel; RefreshButton: TSpeedButton);
     procedure CheckLibraryStatus;
     procedure FilterItemFromSearchString;
+
+    procedure SaveConfigs;
+    procedure LoadConfigs;
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure FilterItem(SearchString: string);
@@ -67,6 +75,10 @@ uses
 const
   IDCONT = '1';
   SEARCH_MESSAGE = 'Type your search...';
+
+var
+  CONFIG_SearchOnProjectUnits: Boolean;
+  CONFIG_SearchOnLibraryPath: Boolean;
 
 procedure TfrmFindUnit.AddUnit;
 var
@@ -99,19 +111,32 @@ begin
   AddUnit;
 end;
 
-procedure TfrmFindUnit.CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel);
+procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
+begin
+  FEnvControl.LoadLibraryPath;
+  CheckLibraryStatus;
+end;
+
+procedure TfrmFindUnit.btnRefreshProjectClick(Sender: TObject);
+begin
+  FEnvControl.LoadProjectPath;
+  CheckLibraryStatus;
+end;
+
+procedure TfrmFindUnit.CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel; RefreshButton: TSpeedButton);
 var
   NewCaption: string;
 begin
   NewCaption := '';
   if Func then
   begin
-    NewCaption := '';
-    LabelDesc.Font.Color := $00408000;
-    LabelDesc.Font.Style := [fsBold];
+    RefreshButton.Visible := True;
+    LabelDesc.Visible := False;
   end
   else
   begin
+    LabelDesc.Visible := True;
+    RefreshButton.Visible := False;
     NewCaption := 'Loading...';
     LabelDesc.Font.Color := $000069D2;
     LabelDesc.Font.Style := [fsItalic];
@@ -122,6 +147,16 @@ begin
     FilterItemFromSearchString;
     LabelDesc.Caption := NewCaption;
   end;
+end;
+
+procedure TfrmFindUnit.chkSearchLibraryPathClick(Sender: TObject);
+begin
+  FilterItemFromSearchString;
+end;
+
+procedure TfrmFindUnit.chkSearchProjectFilesClick(Sender: TObject);
+begin
+  FilterItemFromSearchString;
 end;
 
 procedure TfrmFindUnit.edtSearchChange(Sender: TObject);
@@ -153,13 +188,19 @@ begin
     if (SearchString = '') or (FEnvControl = nil) then
       Exit;
 
-    Return := FEnvControl.GetProjectUnits(SearchString);
-    lstResult.Items.Text := lstResult.Items.Text + Return.Text;
-    Return.Free;
+    if chkSearchProjectFiles.Checked then
+    begin
+      Return := FEnvControl.GetProjectUnits(SearchString);
+      lstResult.Items.Text := lstResult.Items.Text + Return.Text;
+      Return.Free;
+    end;
 
-    Return := FEnvControl.GetLibraryPathUnits(SearchString);
-    lstResult.Items.Text := lstResult.Items.Text + Return.Text;
-    Return.Free;
+    if chkSearchProjectFiles.Checked then
+    begin
+      Return := FEnvControl.GetLibraryPathUnits(SearchString);
+      lstResult.Items.Text := lstResult.Items.Text + Return.Text;
+      Return.Free;
+    end;
   finally
     lstResult.Items.EndUpdate;
   end;
@@ -172,6 +213,7 @@ end;
 
 procedure TfrmFindUnit.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  SaveConfigs;
   Action := caFree;
   frmFindUnit := nil;
 end;
@@ -180,6 +222,7 @@ procedure TfrmFindUnit.FormShow(Sender: TObject);
 begin
   edtSearch.SelectAll;
   edtSearch.SetFocus;
+  LoadConfigs;
 end;
 
 
@@ -212,6 +255,12 @@ begin
   Result := CorrectUses(lstResult.Items[0])
 end;
 
+procedure TfrmFindUnit.LoadConfigs;
+begin
+  chkSearchLibraryPath.Checked := CONFIG_SearchOnLibraryPath;
+  chkSearchProjectFiles.Checked := CONFIG_SearchOnProjectUnits;
+end;
+
 procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);
 begin
   AddUnit;
@@ -234,6 +283,12 @@ begin
   end;
 end;
 
+procedure TfrmFindUnit.SaveConfigs;
+begin
+  CONFIG_SearchOnProjectUnits := chkSearchProjectFiles.Checked;
+  CONFIG_SearchOnLibraryPath := chkSearchLibraryPath.Checked;
+end;
+
 procedure TfrmFindUnit.SetEnvControl(EnvControl: TEnvironmentController);
 begin
   FEnvControl := EnvControl;
@@ -242,13 +297,23 @@ end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;
 begin
-  CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, lblProjectUnitsStatus);
-  CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, lblLibraryUnitsStatus);
+  CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, lblProjectUnitsStatus, btnRefreshProject);
+  CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, lblLibraryUnitsStatus, btnRefreshLibraryPath);
 end;
 
 procedure TfrmFindUnit.tmrLoadedItensTimer(Sender: TObject);
 begin
   CheckLibraryStatus;
 end;
+
+procedure LoadInitialConfigs;
+begin
+  CONFIG_SearchOnProjectUnits := True;
+  CONFIG_SearchOnLibraryPath := True;
+end;
+
+initialization
+  LoadInitialConfigs;
+
 
 end.

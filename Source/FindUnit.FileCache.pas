@@ -49,6 +49,7 @@ end;
 
 destructor TUnitsController.Destroy;
 begin
+  FSearchHistory.Free;
   FUnits.Free;
   inherited;
 end;

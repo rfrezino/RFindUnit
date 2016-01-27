@@ -29,6 +29,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure LoadLibraryPath;
+    procedure LoadProjectPath;
+
     function GetProjectUnits(SearchString: string): TStringList;
     function GetLibraryPathUnits(SearchString: string): TStringList;
 
@@ -45,7 +48,7 @@ uses
 
 constructor TEnvironmentController.Create;
 begin
-  Parallel.Async(CreateLibraryPathUnits);
+  LoadLibraryPath;
 end;
 
 procedure TEnvironmentController.CreateLibraryPathUnits;
@@ -53,6 +56,9 @@ var
   Paths: TStringList;
   EnvironmentOptions: IOTAEnvironmentOptions;
 begin
+  if FLibraryPath <> nil then
+    Exit;
+
   while (BorlandIDEServices as IOTAServices) = nil do
     Sleep(1000);
 
@@ -97,11 +103,7 @@ end;
 
 procedure TEnvironmentController.CreatingProject(const ProjectOrGroup: IOTAModule);
 begin
-  if FLibraryPath = nil then
-    Parallel.Async(CreateLibraryPathUnits);
-
-  FreeAndNil(FProjectUnits);
-  Parallel.Async(CreateProjectPathUnits);
+  LoadProjectPath;
 end;
 
 destructor TEnvironmentController.Destroy;
@@ -113,7 +115,7 @@ end;
 
 function TEnvironmentController.GetLibraryPathUnits(SearchString: string): TStringList;
 begin
-  if FLibraryPath.Ready then
+  if IsLibraryPathsUnitReady then
     Result := FLibraryPath.GetFindInfo(SearchString)
   else
     Result := TStringList.Create;
@@ -126,7 +128,7 @@ end;
 
 function TEnvironmentController.GetProjectUnits(SearchString: string): TStringList;
 begin
-  if FProjectUnits.Ready then
+  if IsProjectsUnitReady then
     Result := FProjectUnits.GetFindInfo(SearchString)
   else
     Result := TStringList.Create;
@@ -140,6 +142,18 @@ end;
 function TEnvironmentController.IsProjectsUnitReady: Boolean;
 begin
   Result := (FProjectUnits <> nil) and (FProjectUnits.Ready);
+end;
+
+procedure TEnvironmentController.LoadLibraryPath;
+begin
+  FreeAndNil(FLibraryPath);
+  Parallel.Async(CreateLibraryPathUnits);
+end;
+
+procedure TEnvironmentController.LoadProjectPath;
+begin
+  FreeAndNil(FProjectUnits);
+  Parallel.Async(CreateProjectPathUnits);
 end;
 
 procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
