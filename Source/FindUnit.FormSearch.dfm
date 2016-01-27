@@ -26,7 +26,20 @@ object frmFindUnit: TfrmFindUnit
     Align = alBottom
     Caption = 'Search Options'
     TabOrder = 2
-    Visible = False
+    object lblProjectUnitsStatus: TLabel
+      Left = 193
+      Top = 23
+      Width = 49
+      Height = 13
+      Caption = 'Loading...'
+    end
+    object lblLibraryUnitsStatus: TLabel
+      Left = 193
+      Top = 46
+      Width = 49
+      Height = 13
+      Caption = 'Loading...'
+    end
     object chkSearchLibraryPath: TCheckBox
       Left = 19
       Top = 45
@@ -47,16 +60,6 @@ object frmFindUnit: TfrmFindUnit
       State = cbChecked
       TabOrder = 0
     end
-    object chkDelphiFiles: TCheckBox
-      Left = 193
-      Top = 21
-      Width = 163
-      Height = 17
-      Caption = 'Search in Delphi Files'
-      Checked = True
-      State = cbChecked
-      TabOrder = 2
-    end
   end
   object grpResult: TGroupBox
     Left = 0
@@ -75,7 +78,6 @@ object frmFindUnit: TfrmFindUnit
       ItemHeight = 13
       TabOrder = 0
       OnDblClick = lstResultDblClick
-      OnKeyPress = lstResultKeyPress
     end
     object pnlResultBottom: TPanel
       Left = 2
@@ -88,7 +90,7 @@ object frmFindUnit: TfrmFindUnit
       ParentBiDiMode = False
       TabOrder = 1
       object btnAdd: TButton
-        Left = 244
+        Left = 231
         Top = 4
         Width = 110
         Height = 25
@@ -121,6 +123,7 @@ object frmFindUnit: TfrmFindUnit
       TabOrder = 0
       Text = 'Type your search...'
       OnChange = edtSearchChange
+      OnClick = edtSearchClick
       OnKeyDown = edtSearchKeyDown
     end
     object rbInterface: TRadioButton
@@ -128,7 +131,7 @@ object frmFindUnit: TfrmFindUnit
       Top = 45
       Width = 113
       Height = 17
-      Caption = 'Interface'
+      Caption = '&Interface'
       Checked = True
       TabOrder = 1
       TabStop = True
@@ -138,8 +141,19 @@ object frmFindUnit: TfrmFindUnit
       Top = 45
       Width = 113
       Height = 17
-      Caption = 'Implementation'
+      Caption = 'Im&plementation'
       TabOrder = 2
     end
+  end
+  object aevKeys: TApplicationEvents
+    OnMessage = aevKeysMessage
+    Left = 291
+    Top = 108
+  end
+  object tmrLoadedItens: TTimer
+    Interval = 700
+    OnTimer = tmrLoadedItensTimer
+    Left = 291
+    Top = 172
   end
 end

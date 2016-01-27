@@ -103,7 +103,7 @@ var
   Files: TStringDynArray;
   FilePath: string;
 begin
-  Files := IOUtils.TDirectory.GetFiles(Path, Filter, TSearchOption.soAllDirectories);
+  Files := IOUtils.TDirectory.GetFiles(Path, Filter, TSearchOption.soTopDirectoryOnly);
 
   Result := TStringList.Create;
   for FilePath in Files do

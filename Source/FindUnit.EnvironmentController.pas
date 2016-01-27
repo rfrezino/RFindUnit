@@ -18,8 +18,9 @@ type
     procedure CreateProjectPathUnits;
     procedure OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 
-    procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
+    //Dummy
+    procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure ProjectSaving(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure ProjectClosing(const ProjectOrGroup: IOTAModule);
   public
@@ -30,6 +31,9 @@ type
 
     function GetProjectUnits(SearchString: string): TStringList;
     function GetLibraryPathUnits(SearchString: string): TStringList;
+
+    function IsProjectsUnitReady: Boolean;
+    function IsLibraryPathsUnitReady: Boolean;
   end;
 
 implementation
@@ -41,7 +45,7 @@ uses
 
 constructor TEnvironmentController.Create;
 begin
-
+  Parallel.Async(CreateLibraryPathUnits);
 end;
 
 procedure TEnvironmentController.CreateLibraryPathUnits;
@@ -49,6 +53,9 @@ var
   Paths: TStringList;
   EnvironmentOptions: IOTAEnvironmentOptions;
 begin
+  while (BorlandIDEServices as IOTAServices) = nil do
+    Sleep(1000);
+
   FLibraryPath := TUnitsController.Create;
   Paths := TStringList.Create;
   try
@@ -123,6 +130,16 @@ begin
     Result := FProjectUnits.GetFindInfo(SearchString)
   else
     Result := TStringList.Create;
+end;
+
+function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;
+begin
+  Result := (FLibraryPath <> nil) and (FLibraryPath.Ready);
+end;
+
+function TEnvironmentController.IsProjectsUnitReady: Boolean;
+begin
+  Result := (FProjectUnits <> nil) and (FProjectUnits.Ready);
 end;
 
 procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
