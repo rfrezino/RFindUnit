@@ -16,6 +16,7 @@ uses
   function GxOtaGetSourceEditorFromModule(Module: IOTAModule; const FileName: string = ''): IOTASourceEditor;
   function GetCurrentProject: IOTAProject;
   function OtaGetCurrentSourceEditor: IOTASourceEditor;
+  function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
 
 var
   PathUserDir: string;
@@ -24,7 +25,24 @@ implementation
 
 uses
   Windows, Registry, ShellAPI, ShlObj, ActiveX, SysUtils;
-  
+
+function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
+var
+  Editor: IOTAEditBuffer;
+  EdtPosition: IOTAEditPosition;
+begin
+  Result := '';
+  if Context = nil then
+    Exit;
+
+  Editor := Context.EditBuffer;
+  if Editor= nil then
+    Exit;
+
+  EdtPosition := Editor.EditPosition;
+  Result := Trim(Editor.EditBlock.Text);
+end;
+
 function GetCurrentProject: IOTAProject;  
 var  
   ModServices: IOTAModuleServices;  

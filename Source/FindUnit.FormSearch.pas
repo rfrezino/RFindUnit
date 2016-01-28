@@ -58,6 +58,7 @@ type
     procedure LoadConfigs;
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
+    procedure SetSearch(Search: string);
     procedure FilterItem(SearchString: string);
   end;
 
@@ -293,6 +294,14 @@ procedure TfrmFindUnit.SetEnvControl(EnvControl: TEnvironmentController);
 begin
   FEnvControl := EnvControl;
   CheckLibraryStatus;
+end;
+
+procedure TfrmFindUnit.SetSearch(Search: string);
+begin
+  if (Search = '') or (Pos(#13#10, Search) > 0) then
+    Exit;
+
+  edtSearch.Text := Search;
 end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;

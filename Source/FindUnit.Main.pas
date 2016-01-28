@@ -10,7 +10,7 @@ type
   private
     FEnvControl: TEnvironmentController;
     FProjectServiceIndex: Integer;
-    procedure SetSearch(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
+    procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
   public
     constructor Create;
     destructor Destroy; override;
@@ -27,7 +27,7 @@ type
 implementation
 
 uses
-  FindUnit.FormSearch, FindUnit.SearchString, Log4PAscal, FindUnit.Utils;
+  FindUnit.FormSearch, FindUnit.SearchString, Log4PAscal, FindUnit.Utils, FindUnit.OTAUtils, SysUtils;
 
 var
   vKbIndex: Integer;
@@ -35,7 +35,7 @@ var
 
 procedure Register;
 begin
-  Logger := TLogger.Create(FindUnitDirLogger + '\Logs.txt');
+  Logger := TLogger.Create(Format('%slog_%s.txt', [FindUnitDirLogger, FormatDateTime('yyyy-mm-dd', Now)]));
 
   VFindUnit := TRFindUnitMain.Create;
   with (BorlandIDEServices as IOTAKeyboardServices) do
@@ -48,7 +48,7 @@ end;
 
 procedure TRFindUnitMain.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
 begin
-  BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], SetSearch, nil);
+  BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
 end;
 
 constructor TRFindUnitMain.Create;
@@ -85,14 +85,19 @@ begin
   Result := 'RFindUnit';
 end;
 
-procedure TRFindUnitMain.SetSearch(const Context: IOTAKeyContext; KeyCode: TShortCut;
+procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
   var BindingResult: TKeyBindingResult);
+var
+  SelectedText: string;
 begin
+  SelectedText := GetSelectedTextFromContext(Context);
+
   BindingResult := krHandled;
   if frmFindUnit = nil then
   begin
     frmFindUnit := TfrmFindUnit.Create(nil);
     frmFindUnit.SetEnvControl(FEnvControl);
+    frmFindUnit.SetSearch(SelectedText);
     frmFindUnit.Show;
   end;
 end;
