@@ -14,19 +14,27 @@ type
     EndPos: Integer;
   end;
 
+  TFileRegion = class(TObject)
+  private
+    FUses: TStringList;
+    FUsesPosition: CharPosition;
+    FRegionPosition: CharPosition;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function HaveUses: Boolean;
+
+    property RegionPosition: CharPosition read FRegionPosition write FRegionPosition;
+    property UsesPosition: CharPosition read FUsesPosition write FUsesPosition;
+  end;
+
   TSourceFileEditor = class(TObject)
   private
     FSource: IOTASourceEditor;
     FFileContent: TStringList;
-
-    FHaveImplementationUses: Boolean;
-    FHaveInterfaceUses: Boolean;
-
-    FInterfacePos: CharPosition;
-    FIntUsesPos: CharPosition;
-
-    FImplementationPos: CharPosition;
-    FImpUses: CharPosition;
+    FInterfaceRegion: TFileRegion;
+    FImplementationRegion: TFileRegion;
 
     procedure ParseInformations;
 
@@ -35,6 +43,7 @@ type
     procedure GetInfos;
 
     procedure WriteInformationAtPostion(Line, Position: Integer; Information: string);
+    procedure AddUsesToRegion(Region: TFileRegion; UseUnit: string);
   public
     constructor Create(SourceEditor: IOTASourceEditor);
     destructor Destroy; override;
@@ -53,35 +62,25 @@ uses
 { TSourceFileEditor }
 
 procedure TSourceFileEditor.AddUsesToImplementation(UseUnit: string);
-var
-  PosChar: Integer;
-  Line: Integer;
 begin
-  Line := FImpUses.EndLine;
-  PosChar := FImpUses.EndPos -1;
-  if not FHaveImplementationUses then
-  begin
-    Line := FImplementationPos.StartLine + 1;
-    PosChar := 0;
-
-    UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
-  end
-  else
-    UseUnit := ', ' + UseUnit;
-
-  WriteInformationAtPostion(Line, PosChar, UseUnit);
+  AddUsesToRegion(FImplementationRegion, UseUnit);
 end;
 
 procedure TSourceFileEditor.AddUsesToInterface(UseUnit: string);
+begin
+  AddUsesToRegion(FInterfaceRegion, UseUnit);
+end;
+
+procedure TSourceFileEditor.AddUsesToRegion(Region: TFileRegion; UseUnit: string);
 var
   Line: Integer;
   PosChar: Integer;
 begin
-  Line := FIntUsesPos.EndLine;
-  PosChar := FIntUsesPos.EndPos -1;
-  if not FHaveInterfaceUses then
+  Line := Region.UsesPosition.EndLine;
+  PosChar := Region.UsesPosition.EndPos -1;
+  if not Region.HaveUses then
   begin
-    Line := FInterfacePos.StartLine + 1;
+    Line := Region.RegionPosition.StartLine + 1;
     PosChar := 0;
 
     UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
@@ -94,12 +93,16 @@ end;
 
 constructor TSourceFileEditor.Create(SourceEditor: IOTASourceEditor);
 begin
+  FInterfaceRegion := TFileRegion.Create;
+  FImplementationRegion := TFileRegion.Create;
   FFileContent := TStringList.Create;
   FSource := SourceEditor;
 end;
 
 destructor TSourceFileEditor.Destroy;
 begin
+  FInterfaceRegion.Destroy;
+  FImplementationRegion.Destroy;
   FFileContent.Free;
   inherited;
 end;
@@ -152,21 +155,18 @@ procedure TSourceFileEditor.GetInfos;
 var
   InterfaceEnd: Integer;
 begin
-  FInterfacePos := GetInformationsFor('interface', False, 0, FFileContent.Count -1);
-  FImplementationPos := GetInformationsFor('implementation', False, 0, FFileContent.Count -1);
+  FInterfaceRegion.RegionPosition := GetInformationsFor('interface', False, 0, FFileContent.Count -1);
+  FImplementationRegion.RegionPosition := GetInformationsFor('implementation', False, 0, FFileContent.Count -1);
 
-  if FImplementationPos.StartLine > -1 then
-    InterfaceEnd := FImplementationPos.StartLine
+  if FImplementationRegion.RegionPosition.StartLine > -1 then
+    InterfaceEnd := FImplementationRegion.RegionPosition.StartLine
   else
     InterfaceEnd := FFileContent.Count -1;
 
-  FIntUsesPos := GetInformationsFor('uses', True, FInterfacePos.StartLine, InterfaceEnd);
+  FInterfaceRegion.UsesPosition := GetInformationsFor('uses', True, FInterfaceRegion.RegionPosition.StartLine, InterfaceEnd);
 
-  if FImplementationPos.StartLine > -1 then
-    FImpUses := GetInformationsFor('uses', True, FImplementationPos.StartLine, FFileContent.Count -1);
-
-  FHaveImplementationUses := FImpUses.StartLine > 0;
-  FHaveInterfaceUses := FIntUsesPos.StartLine > 0;
+  if FImplementationRegion.RegionPosition.StartLine > -1 then
+    FImplementationRegion.UsesPosition := GetInformationsFor('uses', True, FImplementationRegion.RegionPosition.StartLine, FFileContent.Count -1);
 end;
 
 procedure TSourceFileEditor.ParseInformations;
@@ -208,6 +208,26 @@ begin
   finally
     FileWriter := nil;
   end;
+end;
+
+{ TFileRegion }
+
+constructor TFileRegion.Create;
+begin
+  FUses := TStringList.Create;
+  FUses.Duplicates := dupIgnore;
+  FUses.Sorted := True;
+end;
+
+destructor TFileRegion.Destroy;
+begin
+
+  inherited;
+end;
+
+function TFileRegion.HaveUses: Boolean;
+begin
+  Result := UsesPosition.StartLine > 0;
 end;
 
 end.
