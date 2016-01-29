@@ -3,7 +3,7 @@ unit FindUnit.Utils;
 interface
 
 uses
-  IOUtils, Classes, SimpleParser.Lexer.Types;
+  IOUtils, Classes, SimpleParser.Lexer.Types, TlHelp32, Windows;
 
 type
   TIncludeHandler = class(TInterfacedObject, IIncludeHandler)
@@ -29,14 +29,41 @@ type
   function Fetch(var AInput: string; const ADelim: string = '';
     const ADelete: Boolean = True; const ACaseSensitive: Boolean = False): string; inline;
 
-  var
-    FindUnitDir: string;
-    FindUnitDirLogger: string;
+  function IsProcessRunning(AExeFileName: string): Boolean;
+
+var
+  FindUnitDir: string;
+  FindUnitDirLogger: string;
 
 implementation
 
 uses
   Types, SysUtils, Log4PAscal;
+
+function IsProcessRunning(AExeFileName: string): Boolean;
+var
+  Continuar: BOOL;
+  SnapshotHandle: THandle;
+  Entry: TProcessEntry32;
+begin
+  try
+    Result := False;
+    SnapshotHandle := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    Entry.dwSize := SizeOf(Entry);
+    Continuar := Process32First(SnapshotHandle, Entry);
+    while Integer(Continuar) <> 0 do
+    begin
+      if ((UpperCase(ExtractFileName(Entry.szExeFile)) = UpperCase(AExeFileName)) or
+        (UpperCase(Entry.szExeFile) = UpperCase(AExeFileName))) then
+      begin
+        Result := True;
+      end;
+      Continuar := Process32Next(SnapshotHandle, Entry);
+    end;
+    CloseHandle(SnapshotHandle);
+  except
+  end;
+end;
 
 function FetchCaseInsensitive(var AInput: string; const ADelim: string;
   const ADelete: Boolean): string; inline;

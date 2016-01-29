@@ -15,7 +15,7 @@ If you help, it'll be very good.
 It requires Delphi XE or above.
 
 ### Instalation
-**Delphi XE**: Download [ReplaceFindUnit.zip](http://1drv.ms/1SKw2wN)
+**Delphi XE**: Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), unzip and run Installer.exe.
 </br>**Other versions**: I didn't create installer for every version. You can get the source code, and install it normaly. Just remember to add the "Thirdy" directory to library path.
 </br>If you have access to another Delphi Version and can send me the BPL I can add on the installer.
 

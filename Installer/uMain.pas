@@ -5,16 +5,30 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Registry, StdCtrls, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit,
-  dxSkinsCore, dxSkinsDefaultPainters, jpeg, cxImage;
+  dxSkinsCore, dxSkinsDefaultPainters, jpeg, cxImage, ImgList, ComCtrls, uDelphiInstallationCheck, ExtCtrls, uInstaller;
 
 type
   TFrmInstall = class(TForm)
-    btnInstallDelphiXe: TButton;
+    ilDelphiIcons: TImageList;
+    grpDelphiVersions: TGroupBox;
+    lvDelphis: TListView;
+    pnlDesc: TPanel;
+    lblVersion: TLabel;
+    btnInstall: TButton;
+    lblDescription: TLabel;
     procedure btnInstallDelphiXeClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnInstallClick(Sender: TObject);
+    procedure lvDelphisDblClick(Sender: TObject);
   private
-    { Private declarations }
+    FDelphiVersion: TDelphiInstallationCheck;
+
+    function GetSelectedPath: string;
+    function GetDelphiDesc: string;
+
+    procedure RefreshDesc(Desc: string);
   public
-    { Public declarations }
+    procedure Install;
   end;
 
 var
@@ -26,6 +40,11 @@ const
   BPL_FILENAME = 'RfFindUnit.bpl';
 
 {$R *.dfm}
+
+procedure TFrmInstall.btnInstallClick(Sender: TObject);
+begin
+  Install;
+end;
 
 procedure TFrmInstall.btnInstallDelphiXeClick(Sender: TObject);
 var
@@ -61,6 +80,68 @@ begin
   finally
     Reg.Free;
   end;
+end;
+
+procedure TFrmInstall.FormShow(Sender: TObject);
+begin
+  FDelphiVersion := TDelphiInstallationCheck.Create;
+
+  FDelphiVersion.LoadInstalledVersions(ilDelphiIcons, lvDelphis);
+end;
+
+function TFrmInstall.GetSelectedPath: string;
+var
+  SelItem: TListItem;
+begin
+  SelItem := lvDelphis.Selected;
+  if SelItem = nil then
+    Raise Exception.Create('You must select a Delphi Version.');
+
+  Result := SelItem.SubItems[0];
+end;
+
+function TFrmInstall.GetDelphiDesc: string;
+var
+  SelItem: TListItem;
+begin
+  SelItem := lvDelphis.Selected;
+  if SelItem = nil then
+    Raise Exception.Create('You must select a Delphi Version.');
+
+  Result := SelItem.Caption;
+end;
+
+procedure TFrmInstall.Install;
+var
+  Installer: TInstaller;
+begin
+  lblDescription.Caption := 'Starting...';
+  lblDescription.Visible := True;
+  try
+    Installer := TInstaller.Create(GetDelphiDesc, GetSelectedPath);
+    try
+      Installer.Install(RefreshDesc)
+    finally
+      Installer.Free;
+    end;
+
+    MessageDlg('Installation finished!', mtInformation, [mbOK], 0);
+  except
+    on E: exception do
+      MessageDlg('Error on installation: ' + e.Message, mtError, [mbOK], 0);
+  end;
+  lblDescription.Visible := False;
+end;
+
+procedure TFrmInstall.lvDelphisDblClick(Sender: TObject);
+begin
+  Install;
+end;
+
+procedure TFrmInstall.RefreshDesc(Desc: string);
+begin
+  lblDescription.Caption := Desc;
+  Application.ProcessMessages;
 end;
 
 end.
