@@ -3,8 +3,8 @@ object frmFindUnit: TfrmFindUnit
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Find Unit'
-  ClientHeight = 370
-  ClientWidth = 359
+  ClientHeight = 484
+  ClientWidth = 580
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object frmFindUnit: TfrmFindUnit
   TextHeight = 13
   object grpOptions: TGroupBox
     Left = 0
-    Top = 301
-    Width = 359
+    Top = 415
+    Width = 580
     Height = 69
     Align = alBottom
     Caption = 'Search Options'
@@ -84,46 +84,26 @@ object frmFindUnit: TfrmFindUnit
   object grpResult: TGroupBox
     Left = 0
     Top = 73
-    Width = 359
-    Height = 228
+    Width = 580
+    Height = 342
     Align = alClient
     Caption = 'Result'
     TabOrder = 1
     object lstResult: TListBox
       Left = 2
       Top = 15
-      Width = 355
-      Height = 178
+      Width = 576
+      Height = 325
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
       OnDblClick = lstResultDblClick
     end
-    object pnlResultBottom: TPanel
-      Left = 2
-      Top = 193
-      Width = 355
-      Height = 33
-      Align = alBottom
-      BevelOuter = bvNone
-      BiDiMode = bdLeftToRight
-      ParentBiDiMode = False
-      TabOrder = 1
-      object btnAdd: TButton
-        Left = 231
-        Top = 4
-        Width = 110
-        Height = 25
-        Caption = 'Add'
-        TabOrder = 0
-        OnClick = btnAddClick
-      end
-    end
   end
   object grpSearch: TGroupBox
     Left = 0
     Top = 0
-    Width = 359
+    Width = 580
     Height = 73
     Align = alTop
     Caption = 'Search'
@@ -164,16 +144,25 @@ object frmFindUnit: TfrmFindUnit
       Caption = 'Im&plementation'
       TabOrder = 2
     end
+    object btnAdd: TButton
+      Left = 475
+      Top = 24
+      Width = 85
+      Height = 25
+      Caption = 'Add'
+      TabOrder = 3
+      OnClick = btnAddClick
+    end
   end
   object aevKeys: TApplicationEvents
     OnMessage = aevKeysMessage
-    Left = 291
-    Top = 108
+    Left = 537
+    Top = 423
   end
   object tmrLoadedItens: TTimer
     Interval = 700
     OnTimer = tmrLoadedItensTimer
-    Left = 291
-    Top = 172
+    Left = 470
+    Top = 427
   end
 end

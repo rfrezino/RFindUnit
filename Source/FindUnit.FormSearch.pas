@@ -17,8 +17,6 @@ type
     grpResult: TGroupBox;
     lstResult: TListBox;
     grpSearch: TGroupBox;
-    pnlResultBottom: TPanel;
-    btnAdd: TButton;
     edtSearch: TEdit;
     lblWhere: TLabel;
     rbInterface: TRadioButton;
@@ -29,6 +27,7 @@ type
     lblLibraryUnitsStatus: TLabel;
     btnRefreshProject: TSpeedButton;
     btnRefreshLibraryPath: TSpeedButton;
+    btnAdd: TButton;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -56,6 +55,8 @@ type
 
     procedure SaveConfigs;
     procedure LoadConfigs;
+
+    procedure SelectTheMostSelectableItem;
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure SetSearch(Search: string);
@@ -106,6 +107,7 @@ begin
   if Msg.message = WM_KEYDOWN then
     ProcessKeyCommand(Msg, Handled);
 end;
+
 
 procedure TfrmFindUnit.btnAddClick(Sender: TObject);
 begin
@@ -182,8 +184,10 @@ end;
 procedure TfrmFindUnit.FilterItem(SearchString: string);
 var
   Return: TStringList;
+  ResultSearch: TStringList;
 begin
   lstResult.Items.BeginUpdate;
+  ResultSearch := TStringList.Create;
   try
     lstResult.Clear;
     if (SearchString = '') or (FEnvControl = nil) then
@@ -192,17 +196,23 @@ begin
     if chkSearchProjectFiles.Checked then
     begin
       Return := FEnvControl.GetProjectUnits(SearchString);
-      lstResult.Items.Text := lstResult.Items.Text + Return.Text;
+      ResultSearch.Text := ResultSearch.Text + Return.Text;
       Return.Free;
     end;
 
-    if chkSearchProjectFiles.Checked then
+    if chkSearchLibraryPath.Checked then
     begin
       Return := FEnvControl.GetLibraryPathUnits(SearchString);
-      lstResult.Items.Text := lstResult.Items.Text + Return.Text;
+      ResultSearch.Text := ResultSearch.Text + Return.Text;
       Return.Free;
     end;
+
+    ResultSearch.Sorted := True;
+    lstResult.Items.Text := ResultSearch.Text;
+
+    SelectTheMostSelectableItem;
   finally
+    ResultSearch.Free;
     lstResult.Items.EndUpdate;
   end;
 end;
@@ -271,6 +281,11 @@ end;
 procedure TfrmFindUnit.ProcessKeyCommand(var Msg: tagMSG; var Handled: Boolean);
 const
   MOVE_COMMANDS = [VK_UP, VK_DOWN];
+
+  function IsCtrlA: Boolean;
+  begin
+    Result := (GetKeyState(VK_CONTROL) < 0) and (Char(Msg.wParam) = 'A');
+  end;
 begin
   if (Msg.wParam in MOVE_COMMANDS) then
   begin
@@ -281,6 +296,9 @@ begin
   begin
     Msg.hwnd := edtSearch.Handle;
     edtSearch.SetFocus;
+
+    if IsCtrlA then
+      edtSearch.SelectAll;
   end;
 end;
 
@@ -288,6 +306,34 @@ procedure TfrmFindUnit.SaveConfigs;
 begin
   CONFIG_SearchOnProjectUnits := chkSearchProjectFiles.Checked;
   CONFIG_SearchOnLibraryPath := chkSearchLibraryPath.Checked;
+end;
+
+procedure TfrmFindUnit.SelectTheMostSelectableItem;
+var
+  SmallItemId: Integer;
+  SmallItemLength: Integer;
+  I: Integer;
+  List: TStrings;
+  PosSize: Integer;
+begin
+  SmallItemLength := 999999;
+  SmallItemId := -1;
+  List := lstResult.Items;
+
+  if List.Count = 0 then
+    Exit;
+
+  for I := 0 to List.Count -1 do
+  begin
+    PosSize := Pos('-', List[i]);
+    if PosSize < SmallItemLength then
+    begin
+      SmallItemLength := PosSize;
+      SmallItemId := I;
+    end;
+  end;
+
+  lstResult.Selected[SmallItemId] := True;
 end;
 
 procedure TfrmFindUnit.SetEnvControl(EnvControl: TEnvironmentController);
