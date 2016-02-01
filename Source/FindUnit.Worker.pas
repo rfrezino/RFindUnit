@@ -4,7 +4,7 @@ interface
 
 uses
   OtlCommFU, OtlCommonFU, OtlTaskFU, OtlThreadPoolFU, OtlParallelFU, OtlCollectionsFU,
-  Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc;
+  Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc, Log4Pascal;
 
 type
   TOnFinished = procedure(FindUnits: TObjectList<TPasFile>) of object;
@@ -92,6 +92,8 @@ begin
             PasFiles.Free;
           end;
         except
+          on E: exception do
+            Logger.Error('TParserWorker.ListPasFiles: ' + e.Message);
         end;
       end
     );
@@ -123,6 +125,8 @@ begin
             if Item <> nil then
               ResultList.Add(Item);
           except
+            on e: exception do
+              Logger.Error('TParserWorker.ParseFiles: ' + e.Message);
           end;
         finally
           Parser.Free;

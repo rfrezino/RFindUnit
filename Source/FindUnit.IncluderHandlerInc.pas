@@ -19,7 +19,7 @@ type
 
     procedure GenerateIncList;
   public
-    constructor Create(PossiblePaths: string);
+    constructor Create(const PossiblePaths: string);
     destructor Destroy; override;
 
     procedure Process;
@@ -35,7 +35,7 @@ uses
 
 { TIncludeHandlerInc }
 
-constructor TIncludeHandlerInc.Create(PossiblePaths: string);
+constructor TIncludeHandlerInc.Create(const PossiblePaths: string);
 begin
   FIncList := TObjectDictionary<string, TIncItem>.Create;
   FPossiblePaths := TStringList.Create;
@@ -106,6 +106,7 @@ begin
       ItemInc.Content := FileInc.Text;
       ItemInc.Loaded := True;
     except
+      Result := '';
     end;
     Result := ItemInc.Content;
   finally

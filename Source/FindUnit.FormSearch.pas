@@ -59,8 +59,8 @@ type
     procedure SelectTheMostSelectableItem;
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
-    procedure SetSearch(Search: string);
-    procedure FilterItem(SearchString: string);
+    procedure SetSearch(const Search: string);
+    procedure FilterItem(const SearchString: string);
   end;
 
 var
@@ -181,7 +181,7 @@ begin
     Close;
 end;
 
-procedure TfrmFindUnit.FilterItem(SearchString: string);
+procedure TfrmFindUnit.FilterItem(const SearchString: string);
 var
   Return: TStringList;
   ResultSearch: TStringList;
@@ -342,7 +342,7 @@ begin
   CheckLibraryStatus;
 end;
 
-procedure TfrmFindUnit.SetSearch(Search: string);
+procedure TfrmFindUnit.SetSearch(const Search: string);
 begin
   if (Search = '') or (Pos(#13#10, Search) > 0) then
     Exit;

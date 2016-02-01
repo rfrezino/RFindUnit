@@ -15,15 +15,15 @@ type
     FContent: TStringList;
     FReady: Boolean;
 
-    function SearchOnHistory(SearchString: string): TStringList;
-    procedure AddToHistory(SearchString, Content: string);
+    function SearchOnHistory(const SearchString: string): TStringList;
+    procedure AddToHistory(const SearchString, Content: string);
 
     procedure SetUnits(const Value: TObjectList<TPasFile>);
   public
     constructor Create;
     destructor Destroy; override;
 
-    function GetFindInfo(SearchString: string): TStringList;
+    function GetFindInfo(const SearchString: string): TStringList;
 
     property Units: TObjectList<TPasFile> read FUnits write SetUnits;
     property Ready: Boolean read FReady write FReady;
@@ -36,7 +36,7 @@ uses
 
 { TUnitUpdateController }
 
-procedure TUnitsController.AddToHistory(SearchString, Content: string);
+procedure TUnitsController.AddToHistory(const SearchString, Content: string);
 begin
   if FSearchHistory = nil then
     Exit;
@@ -45,6 +45,7 @@ end;
 
 constructor TUnitsController.Create;
 begin
+  inherited;
 end;
 
 destructor TUnitsController.Destroy;
@@ -54,7 +55,7 @@ begin
   inherited;
 end;
 
-function TUnitsController.GetFindInfo(SearchString: string): TStringList;
+function TUnitsController.GetFindInfo(const SearchString: string): TStringList;
 var
   Search: TSearchString;
 begin
@@ -71,7 +72,7 @@ begin
   end;
 end;
 
-function TUnitsController.SearchOnHistory(SearchString: string): TStringList;
+function TUnitsController.SearchOnHistory(const SearchString: string): TStringList;
 var
   Local: string;
   Content: string;

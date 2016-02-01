@@ -58,7 +58,7 @@ type
 
     function HaveInterfaceNode: Boolean;
   public
-    constructor Create(FilePath: string);
+    constructor Create(const FilePath: string);
 
     function Process: TPasFile;
 
@@ -132,7 +132,7 @@ const
 
 { TFindUnitParser }
 
-constructor TPasFileParser.Create(FilePath: string);
+constructor TPasFileParser.Create(const FilePath: string);
 begin
   FFilePath := FilePath;
 end;

@@ -55,6 +55,7 @@ constructor TRFindUnitMain.Create;
 var
   ProjectFileStorageService: IOTAProjectFileStorage;
 begin
+  inherited;
   ProjectFileStorageService := BorlandIDEServices.GetService(IOTAProjectFileStorage) as IOTAProjectFileStorage;
   FEnvControl := TEnvironmentController.Create;
   FProjectServiceIndex := ProjectFileStorageService.AddNotifier(FEnvControl);

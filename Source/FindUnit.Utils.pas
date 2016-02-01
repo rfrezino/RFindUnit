@@ -15,21 +15,20 @@ type
   end;
 
   TPathConverter = class(TObject)
-  private
-    const
-      VAR_INIT = '$(';
-      VAR_END = ')';
+  private const
+    VAR_INIT = '$(';
+    VAR_END = ')';
   public
     class function ConvertPathsToFullPath(Paths: string): string;
   end;
 
-  function GetAllFilesFromPath(Path, Filter: string): TStringList;
-  function GetAllPasFilesFromPath(Path: string): TStringList;
+function GetAllFilesFromPath(const Path, Filter: string): TStringList;
+function GetAllPasFilesFromPath(const Path: string): TStringList;
 
-  function Fetch(var AInput: string; const ADelim: string = '';
-    const ADelete: Boolean = True; const ACaseSensitive: Boolean = False): string; inline;
+function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boolean = True;
+  const ACaseSensitive: Boolean = False): string; inline;
 
-  function IsProcessRunning(AExeFileName: string): Boolean;
+function IsProcessRunning(const AExeFileName: string): Boolean;
 
 var
   FindUnitDir: string;
@@ -40,14 +39,14 @@ implementation
 uses
   Types, SysUtils, Log4PAscal;
 
-function IsProcessRunning(AExeFileName: string): Boolean;
+function IsProcessRunning(const AExeFileName: string): Boolean;
 var
   Continuar: BOOL;
   SnapshotHandle: THandle;
   Entry: TProcessEntry32;
 begin
+  Result := False;
   try
-    Result := False;
     SnapshotHandle := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     Entry.dwSize := SizeOf(Entry);
     Continuar := Process32First(SnapshotHandle, Entry);
@@ -62,70 +61,78 @@ begin
     end;
     CloseHandle(SnapshotHandle);
   except
+    Result := False;
   end;
 end;
 
-function FetchCaseInsensitive(var AInput: string; const ADelim: string;
-  const ADelete: Boolean): string; inline;
+function FetchCaseInsensitive(var AInput: string; const ADelim: string; const ADelete: Boolean): string; inline;
 var
   LPos: Integer;
 begin
-  if ADelim = #0 then begin
-    // AnsiPos does not work with #0
+  if ADelim = #0 then
+  begin
     LPos := Pos(ADelim, AInput);
-  end else begin
-    //? may be AnsiUpperCase?
+  end
+  else
+  begin
     LPos := Pos(UpperCase(ADelim), UpperCase(AInput));
   end;
-  if LPos = 0 then begin
+  if LPos = 0 then
+  begin
     Result := AInput;
-    if ADelete then begin
-      AInput := '';    {Do not Localize}
+    if ADelete then
+    begin
+      AInput := '';
     end;
-  end else begin
+  end
+  else
+  begin
     Result := Copy(AInput, 1, LPos - 1);
-    if ADelete then begin
-      //faster than Delete(AInput, 1, LPos + Length(ADelim) - 1); because the
-      //remaining part is larger than the deleted
+    if ADelete then
       AInput := Copy(AInput, LPos + Length(ADelim), MaxInt);
-    end;
   end;
 end;
 
-function Fetch(var AInput: string; const ADelim: string = '';
-  const ADelete: Boolean = True;
+function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boolean = True;
   const ACaseSensitive: Boolean = False): string; inline;
 var
   LPos: Integer;
 begin
-  if ACaseSensitive then begin
-    if ADelim = #0 then begin
+  if ACaseSensitive then
+  begin
+    if ADelim = #0 then
+    begin
       // AnsiPos does not work with #0
       LPos := Pos(ADelim, AInput);
-    end else begin
+    end
+    else
+    begin
       LPos := Pos(ADelim, AInput);
     end;
-    if LPos = 0 then begin
+    if LPos = 0 then
+    begin
       Result := AInput;
-      if ADelete then begin
-        AInput := '';    {Do not Localize}
-      end;
+      if ADelete then
+        AInput := '';
     end
-    else begin
+    else
+    begin
       Result := Copy(AInput, 1, LPos - 1);
-      if ADelete then begin
-        //slower Delete(AInput, 1, LPos + Length(ADelim) - 1); because the
-        //remaining part is larger than the deleted
+      if ADelete then
+      begin
+        // slower Delete(AInput, 1, LPos + Length(ADelim) - 1); because the
+        // remaining part is larger than the deleted
         AInput := Copy(AInput, LPos + Length(ADelim), MaxInt);
       end;
     end;
-  end else begin
+  end
+  else
+  begin
     Result := FetchCaseInsensitive(AInput, ADelim, ADelete);
   end;
 end;
 
-
-function GetAllFilesFromPath(Path, Filter: string): TStringList;
+function GetAllFilesFromPath(const Path, Filter: string): TStringList;
 var
   Files: TStringDynArray;
   FilePath: string;
@@ -137,7 +144,7 @@ begin
     Result.Add(FilePath);
 end;
 
-function GetAllPasFilesFromPath(Path: string): TStringList;
+function GetAllPasFilesFromPath(const Path: string): TStringList;
 begin
   Result := GetAllFilesFromPath(Path, '*.pas');
 end;
@@ -197,6 +204,7 @@ begin
 end;
 
 initialization
-  CarregarPaths;
+
+CarregarPaths;
 
 end.

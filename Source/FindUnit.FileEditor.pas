@@ -42,7 +42,7 @@ type
 
     procedure GetInfos;
 
-    procedure WriteInformationAtPostion(Line, Position: Integer; Information: string);
+    procedure WriteInformationAtPostion(Line, Position: Integer; const Information: string);
     procedure AddUsesToRegion(Region: TFileRegion; UseUnit: string);
   public
     constructor Create(SourceEditor: IOTASourceEditor);
@@ -50,8 +50,8 @@ type
 
     function Prepare: Boolean;
 
-    procedure AddUsesToInterface(UseUnit: string);
-    procedure AddUsesToImplementation(UseUnit: string);
+    procedure AddUsesToInterface(const UseUnit: string);
+    procedure AddUsesToImplementation(const UseUnit: string);
   end;
 
 implementation
@@ -61,12 +61,12 @@ uses
 
 { TSourceFileEditor }
 
-procedure TSourceFileEditor.AddUsesToImplementation(UseUnit: string);
+procedure TSourceFileEditor.AddUsesToImplementation(const UseUnit: string);
 begin
   AddUsesToRegion(FImplementationRegion, UseUnit);
 end;
 
-procedure TSourceFileEditor.AddUsesToInterface(UseUnit: string);
+procedure TSourceFileEditor.AddUsesToInterface(const UseUnit: string);
 begin
   AddUsesToRegion(FInterfaceRegion, UseUnit);
 end;
@@ -186,7 +186,7 @@ begin
 end;
 
 
-procedure TSourceFileEditor.WriteInformationAtPostion(Line, Position: Integer; Information: string);
+procedure TSourceFileEditor.WriteInformationAtPostion(Line, Position: Integer; const Information: string);
 var
   InfoPosition: TOTACharPos;
   FileWriter: IOTAEditWriter;

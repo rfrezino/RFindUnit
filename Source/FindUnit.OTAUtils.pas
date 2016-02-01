@@ -5,7 +5,7 @@ interface
 uses
   ToolsAPI;
 
-  function GetVolumeLabel(DriveChar: string): string;
+  function GetVolumeLabel(const DriveChar: string): string;
   function BrowseURL(const URL: string) : boolean;
   function GetEditView(var ASourceEditor: IOTASourceEditor; var AEditView: IOTAEditView): boolean;
   function EditorAsString(SourceEditor : IOTASourceEditor): string;
@@ -197,7 +197,7 @@ begin
   end;
 end;
 
-function LongPathName(ShortPathName: string): string;
+function LongPathName(const ShortPathName: string): string;
 var
   PIDL: PItemIDList;
   Desktop: IShellFolder;
@@ -237,7 +237,7 @@ begin
     Result := '';
 end;
 
-function GetVolumeLabel(DriveChar: string): string;
+function GetVolumeLabel(const DriveChar: string): string;
 var
   NotUsed:     DWORD;
   VolumeFlags: DWORD;
@@ -257,8 +257,9 @@ function BrowseURL(const URL: string) : boolean;
 var
   LBrowserInformation: TBrowserInformation;
 begin
+  Result := False;
   LBrowserInformation := GetDefaultBrowser;
-  ShellExecute(0, 'open', PChar(LBrowserInformation.Path + LBrowserInformation.Name), PChar(URL), nil, SW_SHOW) ;
+  Result := ShellExecute(0, 'open', PChar(LBrowserInformation.Path + LBrowserInformation.Name), PChar(URL), nil, SW_SHOW) > 32;
 end;
 
 initialization

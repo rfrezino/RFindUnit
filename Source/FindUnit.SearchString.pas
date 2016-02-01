@@ -10,7 +10,7 @@ type
   protected
     FCandidates: TObjectList<TPasFile>;
 
-    function FoundAllEntries(Entries: TStringList; Text: string): Boolean;
+    function FoundAllEntries(Entries: TStringList; const Text: string): Boolean;
 
     function GetMatcherOnItemListType(Item: TPasFile; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
     function GetMatchesOnItem(Item: TPasFile; SearchString: TStringList; var ItensFound: integer): string;
@@ -18,7 +18,7 @@ type
     constructor Create(Candidates: TObjectList<TPasFile>);
     destructor Destroy; override;
 
-    function GetMatch(SearchString: string): TStringList;
+    function GetMatch(const SearchString: string): TStringList;
   end;
 
 implementation
@@ -38,7 +38,7 @@ begin
   inherited;
 end;
 
-function TSearchString.FoundAllEntries(Entries: TStringList; Text: string): Boolean;
+function TSearchString.FoundAllEntries(Entries: TStringList; const Text: string): Boolean;
 var
   I: Integer;
   Entry: string;
@@ -53,7 +53,7 @@ begin
   end;
 end;
 
-function TSearchString.GetMatch(SearchString: string): TStringList;
+function TSearchString.GetMatch(const SearchString: string): TStringList;
 var
   I: Integer;
   Item: TPasFile;

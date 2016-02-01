@@ -32,8 +32,8 @@ type
     procedure LoadLibraryPath;
     procedure LoadProjectPath;
 
-    function GetProjectUnits(SearchString: string): TStringList;
-    function GetLibraryPathUnits(SearchString: string): TStringList;
+    function GetProjectUnits(const SearchString: string): TStringList;
+    function GetLibraryPathUnits(const SearchString: string): TStringList;
 
     function IsProjectsUnitReady: Boolean;
     function IsLibraryPathsUnitReady: Boolean;
@@ -113,7 +113,7 @@ begin
   inherited;
 end;
 
-function TEnvironmentController.GetLibraryPathUnits(SearchString: string): TStringList;
+function TEnvironmentController.GetLibraryPathUnits(const SearchString: string): TStringList;
 begin
   if IsLibraryPathsUnitReady then
     Result := FLibraryPath.GetFindInfo(SearchString)
@@ -123,10 +123,10 @@ end;
 
 function TEnvironmentController.GetName: string;
 begin
-
+  Result := 'RfUtils - Replace FindUnit';
 end;
 
-function TEnvironmentController.GetProjectUnits(SearchString: string): TStringList;
+function TEnvironmentController.GetProjectUnits(const SearchString: string): TStringList;
 begin
   if IsProjectsUnitReady then
     Result := FProjectUnits.GetFindInfo(SearchString)
