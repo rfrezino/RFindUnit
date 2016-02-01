@@ -16,8 +16,7 @@ It requires Delphi XE or above.
 
 ### Instalation
 **Delphi XE**: Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), unzip and run Installer.exe.
-</br>**Other versions**: I didn't create installer for every version. You can get the source code, and install it normaly. Just remember to add the "Thirdy" directory to library path.
-</br>If you have access to another Delphi Version and can send me the BPL I can add on the installer.
+</br>**Other versions**: The installer identify all Delphi's Version, and will try to install in every one you ask for. But, as I just have Delphi XE, I just tried to compile to it. Certanly, you will not spend too much time, even it's necessary to add some compilation flag on the project. I'll work on the compability issue soon. 
 
 #### Contact
 Rodrigo Farias Rezino
