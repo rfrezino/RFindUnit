@@ -37,7 +37,7 @@ uses
 
 constructor TIncludeHandlerInc.Create(const PossiblePaths: string);
 begin
-  FIncList := TObjectDictionary<string, TIncItem>.Create;
+  FIncList := TObjectDictionary<string, TIncItem>.Create{([doOwnsValues])};
   FPossiblePaths := TStringList.Create;
   FPossiblePaths.Text := PossiblePaths;
 end;

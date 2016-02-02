@@ -2,7 +2,7 @@ object frmFindUnit: TfrmFindUnit
   Left = 0
   Top = 0
   BorderStyle = bsSizeToolWin
-  Caption = 'Find Unit'
+  Caption = 'Find Uses'
   ClientHeight = 484
   ClientWidth = 580
   Color = clBtnFace

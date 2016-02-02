@@ -57,6 +57,7 @@ type
     procedure LoadConfigs;
 
     procedure SelectTheMostSelectableItem;
+    procedure ShowTextOnScreen(Text: string);
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure SetSearch(const Search: string);
@@ -69,7 +70,8 @@ var
 implementation
 
 uses
-  WinSvc, FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor;
+  WinSvc, FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, TransparentCanvas,
+  FindUnit.FormMessage;
 
 {$R *.dfm}
 
@@ -82,19 +84,39 @@ var
   CONFIG_SearchOnProjectUnits: Boolean;
   CONFIG_SearchOnLibraryPath: Boolean;
 
+procedure TfrmFindUnit.ShowTextOnScreen(Text: string);
+var
+  MsgForm: TfrmMessage;
+begin
+  MsgForm := TfrmMessage.Create(nil);
+
+  if rbInterface.Checked then
+    Text := 'Unit ' + Text + ' added to interface''s uses.'
+  else
+    Text := 'Unit ' + Text + ' added to implementation''s uses.';
+
+  MsgForm.ShowMessage(Text);
+end;
+
 procedure TfrmFindUnit.AddUnit;
 var
   CurEditor: IOTASourceEditor;
   FileEditor: TSourceFileEditor;
+  ItemSelected: string;
 begin
+  ItemSelected := GetSelectedItem;
+  if ItemSelected = '' then
+    Exit;
+
   CurEditor := OtaGetCurrentSourceEditor;
   FileEditor := TSourceFileEditor.Create(CurEditor);
   try
+    ShowTextOnScreen(ItemSelected);
     FileEditor.Prepare;
     if rbInterface.Checked then
-      FileEditor.AddUsesToInterface(GetSelectedItem)
+      FileEditor.AddUsesToInterface(ItemSelected)
     else
-      FileEditor.AddUsesToImplementation(GetSelectedItem);
+      FileEditor.AddUsesToImplementation(ItemSelected);
   finally
     FileEditor.Free;
   end;
