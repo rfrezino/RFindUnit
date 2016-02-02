@@ -35,7 +35,7 @@ var
 
 procedure Register;
 begin
-  Logger := TLogger.Create(Format('%slog_%s.txt', [FindUnitDirLogger, FormatDateTime('yyyy-mm-dd', Now)]));
+  Logger := TLogger.Create(FindUnitDirLogger + Format('log_%s.txt', [FormatDateTime('yyyy-mm-dd', Now)]));
 
   VFindUnit := TRFindUnitMain.Create;
   with (BorlandIDEServices as IOTAKeyboardServices) do

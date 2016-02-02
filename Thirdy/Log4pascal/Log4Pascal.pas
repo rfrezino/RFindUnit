@@ -124,6 +124,9 @@ end;
 
 procedure TLogger.Debug(const Msg: string);
 begin
+  {$IFNDEF DEBUG}
+  Exit;
+  {$ENDIF}
   {$WARN SYMBOL_PLATFORM OFF}
   if DebugHook = 0 then
     Exit;
@@ -284,7 +287,6 @@ begin
   if FQuietMode then
     Exit;
 
-
   FRC.Acquire;
   try
     Self.Initialize;
@@ -298,11 +300,5 @@ begin
     FRC.Release;
   end;
 end;
-
-initialization
-  Logger := TLogger.Create('Log.txt');
-
-finalization
-  Logger.Free;
 
 end.
