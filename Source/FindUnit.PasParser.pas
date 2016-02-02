@@ -160,6 +160,10 @@ begin
         if TypeDesc <> nil then
         begin
           Description := TypeDesc.GetAttribute(anType);
+
+          if Description = '' then
+            Description := 'Enum';
+
           Description[1] := UpCase(Description[1]);
           Description := ' - ' + Description;
         end;
