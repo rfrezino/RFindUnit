@@ -96,6 +96,7 @@ begin
     Text := 'Unit ' + Text + ' added to implementation''s uses.';
 
   MsgForm.ShowMessage(Text);
+  SetFocus;
 end;
 
 procedure TfrmFindUnit.AddUnit;

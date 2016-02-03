@@ -27,6 +27,9 @@ type
 
     property RegionPosition: CharPosition read FRegionPosition write FRegionPosition;
     property UsesPosition: CharPosition read FUsesPosition write FUsesPosition;
+
+    procedure GetUsesFromText(FullFileText: TStringList);
+    function UsesExists(UseUnit: string): Boolean;
   end;
 
   TSourceFileEditor = class(TObject)
@@ -57,7 +60,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, FindUnit.Utils;
 
 { TSourceFileEditor }
 
@@ -76,6 +79,9 @@ var
   Line: Integer;
   PosChar: Integer;
 begin
+  if Region.UsesExists(UseUnit) then
+    Exit;
+
   Line := Region.UsesPosition.EndLine;
   PosChar := Region.UsesPosition.EndPos -1;
   if not Region.HaveUses then
@@ -167,6 +173,9 @@ begin
 
   if FImplementationRegion.RegionPosition.StartLine > -1 then
     FImplementationRegion.UsesPosition := GetInformationsFor('uses', True, FImplementationRegion.RegionPosition.StartLine, FFileContent.Count -1);
+
+  FImplementationRegion.GetUsesFromText(FFileContent);
+  FInterfaceRegion.GetUsesFromText(FFileContent);
 end;
 
 procedure TSourceFileEditor.ParseInformations;
@@ -221,13 +230,50 @@ end;
 
 destructor TFileRegion.Destroy;
 begin
-
+  FUses.Free;
   inherited;
+end;
+
+procedure TFileRegion.GetUsesFromText(FullFileText: TStringList);
+var
+  I: Integer;
+  LocalUses: TStringList;
+  Line: string;
+  Item: string;
+begin
+  if not HaveUses then
+    Exit;
+
+  LocalUses := TStringList.Create;
+  try
+    for I := FUsesPosition.StartLine to FUsesPosition.EndLine do
+      LocalUses.Add(Trim(FullFileText[I]));
+
+    LocalUses.Text := StringReplace(LocalUses.Text,' ',',', [rfReplaceAll]);
+    LocalUses.Text := StringReplace(LocalUses.Text,';',',', [rfReplaceAll]);
+
+    for I := 0 to LocalUses.Count -1 do
+    begin
+      Line := LocalUses[i];
+      while Line <> '' do
+      begin
+        Item := Fetch(Line, ',');
+        FUses.Add(UpperCase(Item));
+      end;
+    end;
+  finally
+    LocalUses.Free;
+  end;
 end;
 
 function TFileRegion.HaveUses: Boolean;
 begin
   Result := UsesPosition.StartLine > 0;
+end;
+
+function TFileRegion.UsesExists(UseUnit: string): Boolean;
+begin
+  Result := FUses.IndexOf(UpperCase(UseUnit)) > 0;
 end;
 
 end.

@@ -48,7 +48,7 @@ end;
 procedure TfrmMessage.CreateParams(var Params: TCreateParams);
 begin
   inherited CreateParams(Params);
-  Params.ExStyle := WS_EX_TRANSPARENT or WS_EX_TOPMOST;
+  Params.ExStyle := WS_EX_TRANSPARENT or WS_EX_TOPMOST or WS_EX_NOACTIVATE;
 end;
 
 procedure TfrmMessage.SetPosition;
@@ -74,7 +74,8 @@ procedure TfrmMessage.ShowMessage(const Text: string);
 begin
   FTexto := Text;
   SetPosition;
-  Show;
+  ShowWindow(Handle, SW_SHOWNOACTIVATE);
+  Visible := True;
   PrintOnCanvas;
   tmrClose.Enabled := True;
 end;
