@@ -16,7 +16,7 @@ type
       DPK_FILENAME = 'RFindUnit.dpk';
       RSVARS_FILENAME = 'rsvars.bat';
   var
-    FDelphiBplOutPut, FDelphiBinPath, FDpkFile, FCurPath, FOutPutDir, FDelphiDesc: string;
+    FDelphiBplOutPut, FDelphiBinPath, FCurPath, FOutPutDir, FDelphiDesc: string;
     FReg, FRegPacks: string;
 
     procedure LoadPaths(DelphiDesc, DelphiPath: string);
@@ -42,10 +42,8 @@ implementation
 procedure TInstaller.CheckDelphiRunning;
 begin
   FCallBackProc('Cheking if is there same Delphi instance running...');
-  {$IFNDEF DEBUG}
   if IsProcessRunning('bds.exe') then
     Raise Exception.Create('Close all you Delphi instances before install.');
-  {$ENDIF}
 end;
 
 procedure TInstaller.CheckDpkExists;
@@ -167,7 +165,6 @@ end;
 procedure TInstaller.RegisterBpl;
 var
   Reg: TRegistry;
-  InstalFile: string;
 begin
   FCallBackProc('Registering package...');
 

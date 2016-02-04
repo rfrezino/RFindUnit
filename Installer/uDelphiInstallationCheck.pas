@@ -26,7 +26,6 @@ type
     DelphiXE6,
     DelphiXE7,
     DelphiXE8,
-    DelphiXE9,
     DelphiSeattle10);
 
   TDelphiInstallationCheck = class(TObject)
@@ -61,7 +60,6 @@ const
     'RAD Studio XE 6',
     'RAD Studio XE 7',
     'RAD Studio XE 8',
-    'RAD Studio XE 9',
     'RAD Studio 10 Seattle'
     );
 
@@ -81,7 +79,6 @@ const
     '\Software\Embarcadero\BDS\10.0',
     '\Software\Embarcadero\BDS\11.0',
     '\Software\Embarcadero\BDS\12.0',
-    '\Software\Embarcadero\BDS\13.0',
     '\Software\Embarcadero\BDS\14.0',
     '\Software\Embarcadero\BDS\15.0',
     '\Software\Embarcadero\BDS\16.0',
