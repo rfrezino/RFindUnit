@@ -3,9 +3,9 @@ unit uMain;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Registry, StdCtrls, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit,
-  dxSkinsCore, dxSkinsDefaultPainters, jpeg, cxImage, ImgList, ComCtrls, uDelphiInstallationCheck, ExtCtrls, uInstaller;
+  Windows, SysUtils, Classes, Controls, Forms, Dialogs, Registry,
+  StdCtrls, ComCtrls, uDelphiInstallationCheck, ExtCtrls,
+  uInstaller, ImgList;
 
 type
   TFrmInstall = class(TForm)

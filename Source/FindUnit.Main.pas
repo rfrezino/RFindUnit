@@ -27,7 +27,7 @@ type
 implementation
 
 uses
-  FindUnit.FormSearch, FindUnit.SearchString, Log4PAscal, FindUnit.Utils, FindUnit.OTAUtils, SysUtils;
+  FindUnit.FormSearch, Log4PAscal, FindUnit.Utils, FindUnit.OTAUtils, SysUtils;
 
 var
   vKbIndex: Integer;

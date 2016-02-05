@@ -3,7 +3,7 @@ unit FindUnit.IncluderHandlerInc;
 interface
 
 uses
-  IOUtils, Classes, Generics.Collections, SimpleParser.Lexer.Types;
+  Classes, Generics.Collections, SimpleParser.Lexer.Types;
 
 type
   TIncItem = record

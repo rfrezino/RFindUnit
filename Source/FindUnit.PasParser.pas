@@ -69,7 +69,7 @@ type
 implementation
 
 uses
-  IOUtils, DelphiAST.Writer, DelphiAST.Consts, DelphiAST, Log4PAscal;
+  IOUtils, DelphiAST.Consts, DelphiAST, Log4PAscal;
 
 { TFindUnitItem }
 

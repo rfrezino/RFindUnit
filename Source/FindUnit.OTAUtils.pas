@@ -24,7 +24,7 @@ var
 implementation
 
 uses
-  Windows, Registry, ShellAPI, ShlObj, ActiveX, SysUtils;
+  Windows, ShellAPI, ShlObj, ActiveX, SysUtils;
 
 function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
 var

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, FindUnit.SearchString, ToolsAPI, Menus,
+  Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus,
   FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons;
 
 type
@@ -70,7 +70,7 @@ var
 implementation
 
 uses
-  WinSvc, FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, TransparentCanvas,
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor,
   FindUnit.FormMessage;
 
 {$R *.dfm}
