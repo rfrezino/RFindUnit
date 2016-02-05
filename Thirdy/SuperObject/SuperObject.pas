@@ -86,7 +86,7 @@
   {$DEFINE HAVE_INLINE}
 {$ifend}
 
-{$if defined(VER210) or defined(VER220)}
+{$if CompilerVersion >= 14.0}
   {$define HAVE_RTTI}
 {$ifend}
 
