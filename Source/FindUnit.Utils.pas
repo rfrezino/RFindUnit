@@ -100,15 +100,7 @@ var
 begin
   if ACaseSensitive then
   begin
-    if ADelim = #0 then
-    begin
-      // AnsiPos does not work with #0
-      LPos := Pos(ADelim, AInput);
-    end
-    else
-    begin
-      LPos := Pos(ADelim, AInput);
-    end;
+    LPos := Pos(ADelim, AInput);
     if LPos = 0 then
     begin
       Result := AInput;
