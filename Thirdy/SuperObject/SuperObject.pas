@@ -8,6 +8,9 @@
  * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
  * the specific language governing rights and limitations under the License.
  *
+ * Embarcadero Technologies Inc is not permitted to use or redistribute
+ * this source code without explicit permission.
+ *
  * Unit owner : Henri Gourvest <hgourvest@gmail.com>
  * Web site   : http://www.progdigy.com
  *
@@ -86,14 +89,32 @@
   {$DEFINE HAVE_INLINE}
 {$ifend}
 
-{$if CompilerVersion >= 14.0}
+{$if defined(VER210) or defined(VER220) or defined(VER230)}
   {$define HAVE_RTTI}
+{$ifend}
+
+{$if defined(VER230)}
+  {$define NEED_FORMATSETTINGS}
+{$ifend}
+
+{$if defined(VER240)}
+  {$define NEED_FORMATSETTINGS}
+{$ifend}
+
+{$if defined(VER250)}
+  {$define NEED_FORMATSETTINGS}
+{$ifend}
+
+{$if defined(FPC) and defined(VER2_6)}
+  {$define NEED_FORMATSETTINGS}
 {$ifend}
 
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 
-unit SuperObject;
+{$define HAVE_RTTI} //edwin
+
+unit superobject;
 
 interface
 uses
@@ -105,8 +126,13 @@ uses
 
 type
 {$IFNDEF FPC}
+{$IFDEF CPUX64}
+  PtrInt = Int64;
+  PtrUInt = UInt64;
+{$ELSE}
   PtrInt = longint;
   PtrUInt = Longword;
+{$ENDIF}
 {$ENDIF}
   SuperInt = Int64;
 
@@ -134,13 +160,6 @@ const
   SUPER_AVL_MASK_HIGH_BIT = not ((not longword(0)) shr 1);
 
 type
-
-
-  TValueEx = record
-  private
-    FData: TValueData;
-  end;
-
   // forward declarations
   TSuperObject = class;
   ISuperObject = interface;
@@ -237,6 +256,7 @@ type
     function GetValues: ISuperObject;
     function GetNames: ISuperObject;
     function Find(const k: SOString; var value: ISuperObject): Boolean;
+    function Exists(const k: SOString): Boolean;
   end;
 
   TSuperAvlIterator = class
@@ -258,7 +278,7 @@ type
     property Current: TSuperAvlEntry read GetIter;
   end;
 
-  TSuperObjectArray = array[0..(high(PtrInt) div sizeof(TSuperObject))-1] of ISuperObject;
+  TSuperObjectArray = array[0..(high(Integer) div sizeof(TSuperObject))-1] of ISuperObject;
   PSuperObjectArray = ^TSuperObjectArray;
 
   TSuperArray = class
@@ -289,7 +309,12 @@ type
   public
     constructor Create; virtual;
     destructor Destroy; override;
-    function Add(const Data: ISuperObject): Integer;
+    function Add(const Data: ISuperObject): Integer; overload;
+    function Add(Data: SuperInt): Integer; overload;
+    function Add(const Data: SOString): Integer; overload;
+    function Add(Data: Boolean): Integer; overload;
+    function Add(Data: Double): Integer; overload;
+    function AddC(const Data: Currency): Integer;
     function Delete(index: Integer): ISuperObject;
     procedure Insert(index: Integer; const value: ISuperObject);
     procedure Clear(all: boolean = false);
@@ -583,6 +608,7 @@ type
     function call(const path: SOString; const param: ISuperObject = nil): ISuperObject; overload;
     function call(const path, param: SOString): ISuperObject; overload;
 {$ENDIF}
+
     // clone a node
     function Clone: ISuperObject;
     function Delete(const path: SOString): ISuperObject;
@@ -633,7 +659,11 @@ type
     function GetDataPtr: Pointer;
     procedure SetDataPtr(const Value: Pointer);
   protected
+{$IFDEF FPC}
+    function QueryInterface({$IFDEF FPC_HAS_CONSTREF}constref{$ELSE}const{$ENDIF} iid: tguid; out obj): longint;{$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
+{$ELSE}
     function QueryInterface(const IID: TGUID; out Obj): HResult; virtual; stdcall;
+{$ENDIF}
     function _AddRef: Integer; virtual; stdcall;
     function _Release: Integer; virtual; stdcall;
 
@@ -724,7 +754,7 @@ type
 {$ENDIF}
     property A[const path: SOString]: TSuperArray read GetA;
 
-{$IFDEF SUPER_METHOD}
+    {$IFDEF SUPER_METHOD}
     function call(const path: SOString; const param: ISuperObject = nil): ISuperObject; overload; virtual;
     function call(const path, param: SOString): ISuperObject; overload; virtual;
 {$ENDIF}
@@ -802,6 +832,7 @@ type
 function ObjectIsError(obj: TSuperObject): boolean;
 function ObjectIsType(const obj: ISuperObject; typ: TSuperType): boolean;
 function ObjectGetType(const obj: ISuperObject): TSuperType;
+function ObjectIsNull(const obj: ISuperObject): Boolean;
 
 function ObjectFindFirst(const obj: ISuperObject; var F: TSuperObjectIter): boolean;
 function ObjectFindNext(var F: TSuperObjectIter): boolean;
@@ -819,7 +850,8 @@ function TryObjectToDate(const obj: ISuperObject; var dt: TDateTime): Boolean;
 function ISO8601DateToJavaDateTime(const str: SOString; var ms: Int64): Boolean;
 function ISO8601DateToDelphiDateTime(const str: SOString; var dt: TDateTime): Boolean;
 function DelphiDateTimeToISO8601Date(dt: TDateTime): SOString;
-
+function UUIDToString(const g: TGUID): SOString;
+function StringToUUID(const str: SOString; var g: TGUID): Boolean;
 
 {$IFDEF HAVE_RTTI}
 
@@ -853,91 +885,6 @@ uses sysutils,
 var
   debugcount: integer = 0;
 {$ENDIF}
-
-type
-  TValueDataImpl = class(TInterfacedObject, IValueData)
-  private
-    FTypeInfo: PTypeInfo;
-    FData: TArray<Byte>;
-  public
-    constructor Create(ABuffer: Pointer; ACount: Integer; ATypeInfo: PTypeInfo);
-    constructor CreateEmpty(ACount: Integer; ATypeInfo: PTypeInfo);
-    constructor CreateWithoutCopy(ABuffer: Pointer; ACount: Integer; ATypeInfo: PTypeInfo);
-    destructor Destroy; override;
-    function GetDataSize: Integer;
-    procedure ExtractRawData(ABuffer: Pointer);
-    procedure ExtractRawDataNoCopy(ABuffer: Pointer);
-    function GetReferenceToRawData: Pointer;
-  end;
-
-constructor TValueDataImpl.Create(ABuffer: Pointer; ACount: Integer; ATypeInfo: PTypeInfo);
-begin
-  CreateEmpty(ACount, ATypeInfo);
-  if ABuffer <> nil then
-    if IsManaged(ATypeInfo) then
-      CopyArray(@FData[0], ABuffer, ATypeInfo, 1)
-    else
-      Move(ABuffer^, FData[0], ACount);
-end;
-
-constructor TValueDataImpl.CreateEmpty(ACount: Integer; ATypeInfo: PTypeInfo);
-begin
-  FTypeInfo := ATypeInfo;
-  SetLength(FData, ACount);
-end;
-
-constructor TValueDataImpl.CreateWithoutCopy(ABuffer: Pointer; ACount: Integer; ATypeInfo: PTypeInfo);
-begin
-  CreateEmpty(ACount, ATypeInfo);
-  if ABuffer <> nil then
-    Move(ABuffer^, FData[0], ACount);
-end;
-
-destructor TValueDataImpl.Destroy;
-begin
-  if IsManaged(FTypeInfo) then
-    FinalizeArray(@FData[0], FTypeInfo, 1);
-  inherited;
-end;
-
-function TValueDataImpl.GetDataSize: Integer;
-begin
-  Result := Length(FData);
-end;
-
-procedure TValueDataImpl.ExtractRawData(ABuffer: Pointer);
-begin
-  if IsManaged(FTypeInfo) then
-    CopyArray(ABuffer, @FData[0], FTypeInfo, 1)
-  else
-    Move(FData[0], ABuffer^, Length(FData));
-end;
-
-procedure TValueDataImpl.ExtractRawDataNoCopy(ABuffer: Pointer);
-begin
-  Move(FData[0], ABuffer^, Length(FData));
-end;
-
-function TValueDataImpl.GetReferenceToRawData: Pointer;
-begin
-  Result := @FData[0];
-end;
-
-
-function NopRefCount(inst: Pointer): Integer; stdcall;
-begin
-  Result := -1;
-end;
-
-function NopQueryInterface(inst: Pointer; const IID: TGUID; out Obj): HResult; stdcall;
-begin
-  Result := E_NOINTERFACE;
-end;
-
-function NopRet0(inst: Pointer): Integer;
-begin
-  Result := 0;
-end;
 
 const
   super_number_chars_set = ['0'..'9','.','+','-','e','E'];
@@ -974,20 +921,6 @@ const
   TOK_DQT: PSOChar = '"'; // Double Quote
   TOK_TRUE: PSOChar = 'true';
   TOK_FALSE: PSOChar = 'false';
-
-  Nop_Vtable: array[0..6] of Pointer =
-  (
-    @NopQueryInterface,
-    @NopRefCount,
-    @NopRefCount,
-    @NopRet0, // function GetDataSize: Integer;
-    @NopRet0, // procedure ExtractRawData(ABuffer: Pointer);
-    @NopRet0, // procedure ExtractRawDataNoCopy(ABuffer: Pointer);
-    @NopRet0 // function GetReferenceToRawData: Pointer;
-  );
-  Nop_Instance_Data: Pointer = @Nop_Vtable;
-  Nop_Instance: Pointer = @Nop_Instance_Data;
-
 
 {$if (sizeof(Char) = 1)}
 function StrLComp(const Str1, Str2: PSOChar; MaxLen: Cardinal): Integer;
@@ -1059,11 +992,11 @@ var
   p: PSOChar;
 begin
   Result := FloatToStr(value);
-  if DecimalSeparator <> '.' then
+  if {$if defined(NEED_FORMATSETTINGS)}FormatSettings.{$ifend}DecimalSeparator <> '.' then
   begin
     p := PSOChar(Result);
     while p^ <> #0 do
-      if p^ <> SOChar(DecimalSeparator) then
+      if p^ <> SOChar({$if defined(NEED_FORMATSETTINGS)}FormatSettings.{$ifend}DecimalSeparator) then
       inc(p) else
       begin
         p^ := '.';
@@ -1077,11 +1010,11 @@ var
   p: PSOChar;
 begin
   Result := CurrToStr(value);
-  if DecimalSeparator <> '.' then
+  if {$if defined(NEED_FORMATSETTINGS)}FormatSettings.{$ifend}DecimalSeparator <> '.' then
   begin
     p := PSOChar(Result);
     while p^ <> #0 do
-      if p^ <> SOChar(DecimalSeparator) then
+      if p^ <> SOChar({$if defined(NEED_FORMATSETTINGS)}FormatSettings.{$ifend}DecimalSeparator) then
       inc(p) else
       begin
         p^ := '.';
@@ -1736,7 +1669,7 @@ begin
                     state := stMin;
                   end else
                     goto error;
-             ',':
+             ',', '.':
                 begin
                   Inc(p);
                   state := stMs;
@@ -1810,7 +1743,7 @@ begin
                     sep := yes;
                   end else
                     goto error;
-             ',':
+             ',', '.':
                 begin
                   Inc(p);
                   state := stMs;
@@ -1859,7 +1792,7 @@ begin
               end else
                 goto error;
         2:    case p^ of
-               ',':
+               ',', '.':
                   begin
                     Inc(p);
                     state := stMs;
@@ -2178,7 +2111,11 @@ begin
     varInt64:    Result := TSuperObject.Create(VInt64);
     varString:   Result := TSuperObject.Create(SOString(AnsiString(VString)));
 {$if declared(varUString)}
+  {$IFDEF FPC}
+    varUString:  Result := TSuperObject.Create(SOString(UnicodeString(VString)));
+  {$ELSE}
     varUString:  Result := TSuperObject.Create(SOString(string(VUString)));
+  {$ENDIF}
 {$ifend}
   else
     raise Exception.CreateFmt('Unsuported variant data type: %d', [VType]);
@@ -2202,6 +2139,11 @@ begin
   if obj <> nil then
     Result := obj.DataType else
     Result := stNull;
+end;
+
+function ObjectIsNull(const obj: ISuperObject): Boolean;
+begin
+  Result := ObjectIsType(obj, stNull);
 end;
 
 function ObjectFindFirst(const obj: ISuperObject; var F: TSuperObjectIter): boolean;
@@ -2243,6 +2185,258 @@ procedure ObjectFindClose(var F: TSuperObjectIter);
 begin
   F.Ite.Free;
   F.val := nil;
+end;
+
+function UuidFromString(p: PSOChar; Uuid: PGUID): Boolean;
+const
+  hex2bin: array[48..102] of Byte = (
+     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+     0,10,11,12,13,14,15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+     0,10,11,12,13,14,15);
+type
+  TState = (stEatSpaces, stStart, stHEX, stBracket, stEnd);
+  TUUID = record
+    case byte of
+      0: (guid: TGUID);
+      1: (bytes: array[0..15] of Byte);
+      2: (words: array[0..7] of Word);
+      3: (ints: array[0..3] of Cardinal);
+      4: (i64s: array[0..1] of UInt64);
+  end;
+
+  function ishex(const c: SOChar): Boolean; {$IFDEF HAVE_INLINE} inline;{$ENDIF}
+  begin
+    result := (c < #256) and (AnsiChar(c) in ['0'..'9', 'a'..'z', 'A'..'Z'])
+  end;
+var
+  pos: Byte;
+  state, saved: TState;
+  bracket, separator: Boolean;
+label
+  redo;
+begin
+  FillChar(Uuid^, SizeOf(TGUID), 0);
+  saved := stStart;
+  state := stEatSpaces;
+  bracket := false;
+  separator := false;
+  pos := 0;
+  while true do
+redo:
+  case state of
+    stEatSpaces:
+      begin
+        while true do
+          case p^ of
+            ' ', #13, #10, #9: inc(p);
+          else
+            state := saved;
+            goto redo;
+          end;
+      end;
+    stStart:
+      case p^ of
+        '{':
+          begin
+            bracket := true;
+            inc(p);
+            state := stEatSpaces;
+            saved := stHEX;
+            pos := 0;
+          end;
+      else
+        state := stHEX;
+      end;
+    stHEX:
+      case pos of
+        0..7:
+          if ishex(p^) then
+          begin
+            Uuid^.D1 := (Uuid^.D1 * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        8:
+          if (p^ = '-') then
+          begin
+            separator := true;
+            inc(p);
+            inc(pos)
+          end else
+            inc(pos);
+        13,18,23:
+           if separator then
+           begin
+             if p^ <> '-' then
+             begin
+               Result := False;
+               Exit;
+             end;
+             inc(p);
+             inc(pos);
+           end else
+             inc(pos);
+        9..12:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).words[2] := (TUUID(Uuid^).words[2] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        14..17:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).words[3] := (TUUID(Uuid^).words[3] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        19..20:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[8] := (TUUID(Uuid^).bytes[8] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        21..22:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[9] := (TUUID(Uuid^).bytes[9] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        24..25:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[10] := (TUUID(Uuid^).bytes[10] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        26..27:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[11] := (TUUID(Uuid^).bytes[11] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        28..29:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[12] := (TUUID(Uuid^).bytes[12] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        30..31:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[13] := (TUUID(Uuid^).bytes[13] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        32..33:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[14] := (TUUID(Uuid^).bytes[14] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        34..35:
+          if ishex(p^) then
+          begin
+            TUUID(Uuid^).bytes[15] := (TUUID(Uuid^).bytes[15] * 16) + hex2bin[Ord(p^)];
+            inc(p);
+            inc(pos);
+          end else
+          begin
+            Result := False;
+            Exit;
+          end;
+        36: if bracket then
+            begin
+              state := stEatSpaces;
+              saved := stBracket;
+            end else
+            begin
+              state := stEatSpaces;
+              saved := stEnd;
+            end;
+      end;
+    stBracket:
+      begin
+        if p^ <> '}' then
+        begin
+          Result := False;
+          Exit;
+        end;
+        inc(p);
+        state := stEatSpaces;
+        saved := stEnd;
+      end;
+    stEnd:
+      begin
+        if p^ <> #0 then
+        begin
+          Result := False;
+          Exit;
+        end;
+        Break;
+      end;
+  end;
+  Result := True;
+end;
+
+function UUIDToString(const g: TGUID): SOString;
+begin
+  Result := format('%.8x%.4x%.4x%.2x%.2x%.2x%.2x%.2x%.2x%.2x%.2x',
+    [g.D1, g.D2, g.D3,
+     g.D4[0], g.D4[1], g.D4[2],
+     g.D4[3], g.D4[4], g.D4[5],
+     g.D4[6], g.D4[7]]);
+end;
+
+function StringToUUID(const str: SOString; var g: TGUID): Boolean;
+begin
+  Result := UuidFromString(PSOChar(str), @g);
 end;
 
 {$IFDEF HAVE_RTTI}
@@ -2326,202 +2520,6 @@ begin
   else
     Result := False;
   end;
-end;
-
-function UuidFromString(p: PSOChar; Uuid: PGUID): Boolean;
-const
-  hex2bin: array[#48..#102] of Byte = (
-     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
-     0,10,11,12,13,14,15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-     0,10,11,12,13,14,15);
-type
-  TState = (stEatSpaces, stStart, stHEX, stBracket, stEnd);
-  TUUID = record
-    case byte of
-      0: (guid: TGUID);
-      1: (bytes: array[0..15] of Byte);
-      2: (words: array[0..7] of Word);
-      3: (ints: array[0..3] of Cardinal);
-      4: (i64s: array[0..1] of UInt64);
-  end;
-
-  function ishex(const c: Char): Boolean; {$IFDEF HAVE_INLINE} inline;{$ENDIF}
-  begin
-    result := (c < #256) and (AnsiChar(c) in ['0'..'9', 'a'..'z', 'A'..'Z'])
-  end;
-var
-  pos: Byte;
-  state, saved: TState;
-  bracket, separator: Boolean;
-label
-  redo;
-begin
-  FillChar(Uuid^, SizeOf(TGUID), 0);
-  saved := stStart;
-  state := stEatSpaces;
-  bracket := false;
-  separator := false;
-  pos := 0;
-  while true do
-redo:
-  case state of
-    stEatSpaces:
-      begin
-        while true do
-          case p^ of
-            ' ', #13, #10, #9: inc(p);
-          else
-            state := saved;
-            goto redo;
-          end;
-      end;
-    stStart:
-      case p^ of
-        '{':
-          begin
-            bracket := true;
-            inc(p);
-            state := stEatSpaces;
-            saved := stHEX;
-            pos := 0;
-          end;
-      else
-        state := stHEX;
-      end;
-    stHEX:
-      case pos of
-        0..7:
-          if ishex(p^) then
-          begin
-            Uuid.D1 := (Uuid.D1 * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        8:
-          if (p^ = '-') then
-          begin
-            separator := true;
-            inc(p);
-            inc(pos)
-          end else
-            inc(pos);
-        13,18,23:
-           if separator then
-           begin
-             if p^ <> '-' then
-               Exit(False);
-             inc(p);
-             inc(pos);
-           end else
-             inc(pos);
-        9..12:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).words[2] := (TUUID(Uuid^).words[2] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        14..17:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).words[3] := (TUUID(Uuid^).words[3] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        19..20:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[8] := (TUUID(Uuid^).bytes[8] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        21..22:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[9] := (TUUID(Uuid^).bytes[9] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        24..25:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[10] := (TUUID(Uuid^).bytes[10] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        26..27:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[11] := (TUUID(Uuid^).bytes[11] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        28..29:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[12] := (TUUID(Uuid^).bytes[12] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        30..31:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[13] := (TUUID(Uuid^).bytes[13] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        32..33:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[14] := (TUUID(Uuid^).bytes[14] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        34..35:
-          if ishex(p^) then
-          begin
-            TUUID(Uuid^).bytes[15] := (TUUID(Uuid^).bytes[15] * 16) + hex2bin[p^];
-            inc(p);
-            inc(pos);
-          end else
-            Exit(False);
-        36: if bracket then
-            begin
-              state := stEatSpaces;
-              saved := stBracket;
-            end else
-            begin
-              state := stEatSpaces;
-              saved := stEnd;
-            end;
-      end;
-    stBracket:
-      begin
-        if p^ <> '}' then
-          Exit(False);
-        inc(p);
-        state := stEatSpaces;
-        saved := stEnd;
-      end;
-    stEnd:
-      begin
-        if p^ <> #0 then
-          Exit(False);
-        Break;
-      end;
-  end;
-  Result := True;
 end;
 
 function serialfromguid(ctx: TSuperRttiContext; const obj: ISuperObject; var Value: TValue): Boolean;
@@ -3123,9 +3121,12 @@ end;
 
 function TSuperObject.AsString: SOString;
 begin
-  if FDataType = stString then
-    Result := FOString else
+  case FDataType of
+    stString: Result := FOString;
+    stNull: Result := '';
+  else
     Result := AsJSon(false, false);
+  end;
 end;
 
 function TSuperObject.GetEnumerator: TSuperEnumerator;
@@ -4267,7 +4268,12 @@ begin
   ParseString(PSOChar(path), true, False, self, [foCreatePath, foPutValue], TSuperObject.Create(Value));
 end;
 
+
+{$IFDEF FPC}
+function TSuperObject.QueryInterface({$IFDEF FPC_HAS_CONSTREF}constref{$ELSE}const{$ENDIF} iid: tguid; out obj): longint;{$IFNDEF WINDOWS}cdecl{$ELSE}stdcall{$ENDIF};
+{$ELSE}
 function TSuperObject.QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+{$ENDIF}
 begin
   if GetInterface(IID, Obj) then
     Result := 0
@@ -5387,6 +5393,31 @@ function TSuperArray.Add(const Data: ISuperObject): Integer;
 begin
   Result := FLength;
   PutO(Result, data);
+end;
+
+function TSuperArray.Add(Data: SuperInt): Integer;
+begin
+  Result := Add(TSuperObject.Create(Data));
+end;
+
+function TSuperArray.Add(const Data: SOString): Integer;
+begin
+  Result := Add(TSuperObject.Create(Data));
+end;
+
+function TSuperArray.Add(Data: Boolean): Integer;
+begin
+  Result := Add(TSuperObject.Create(Data));
+end;
+
+function TSuperArray.Add(Data: Double): Integer;
+begin
+  Result := Add(TSuperObject.Create(Data));
+end;
+
+function TSuperArray.AddC(const Data: Currency): Integer;
+begin
+  Result := Add(TSuperObject.CreateCurrency(Data));
 end;
 
 function TSuperArray.Delete(index: Integer): ISuperObject;
@@ -6686,6 +6717,11 @@ begin
     Result := False;
 end;
 
+function TSuperTableString.Exists(const k: SOString): Boolean;
+begin
+  Result := Search(k) <> nil;
+end;
+
 function TSuperTableString.GetO(const k: SOString): ISuperObject;
 var
   e: TSuperAvlEntry;
@@ -6889,22 +6925,6 @@ begin
     Result := ToJson(v, so);
 end;
 
-type
-  TRttiFieldEx = class(TRttiField)
-  public
-    procedure SetValue(Instance: Pointer; const AValue: TValue); override;
-  end;
-
-procedure TRttiFieldEx.SetValue(Instance: Pointer; const AValue: TValue);
-var
-  ft: TRttiType;
-begin
-  ft := FieldType;
-//  if ft = nil then
-//    raise InsufficientRtti;
-  AValue.Cast(ft.Handle).ExtractRawData(PByte(Instance) + Offset);
-end;
-
 function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject;
   var Value: TValue): Boolean;
 
@@ -6959,7 +6979,6 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
     TypeData: PTypeData;
     i: Integer;
     o: ISuperObject;
-    s: string;
   begin
     case ObjectGetType(obj) of
     stInt, stBoolean:
@@ -6975,20 +6994,8 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
     stString:
       begin
         o := SO(obj.AsString);
-        s := obj.AsString;
         if not ObjectIsType(o, stString) then
-          FromInt(o)
-        else if (Length(s) > 0) and (s[1] = '$') then
-        begin
-          i := StrToInt(s);
-          TypeData := GetTypeData(TypeInfo);
-          if TypeData.MaxValue > TypeData.MinValue then
-            Result := (i >= TypeData.MinValue) and (i <= TypeData.MaxValue) else
-            Result := (i >= TypeData.MinValue) and (i <= Int64(PCardinal(@TypeData.MaxValue)^));
-          if Result then
-            TValue.Make(@i, TypeInfo, Value);
-        end
-        else
+          FromInt(o) else
           Result := False;
       end;
     else
@@ -7081,6 +7088,7 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
           for f in Context.GetType(Value.AsObject.ClassType).GetFields do
             if f.FieldType <> nil then
             begin
+              v := TValue.Empty;
               Result := FromJson(f.FieldType.Handle, GetFieldDefault(f, obj.AsObject[GetFieldName(f)]), v);
               if Result then
                 f.SetValue(Value.AsObject, v) else
@@ -7099,16 +7107,11 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
     end;
   end;
 
-  type
-    TString255 = string[255];
-
   procedure FromRecord;
   var
     f: TRttiField;
     p: Pointer;
-    pfield: Pointer;
     v: TValue;
-    s: TString255;
   begin
     Result := True;
     TValue.Make(nil, TypeInfo, Value);
@@ -7123,19 +7126,11 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
 {$ENDIF}
         Result := FromJson(f.FieldType.Handle, GetFieldDefault(f, obj.AsObject[GetFieldName(f)]), v);
         if Result then
-        begin
-          if (f.FieldType.TypeKind in [tkString, tkLString, tkUString, tkWString])
-            and (f.FieldType.TypeSize <> SizeOf(Pointer))  and (f.FieldType.Handle^.Name <> 'string') then
+          f.SetValue(p, v) else
           begin
-            pfield := Pointer(PByte(p) + f.Offset);
-            s := v.AsString;
-            Move(s[0], pfield^, f.FieldType.TypeSize);
-          end
-          else
-            f.SetValue(p, v);
-        end
-        else
-          Exit;
+            //Writeln(f.Name);
+            Exit;
+          end;
       end else
       begin
         Result := False;
@@ -7340,6 +7335,7 @@ function TSuperRttiContext.FromJson(TypeInfo: PTypeInfo; const obj: ISuperObject
 var
   Serial: TSerialFromJson;
 begin
+
   if TypeInfo <> nil then
   begin
     if not SerialFromJson.TryGetValue(TypeInfo, Serial) then
@@ -7370,9 +7366,6 @@ begin
     Result := False;
 end;
 
-type
-  TString32 = string[32];
-
 function TSuperRttiContext.ToJson(var value: TValue; const index: ISuperObject): ISuperObject;
   procedure ToInt64;
   begin
@@ -7400,26 +7393,9 @@ function TSuperRttiContext.ToJson(var value: TValue; const index: ISuperObject):
     end;
   end;
 
-//  procedure ToString32;
-//  begin
-//     Result := TSuperObject.Create(string(Value.AsType<TString32>));
-//  end;
-
-  type
-  TString255 = string[255];
-
   procedure ToString;
-  var
-    LString: TString255;
   begin
-    if value.DataSize <> 4 then
-    begin
-//      OemToAnsiBuff(PAnsiChar(value.GetReferenceToRawData), PAnsiChar(LString[1]), value.DataSize);
-      Move(value.GetReferenceToRawData^, LString[0], value.DataSize +1);
-      Result := TSuperObject.Create(LString);
-    end
-    else
-      Result := TSuperObject.Create(string(Value.AsType<string>));
+    Result := TSuperObject.Create(string(Value.AsType<string>));
   end;
 
   procedure ToClass;
@@ -7461,10 +7437,6 @@ function TSuperRttiContext.ToJson(var value: TValue; const index: ISuperObject):
   var
     f: TRttiField;
     v: TValue;
-    ft: TRttiType;
-    PTd: PTypeData;
-    LBuffer: Pointer;
-    inlineSize: Integer;
   begin
     Result := TSuperObject.Create(stObject);
     for f in Context.GetType(Value.TypeInfo).GetFields do
@@ -7472,24 +7444,7 @@ function TSuperRttiContext.ToJson(var value: TValue; const index: ISuperObject):
 {$IFDEF VER210}
       v := f.GetValue(IValueData(TValueData(Value).FHeapData).GetReferenceToRawData);
 {$ELSE}
-
-      ft := f.FieldType;
-      if ft.Handle^.Kind = tkString then
-      begin
-        PTd := GetTypeData(ft.Handle);
-        LBuffer := PByte(TValueData(Value).FValueData.GetReferenceToRawData) + f.Offset;
-
-
-        TValueEx(v).FData.FTypeInfo := ft.Handle;
-        TValueEx(v).FData.FValueData := IValueData(Nop_Instance);
-        inlineSize := -(PTd^.MaxLength + 2);
-
-        TValueEx(v).FData.FValueData := TValueDataImpl.Create(LBuffer, -inlineSize, ft.Handle);
-
-      end
-      else
-        TValue.Make(PByte(TValueData(Value).FValueData.GetReferenceToRawData) + f.Offset, ft.Handle, v);
-
+      v := f.GetValue(TValueData(Value).FValueData.GetReferenceToRawData);
 {$ENDIF}
       Result.AsObject[GetFieldName(f)] := ToJson(v, index);
     end;
@@ -7587,10 +7542,6 @@ function TSuperRttiContext.ToJson(var value: TValue; const index: ISuperObject):
 
 var
   Serial: TSerialToJson;
-  LTamanho: smallint;
-  LInteger: Integer;
-  LWord: Word;
-  Lvalue: TValue;
 begin
   if not SerialToJson.TryGetValue(value.TypeInfo, Serial) then
     case Value.Kind of
@@ -7598,28 +7549,7 @@ begin
       tkChar: ToChar;
       tkSet, tkInteger, tkEnumeration: ToInteger;
       tkFloat: ToFloat;
-      tkString, tkLString, tkUString, tkWString:
-      begin
-
-//        LTamanho :=    Value.DataSize;
-//        LTamanho := Value.TypeData.elSize;
-//        case LTamanho of
-//          1:;
-//          2:;
-//          32: ToString32;
-//        else
-
-//        TValue.Make(nil, PTypeInfo(TypeInfo(string)), LValue);
-//        Value := value.From<String>(value.AsString);
-//        value := LValue;
-//
-//        LInteger := value.TypeData.elSize;
-//        LWord := value.TypeData.AttrData.Len;
-          ToString;
-//        end;
-
-
-      end;
+      tkString, tkLString, tkUString, tkWString: ToString;
       tkClass: ToClass;
       tkWChar: ToWChar;
       tkVariant: ToVariant;
@@ -7688,7 +7618,7 @@ end;
 initialization
 
 finalization
-  Assert(debugcount = 0, 'Memory leak');
+  //Assert(debugcount = 0, 'Memory leak');
 {$ENDIF}
 end.
 
