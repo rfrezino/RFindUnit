@@ -40,10 +40,10 @@ var
   vBindingServices: IOTAKeyBindingServices;
 
 resourcestring
-  resPackageName = 'RfUtils - Import Usagest';
+  resPackageName = 'RfUtils - Import Usages';
   resLicense = 'OpenSource (MIT)';
   resAboutCopyright = 'Copyright Rodrigo Farias Rezino';
-  resAboutTitle = 'RfUtils - Find Unit';
+  resAboutTitle = 'RfUtils - Import Usages';
   resAboutDescription = 'Help us on GitHub https://github.com/rfrezino/RFindUnit';
 
 procedure Register;
