@@ -9,6 +9,7 @@ uses
 type
   TRFindUnitMain = class(TNotifierObject, IOTAKeyboardBinding)
   private
+    FMenusCreated: Boolean;
     FEnvControl: TEnvironmentController;
     FProjectServiceIndex: Integer;
     procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
@@ -100,6 +101,11 @@ var
 begin
   if not (Supports(BorlandIDEServices, INTAServices)) then
     Exit;
+
+  if FMenusCreated then
+    Exit;
+
+  FMenusCreated := True;
 
   MainMenu := (BorlandIDEServices as INTAServices).MainMenu;
   ToolItem := MainMenu.Items.Find('Tools');
