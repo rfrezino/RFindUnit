@@ -65,7 +65,6 @@ begin
   LBmp := Graphics.TBitmap.Create;
   LBmp.LoadFromResourceName(HInstance, 'SPLASH');
   SplashScreenServices.AddPluginBitmap(resPackageName, LBmp.Handle, False, resLicense, '');
-  Sleep(500);
   LBmp.Free;
 end;
 
