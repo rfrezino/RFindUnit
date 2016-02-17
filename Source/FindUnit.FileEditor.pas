@@ -6,7 +6,7 @@ uses
   ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics;
 
 type
-  CharPosition = record
+  TCharPosition = record
     StartLine: Integer;
     StartPos: Integer;
 
@@ -16,17 +16,18 @@ type
 
   TFileRegion = class(TObject)
   private
+    FSource: IOTASourceEditor;
     FUses: TStringList;
-    FUsesPosition: CharPosition;
-    FRegionPosition: CharPosition;
+    FUsesPosition: TCharPosition;
+    FRegionPosition: TCharPosition;
   public
-    constructor Create;
+    constructor Create(SourceEditor: IOTASourceEditor);
     destructor Destroy; override;
 
     function HaveUses: Boolean;
 
-    property RegionPosition: CharPosition read FRegionPosition write FRegionPosition;
-    property UsesPosition: CharPosition read FUsesPosition write FUsesPosition;
+    property RegionPosition: TCharPosition read FRegionPosition write FRegionPosition;
+    property UsesPosition: TCharPosition read FUsesPosition write FUsesPosition;
 
     procedure GetUsesFromText(FullFileText: TStringList);
     function UsesExists(UseUnit: string): Boolean;
@@ -40,9 +41,7 @@ type
     FImplementationRegion: TFileRegion;
 
     procedure ParseInformations;
-
-    function GetInformationsFor(Token: string; SearchForEnd: Boolean; StartLine, EndLine: Integer): CharPosition;
-
+    function GetInformationsFor(Token: string; SearchForEnd: Boolean; StartLine, EndLine: Integer): TCharPosition;
     procedure GetInfos;
 
     procedure WriteInformationAtPostion(Line, Position: Integer; const Information: string);
@@ -55,6 +54,9 @@ type
 
     procedure AddUsesToInterface(const UseUnit: string);
     procedure AddUsesToImplementation(const UseUnit: string);
+
+    procedure RemoveUsesFromInterface(const UseUnit: string);
+    procedure RemoveUsesFromImplementation(const UseUnit: string);
   end;
 
 implementation
@@ -66,11 +68,13 @@ uses
 
 procedure TSourceFileEditor.AddUsesToImplementation(const UseUnit: string);
 begin
+  RemoveUsesFromInterface(UseUnit);
   AddUsesToRegion(FImplementationRegion, UseUnit);
 end;
 
 procedure TSourceFileEditor.AddUsesToInterface(const UseUnit: string);
 begin
+  RemoveUsesFromImplementation(UseUnit);
   AddUsesToRegion(FInterfaceRegion, UseUnit);
 end;
 
@@ -99,8 +103,8 @@ end;
 
 constructor TSourceFileEditor.Create(SourceEditor: IOTASourceEditor);
 begin
-  FInterfaceRegion := TFileRegion.Create;
-  FImplementationRegion := TFileRegion.Create;
+  FInterfaceRegion := TFileRegion.Create(SourceEditor);
+  FImplementationRegion := TFileRegion.Create(SourceEditor);
   FFileContent := TStringList.Create;
   FSource := SourceEditor;
 end;
@@ -113,7 +117,7 @@ begin
   inherited;
 end;
 
-function TSourceFileEditor.GetInformationsFor(Token: string; SearchForEnd: Boolean; StartLine, EndLine: Integer): CharPosition;
+function TSourceFileEditor.GetInformationsFor(Token: string; SearchForEnd: Boolean; StartLine, EndLine: Integer): TCharPosition;
 var
   I: Integer;
   OutPosition: Integer;
@@ -195,6 +199,16 @@ begin
 end;
 
 
+procedure TSourceFileEditor.RemoveUsesFromImplementation(const UseUnit: string);
+begin
+
+end;
+
+procedure TSourceFileEditor.RemoveUsesFromInterface(const UseUnit: string);
+begin
+
+end;
+
 procedure TSourceFileEditor.WriteInformationAtPostion(Line, Position: Integer; const Information: string);
 var
   InfoPosition: TOTACharPos;
@@ -221,11 +235,12 @@ end;
 
 { TFileRegion }
 
-constructor TFileRegion.Create;
+constructor TFileRegion.Create(SourceEditor: IOTASourceEditor);
 begin
   FUses := TStringList.Create;
   FUses.Duplicates := dupIgnore;
   FUses.Sorted := True;
+  FSource := SourceEditor;
 end;
 
 destructor TFileRegion.Destroy;
