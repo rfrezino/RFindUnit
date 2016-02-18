@@ -91,7 +91,11 @@
 
 {$if CompilerVersion >= 14.0}
   {$define HAVE_RTTI}
-{$ifend}
+{$endif}
+
+{$if CompilerVersion >= 14.0}
+  {$define NEED_FORMATSETTINGS}
+{$endif}
 
 {$if defined(VER230)}
   {$define NEED_FORMATSETTINGS}
@@ -992,7 +996,7 @@ var
   p: PSOChar;
 begin
   Result := FloatToStr(value);
-  if {$if defined(NEED_FORMATSETTINGS)}FormatSettings.{$ifend}DecimalSeparator <> '.' then
+  if {$if defined(NEED_FORMATSETTINGS)}FormatSettings{$ifend}.DecimalSeparator <> '.' then
   begin
     p := PSOChar(Result);
     while p^ <> #0 do
