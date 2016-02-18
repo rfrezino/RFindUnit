@@ -24,6 +24,7 @@ type
 
 function GetAllFilesFromPath(const Path, Filter: string): TStringList;
 function GetAllPasFilesFromPath(const Path: string): TStringList;
+function GetAllDcuFilesFromPath(const Path: string): TStringList;
 
 function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boolean = True;
   const ACaseSensitive: Boolean = False): string; inline;
@@ -33,6 +34,7 @@ function IsProcessRunning(const AExeFileName: string): Boolean;
 var
   FindUnitDir: string;
   FindUnitDirLogger: string;
+  DirRealeaseWin32: string;
 
 implementation
 
@@ -136,6 +138,11 @@ begin
     Result.Add(FilePath);
 end;
 
+function GetAllDcuFilesFromPath(const Path: string): TStringList;
+begin
+  Result := GetAllFilesFromPath(Path, '*.dcu');
+end;
+
 function GetAllPasFilesFromPath(const Path: string): TStringList;
 begin
   Result := GetAllFilesFromPath(Path, '*.pas');
@@ -169,6 +176,9 @@ begin
 
   CreateDir(FindUnitDir);
   CreateDir(FindUnitDirLogger);
+
+  DirRealeaseWin32 := ExtractFilePath(ParamStr(0));
+  DirRealeaseWin32 := StringReplace(DirRealeaseWin32,'\bin','\lib\win32\release',[rfReplaceAll, rfIgnoreCase]);
 end;
 
 { TPathConverter }

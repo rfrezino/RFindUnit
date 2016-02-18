@@ -10,7 +10,6 @@ type
   private
     FProjectUnits: TUnitsController;
     FLibraryPath: TUnitsController;
-    FLastItem: string;
 
     FProjectPathWorker: TParserWorker;
     FLibraryPathWorker: TParserWorker;
@@ -77,8 +76,9 @@ begin
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
     Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
-    FLibraryPathWorker := TParserWorker.Create(Paths, nil);
-    FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
+    FParserLibraryWorker := TParserWorker.Create(Paths, nil);
+    FParserLibraryWorker.ParseDcuFile := True;
+    FParserLibraryWorker.Start(OnFinishedLibraryPathScan);
   finally
     Paths.Free;
   end;
@@ -198,6 +198,7 @@ procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectLis
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
+  FParserLibraryWorker.Free;
 end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
