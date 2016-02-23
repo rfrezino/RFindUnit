@@ -90,7 +90,7 @@ procedure TParserWorker.GeneratePasFromDcus;
 var
   DcuDecompiler: TDcuDecompiler;
 begin
-  DcuDecompiler := TDcuDecompiler.Create(FPasFiles, FindUnitDir);
+  DcuDecompiler := TDcuDecompiler.Create(FDcuFiles, FindUnitDir);
   try
 
   finally

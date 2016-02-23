@@ -240,7 +240,10 @@ begin
       [ScSt.CurPos-ScSt.StartPos,US,TIncPtr(DefStart)-ScSt.StartPos,AnsiChar(Tag),Byte(Tag),Msg])
   else
     US := Format('Warning%s: %s',[US,Msg]);
+  {$IFDEF CONSOLE}
   Writeln(US);
+  {$ENDIF}
+
 end ;
 
 procedure DCUWarningFmt(const Msg: String; Args: array of const);

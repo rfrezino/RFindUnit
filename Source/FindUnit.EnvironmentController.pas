@@ -198,7 +198,7 @@ procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectLis
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
-  FParserLibraryWorker.Free;
+//  FParserLibraryWorker.Free;
 end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);

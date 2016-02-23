@@ -13,6 +13,9 @@ type
 
     procedure CreateDirs;
     function ProcessUnit(FileName: string; OutRedir: boolean): Integer;
+    procedure ProcessFiles(AFiles: TStringList);
+
+    procedure ProcessFilesFromExe(AFiles: TStringList);
   public
     constructor Create(AFiles: TStringList; ADirOutPutPath: string);
   end;
@@ -20,7 +23,7 @@ type
 implementation
 
 uses
-  SysUtils, DCU_Out, DcuTbl {$IFDEF UNICODE}, AnsiStrings{$ENDIF};
+  SysUtils, DCU_Out, DcuTbl {$IFDEF UNICODE}, AnsiStrings{$ENDIF}, Log4Pascal;
 
 { TDcuDecompiler }
 
@@ -52,24 +55,49 @@ begin
       Result := 1;
     end;
   end;
+  UnitFromDcu.Free;
 end;
 
 constructor TDcuDecompiler.Create(AFiles: TStringList; ADirOutPutPath: string);
+begin
+  CreateDirs;
+  ProcessFiles(AFiles);
+end;
+
+procedure TDcuDecompiler.ProcessFiles(AFiles: TStringList);
 var
   I: Integer;
   FileNameOut: string;
+  DeveSair: Boolean;
 begin
-  CreateDirs;
-  for I := 0 to AFiles.Count - 1 do
+  {I'not using this method 'cause there are to much leaks on dcu32int that by now
+  make it unusable on a single exe'}
+  DeveSair := True;
+  if DeveSair then
+    Exit;
+
+  for I := 0 to AFiles.Count -1 do
   begin
     FileNameOut := FDir + ExtractFileName(AFiles[i]);
-    Writer := InitOut(FileNameOut);
     try
-      ProcessUnit(AFiles[i], True);
-    finally
-      Writer.Free;
+      Writer := InitOut(FileNameOut);
+      try
+        ProcessUnit(AFiles[i], True);
+      finally
+        Writer.Free;
+        Writer := nil;
+      end;
+      FreeStringWriterList;
+    except
+      on e: exception do
+        Logger.Error('TDcuDecompiler.ProcessFile[%s]: %s', [AFiles[i], E.Message]);
     end;
   end;
+end;
+
+procedure TDcuDecompiler.ProcessFilesFromExe(AFiles: TStringList);
+begin
+
 end;
 
 end.
