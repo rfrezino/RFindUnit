@@ -3,7 +3,7 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils, Log4Pascal;
+  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils, Log4Pascal, FindUnit.Worker;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -11,6 +11,9 @@ type
     FProjectUnits: TUnitsController;
     FLibraryPath: TUnitsController;
     FLastItem: string;
+
+    FProjectPathWorker: TParserWorker;
+    FLibraryPathWorker: TParserWorker;
 
     procedure CreateLibraryPathUnits;
     procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
@@ -37,12 +40,15 @@ type
 
     function IsProjectsUnitReady: Boolean;
     function IsLibraryPathsUnitReady: Boolean;
+
+    function GetLibraryPathStatus: string;
+    function GetProjectPathStatus: string;
   end;
 
 implementation
 
 uses
-  FindUnit.Worker, FindUnit.OTAUtils;
+  FindUnit.OTAUtils;
 
 { TEnvUpdateControl }
 
@@ -59,10 +65,11 @@ begin
   if FLibraryPath <> nil then
     Exit;
 
+  FLibraryPath := TUnitsController.Create;
+
   while (BorlandIDEServices as IOTAServices) = nil do
     Sleep(1000);
 
-  FLibraryPath := TUnitsController.Create;
   Paths := TStringList.Create;
   try
     Paths.Delimiter := ';';
@@ -70,7 +77,8 @@ begin
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
     Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
-    TParserWorker.Create(Paths, nil).Start(OnFinishedLibraryPathScan);
+    FLibraryPathWorker := TParserWorker.Create(Paths, nil);
+    FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
   finally
     Paths.Free;
   end;
@@ -82,12 +90,16 @@ var
   CurProject: IOTAProject;
   FileDesc: string;
   Files: TStringList;
+
 begin
   while GetCurrentProject = nil do
   begin
     Logger.Debug('TEnvironmentController.CreateProjectPathUnits: waiting GetCurrentProject <> nil');
     Sleep(1000);
   end;
+
+  if FProjectUnits <> nil then
+    Exit;
 
   FProjectUnits := TUnitsController.Create;
   CurProject :=  GetCurrentProject;
@@ -101,7 +113,10 @@ begin
 
     Files.Add(FileDesc);
   end;
-  TParserWorker.Create(nil, Files).Start(OnFinishedProjectPathScan);
+
+  FreeAndNil(FProjectPathWorker);
+  FProjectPathWorker := TParserWorker.Create(nil, Files);
+  FProjectPathWorker.Start(OnFinishedProjectPathScan);
 end;
 
 procedure TEnvironmentController.CreatingProject(const ProjectOrGroup: IOTAModule);
@@ -116,6 +131,13 @@ begin
   inherited;
 end;
 
+function TEnvironmentController.GetLibraryPathStatus: string;
+begin
+  Result := 'Ready';
+  if FLibraryPathWorker <> nil then
+    Result := Format('%d/%d Processing...', [FLibraryPathWorker.ParsedItems, FLibraryPathWorker.ItemsToParse]);
+end;
+
 function TEnvironmentController.GetLibraryPathUnits(const SearchString: string): TStringList;
 begin
   if IsLibraryPathsUnitReady then
@@ -127,6 +149,13 @@ end;
 function TEnvironmentController.GetName: string;
 begin
   Result := 'RfUtils - Replace FindUnit';
+end;
+
+function TEnvironmentController.GetProjectPathStatus: string;
+begin
+  Result := 'Ready';
+  if FProjectPathWorker <> nil then
+    Result := Format('%d/%d Files Processed...', [FProjectPathWorker.ParsedItems, FProjectPathWorker.ItemsToParse]);
 end;
 
 function TEnvironmentController.GetProjectUnits(const SearchString: string): TStringList;
@@ -149,12 +178,18 @@ end;
 
 procedure TEnvironmentController.LoadLibraryPath;
 begin
+  if (FLibraryPath <> nil) and (not FLibraryPath.Ready) then
+    Exit;
+
   FreeAndNil(FLibraryPath);
   Parallel.Async(CreateLibraryPathUnits);
 end;
 
 procedure TEnvironmentController.LoadProjectPath;
 begin
+  if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
+    Exit;
+
   FreeAndNil(FProjectUnits);
   Parallel.Async(CreateProjectPathUnits);
 end;
