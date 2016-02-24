@@ -16,14 +16,19 @@ type
     FPasFiles: TStringList;
     FFindUnits: TObjectList<TPasFile>;
     FIncluder: TIncludeHandlerInc;
+    FParsedItems: Integer;
 
     procedure ListPasFiles;
     procedure ParseFiles;
+    function GetItemsToParse: Integer;
   public
     constructor Create(DirectoriesPath: TStringList; Files: TStringList);
     destructor Destroy; override;
 
     procedure Start(CallBack: TOnFinished);
+
+    property ItemsToParse: Integer read GetItemsToParse;
+    property ParsedItems: Integer read FParsedItems;
   end;
 
 implementation
@@ -56,8 +61,15 @@ destructor TParserWorker.Destroy;
 begin
   FPasFiles.Free;
   FDirectoriesPath.Free;
-  FIncluder.Free;
+//  FIncluder.Free; //Weak reference
   inherited;
+end;
+
+function TParserWorker.GetItemsToParse: Integer;
+begin
+  Result := 0;
+  if (FPasFiles <> nil) then
+    Result := FPasFiles.Count;
 end;
 
 procedure TParserWorker.ListPasFiles;
@@ -108,6 +120,7 @@ var
   PasValue: TOmniValue;
 begin
   ResultList := TOmniBlockingCollection.Create;
+  FParsedItems := 0;
 
   Parallel.ForEach(0, FPasFiles.Count -1)
     .Into(ResultList)
@@ -121,6 +134,7 @@ begin
         try
           try
             Parser.SetIncluder(FIncluder);
+            InterlockedIncrement(FParsedItems);
             Item := Parser.Process;
             if Item <> nil then
               ResultList.Add(Item);
