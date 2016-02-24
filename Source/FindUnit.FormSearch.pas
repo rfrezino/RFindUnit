@@ -9,6 +9,7 @@ uses
 
 type
   TFuncBoolean = function: Boolean of object;
+  TFuncString = function: string of object;
 
   TfrmFindUnit = class(TForm)
     grpOptions: TGroupBox;
@@ -49,7 +50,7 @@ type
 
     procedure ProcessKeyCommand(var Msg: tagMSG; var Handled: Boolean);
 
-    procedure CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel; RefreshButton: TSpeedButton);
+    procedure CheckLoadingStatus(Func: TFuncBoolean; FuncStatus: TFuncString; LabelDesc: TLabel; RefreshButton: TSpeedButton);
     procedure CheckLibraryStatus;
     procedure FilterItemFromSearchString;
 
@@ -145,11 +146,16 @@ end;
 
 procedure TfrmFindUnit.btnRefreshProjectClick(Sender: TObject);
 begin
-  FEnvControl.LoadProjectPath;
-  CheckLibraryStatus;
+  try
+    FEnvControl.LoadProjectPath;
+    CheckLibraryStatus;
+  except
+    on E: exception do
+      MessageDlg('RFindUnit Error: ' + e.Message, mtError, [mbOK], 0);
+  end;
 end;
 
-procedure TfrmFindUnit.CheckLoadingStatus(Func: TFuncBoolean; LabelDesc: TLabel; RefreshButton: TSpeedButton);
+procedure TfrmFindUnit.CheckLoadingStatus(Func: TFuncBoolean; FuncStatus: TFuncString; LabelDesc: TLabel; RefreshButton: TSpeedButton);
 var
   NewCaption: string;
 begin
@@ -163,7 +169,7 @@ begin
   begin
     LabelDesc.Visible := True;
     RefreshButton.Visible := False;
-    NewCaption := 'Loading...';
+    NewCaption := FuncStatus;
     LabelDesc.Font.Color := $000069D2;
     LabelDesc.Font.Style := [fsItalic];
   end;
@@ -375,8 +381,8 @@ end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;
 begin
-  CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, lblProjectUnitsStatus, btnRefreshProject);
-  CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, lblLibraryUnitsStatus, btnRefreshLibraryPath);
+  CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, FEnvControl.GetProjectPathStatus, lblProjectUnitsStatus, btnRefreshProject);
+  CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, FEnvControl.GetLibraryPathStatus, lblLibraryUnitsStatus, btnRefreshLibraryPath);
 end;
 
 procedure TfrmFindUnit.tmrLoadedItensTimer(Sender: TObject);
