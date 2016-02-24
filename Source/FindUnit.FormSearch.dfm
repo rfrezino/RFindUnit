@@ -3,7 +3,7 @@ object frmFindUnit: TfrmFindUnit
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Find Uses'
-  ClientHeight = 484
+  ClientHeight = 492
   ClientWidth = 580
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,9 +20,9 @@ object frmFindUnit: TfrmFindUnit
   TextHeight = 13
   object grpOptions: TGroupBox
     Left = 0
-    Top = 415
+    Top = 398
     Width = 580
-    Height = 69
+    Height = 94
     Align = alBottom
     Caption = 'Search Options'
     TabOrder = 2
@@ -58,6 +58,14 @@ object frmFindUnit: TfrmFindUnit
       Visible = False
       OnClick = btnRefreshLibraryPathClick
     end
+    object btnProcessDCUs: TSpeedButton
+      Left = 22
+      Top = 67
+      Width = 220
+      Height = 22
+      Caption = 'Process DCUs files from Library Path'
+      OnClick = btnProcessDCUsClick
+    end
     object chkSearchLibraryPath: TCheckBox
       Left = 19
       Top = 45
@@ -85,7 +93,7 @@ object frmFindUnit: TfrmFindUnit
     Left = 0
     Top = 73
     Width = 580
-    Height = 342
+    Height = 325
     Align = alClient
     Caption = 'Result'
     TabOrder = 1
@@ -93,7 +101,7 @@ object frmFindUnit: TfrmFindUnit
       Left = 2
       Top = 15
       Width = 576
-      Height = 325
+      Height = 308
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
@@ -156,13 +164,13 @@ object frmFindUnit: TfrmFindUnit
   end
   object aevKeys: TApplicationEvents
     OnMessage = aevKeysMessage
-    Left = 537
-    Top = 423
+    Left = 538
+    Top = 300
   end
   object tmrLoadedItens: TTimer
     Interval = 700
     OnTimer = tmrLoadedItensTimer
-    Left = 470
-    Top = 428
+    Left = 474
+    Top = 301
   end
 end

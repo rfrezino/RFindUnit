@@ -1,30 +1,27 @@
 package RFindUnit;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
+{$OPTIMIZATION ON}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
+{$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
 
 requires
@@ -83,20 +80,7 @@ contains
   TransparentCanvas in 'Thirdy\TransparentCanvas\TransparentCanvas.pas',
   FindUnit.FormMessage in 'Source\FindUnit.FormMessage.pas' {frmMessage},
   FindUnit.DelphiVlcWrapper in 'Source\FindUnit.DelphiVlcWrapper.pas',
-  FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas',
-  DasmCF in 'Thirdy\Dcu32Int\DasmCF.pas',
-  DasmDefs in 'Thirdy\Dcu32Int\DasmDefs.pas',
-  DasmMSIL in 'Thirdy\Dcu32Int\DasmMSIL.pas',
-  DasmX86 in 'Thirdy\Dcu32Int\DasmX86.pas',
-  DCP in 'Thirdy\Dcu32Int\DCP.pas',
-  DCU_In in 'Thirdy\Dcu32Int\DCU_In.pas',
-  DCU_Out in 'Thirdy\Dcu32Int\DCU_Out.pas',
-  DCU32 in 'Thirdy\Dcu32Int\DCU32.pas',
-  DCURecs in 'Thirdy\Dcu32Int\DCURecs.pas',
-  DCUTbl in 'Thirdy\Dcu32Int\DCUTbl.pas',
-  FixUp in 'Thirdy\Dcu32Int\FixUp.pas',
-  op in 'Thirdy\Dcu32Int\op.pas',
-  DAsmUtil in 'Thirdy\Dcu32Int\DAsmUtil.pas';
+  FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas';
 
 end.
 

@@ -29,6 +29,7 @@ type
     btnRefreshProject: TSpeedButton;
     btnRefreshLibraryPath: TSpeedButton;
     btnAdd: TButton;
+    btnProcessDCUs: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure chkSearchLibraryPathClick(Sender: TObject);
     procedure btnRefreshProjectClick(Sender: TObject);
     procedure btnRefreshLibraryPathClick(Sender: TObject);
+    procedure btnProcessDCUsClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
 
@@ -136,6 +138,20 @@ end;
 procedure TfrmFindUnit.btnAddClick(Sender: TObject);
 begin
   AddUnit;
+end;
+
+procedure TfrmFindUnit.btnProcessDCUsClick(Sender: TObject);
+const
+  MESGEM = 'This command will list all the DCUs files that you don´t have access to .PAS '
+   + ' and process it to make it available for search.'
+   + ' This process will slowdown your computer and can take some minutes (~2), '
+   + ' are you sure that you want to run it now ?';
+begin
+  if MessageDlg(MESGEM, mtWarning, [mbCancel, mbYes], 0) <> mrYes then
+    Exit;
+
+  btnProcessDCUs.Enabled := False;
+  FEnvControl.ProcessDCUFiles;
 end;
 
 procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
@@ -381,6 +397,7 @@ end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;
 begin
+  btnProcessDCUs.Enabled := not FEnvControl.ProcessingDCU;
   CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, FEnvControl.GetProjectPathStatus, lblProjectUnitsStatus, btnRefreshProject);
   CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, FEnvControl.GetLibraryPathStatus, lblLibraryUnitsStatus, btnRefreshLibraryPath);
 end;
