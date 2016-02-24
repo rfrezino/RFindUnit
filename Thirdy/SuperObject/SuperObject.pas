@@ -91,11 +91,11 @@
 
 {$if CompilerVersion >= 14.0}
   {$define HAVE_RTTI}
-{$endif}
+{$ifend}
 
 {$if CompilerVersion >= 14.0}
   {$define NEED_FORMATSETTINGS}
-{$endif}
+{$ifend}
 
 {$if defined(VER230)}
   {$define NEED_FORMATSETTINGS}

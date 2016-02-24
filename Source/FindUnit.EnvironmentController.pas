@@ -3,7 +3,7 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils;
+  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils, Log4Pascal;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -84,7 +84,10 @@ var
   Files: TStringList;
 begin
   while GetCurrentProject = nil do
+  begin
+    Logger.Debug('TEnvironmentController.CreateProjectPathUnits: waiting GetCurrentProject <> nil');
     Sleep(1000);
+  end;
 
   FProjectUnits := TUnitsController.Create;
   CurProject :=  GetCurrentProject;
