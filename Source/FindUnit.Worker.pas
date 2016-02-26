@@ -18,39 +18,54 @@ type
     FIncluder: TIncludeHandlerInc;
     FParsedItems: Integer;
 
+    FDcuFiles: TStringList;
+    FParseDcuFile: Boolean;
+
     procedure ListPasFiles;
+    procedure ListDcuFiles;
+
+    procedure RemoveDcuFromExistingPasFiles;
+    procedure GeneratePasFromDcus;
     procedure ParseFiles;
     function GetItemsToParse: Integer;
+    procedure RunTasks;
   public
-    constructor Create(DirectoriesPath: TStringList; Files: TStringList);
+    constructor Create(var DirectoriesPath: TStringList; var Files: TStringList);
     destructor Destroy; override;
 
-    procedure Start(CallBack: TOnFinished);
+    procedure Start(CallBack: TOnFinished); overload;
+    function Start: TObjectList<TPasFile>; overload;
 
     property ItemsToParse: Integer read GetItemsToParse;
     property ParsedItems: Integer read FParsedItems;
+
+    property ParseDcuFile: Boolean read FParseDcuFile write FParseDcuFile;
   end;
 
 implementation
 
 uses
-  FindUnit.Utils, SysUtils, Windows;
+  FindUnit.Utils, SysUtils, Windows, FindUnit.DcuDecompiler;
 
 { TParserWorker }
 
-constructor TParserWorker.Create(DirectoriesPath: TStringList; Files: TStringList);
+constructor TParserWorker.Create(var DirectoriesPath: TStringList; var Files: TStringList);
 begin
   FDirectoriesPath := TStringList.Create;
   if DirectoriesPath <> nil then
     FDirectoriesPath.Text := TPathConverter.ConvertPathsToFullPath(DirectoriesPath.Text);
-  DirectoriesPath.Free;
+  FreeAndNil(DirectoriesPath);
 
   FPasFiles := TStringList.Create;
   FPasFiles.Sorted := True;
   FPasFiles.Duplicates := dupIgnore;
   if Files <> nil then
     FPasFiles.AddStrings(Files);
-  Files.Free;
+  FreeAndNil(Files);
+
+  FDcuFiles := TStringList.Create;
+  FDcuFiles.Sorted := True;
+  FDcuFiles.Duplicates := dupIgnore;
 
   FFindUnits := TObjectList<TPasFile>.Create;
 
@@ -62,6 +77,7 @@ begin
   FPasFiles.Free;
   FDirectoriesPath.Free;
 //  FIncluder.Free; //Weak reference
+  FDcuFiles.Free;
   inherited;
 end;
 
@@ -70,6 +86,61 @@ begin
   Result := 0;
   if (FPasFiles <> nil) then
     Result := FPasFiles.Count;
+end;
+
+procedure TParserWorker.GeneratePasFromDcus;
+var
+  DcuDecompiler: TDcuDecompiler;
+begin
+  if not FParseDcuFile then
+    Exit;
+
+  DcuDecompiler := TDcuDecompiler.Create;
+  try
+    DcuDecompiler.ProcessFiles(FDcuFiles);
+  finally
+    DcuDecompiler.Free;
+  end;
+end;
+
+procedure TParserWorker.ListDcuFiles;
+var
+  ResultList: TOmniBlockingCollection;
+  RetunrValue: TObject;
+  DcuFile: TOmniValue;
+begin
+  if not FParseDcuFile then
+    Exit;
+
+  FDirectoriesPath.Add(DirRealeaseWin32);
+
+  ResultList := TOmniBlockingCollection.Create;
+
+  Parallel.ForEach(0, FDirectoriesPath.Count -1)
+    .Into(ResultList)
+    .Execute(
+      procedure (const index: Integer; var result: TOmniValue)
+      var
+      DcuFiles: TStringList;
+      DcuFile: string;
+      begin
+        try
+          DcuFiles := GetAllDcuFilesFromPath(FDirectoriesPath[index]);
+          try
+            for DcuFile in DcuFiles do
+              ResultList.Add(Trim(DcuFile));
+          finally
+            DcuFiles.Free;
+          end;
+        except
+          on E: exception do
+            Logger.Error('TParserWorker.ListDcuFiles: ' + e.Message);
+        end;
+      end
+    );
+
+  while ResultList.Take(DcuFile) do
+    FDcuFiles.Add(DcuFile.AsString);
 end;
 
 procedure TParserWorker.ListPasFiles;
@@ -99,7 +170,7 @@ begin
           PasFiles := GetAllPasFilesFromPath(FDirectoriesPath[index]);
           try
             for PasFile in PasFiles do
-              ResultList.Add(PasFile);
+              ResultList.Add(Trim(PasFile));
           finally
             PasFiles.Free;
           end;
@@ -152,11 +223,62 @@ begin
     FFindUnits.Add(TPasFile(PasValue.AsObject));
 end;
 
-procedure TParserWorker.Start;
+procedure TParserWorker.RemoveDcuFromExistingPasFiles;
+var
+  DcuFilesName: TStringList;
+  PasFilesName: TStringList;
+  I: Integer;
+  PasFile: string;
+  DcuFile: string;
+begin
+  if FDcuFiles.Count = 0 then
+    Exit;
+
+  PasFilesName := TStringList.Create;
+  PasFilesName.Sorted := True;
+  PasFilesName.Duplicates := dupIgnore;
+  try
+    for I := 0 to FPasFiles.Count -1 do
+    begin
+      PasFile := FPasFiles[i];
+      PasFile := UpperCase(ExtractFileName(PasFile));
+      PasFile := StringReplace(PasFile, '.PAS', '', [rfReplaceAll]);
+      PasFilesName.Add(PasFile);
+    end;
+
+    for I := FDcuFiles.Count -1 downto 0 do
+    begin
+      DcuFile := FDcuFiles[i];
+      DcuFile:= UpperCase(ExtractFileName(DcuFile));
+      DcuFile := StringReplace(DcuFile, '.DCU', '', [rfReplaceAll]);
+
+      if PasFilesName.IndexOf(DcuFile) > -1 then
+        FDcuFiles.Delete(I);
+    end;
+  finally
+    PasFilesName.Free;
+  end;
+end;
+
+function TParserWorker.Start: TObjectList<TPasFile>;
+begin
+  RunTasks;
+  Result := FFindUnits;
+end;
+
+procedure TParserWorker.RunTasks;
 begin
   FIncluder.Process;
   ListPasFiles;
+  ListDcuFiles;
+  RemoveDcuFromExistingPasFiles;
+  GeneratePasFromDcus;
   ParseFiles;
+end;
+
+procedure TParserWorker.Start(CallBack: TOnFinished);
+begin
+  RunTasks;
   CallBack(FFindUnits);
 end;
 

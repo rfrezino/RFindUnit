@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons;
+  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -29,6 +29,7 @@ type
     btnRefreshProject: TSpeedButton;
     btnRefreshLibraryPath: TSpeedButton;
     btnAdd: TButton;
+    btnProcessDCUs: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure chkSearchLibraryPathClick(Sender: TObject);
     procedure btnRefreshProjectClick(Sender: TObject);
     procedure btnRefreshLibraryPathClick(Sender: TObject);
+    procedure btnProcessDCUsClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
 
@@ -59,6 +61,8 @@ type
 
     procedure SelectTheMostSelectableItem;
     procedure ShowTextOnScreen(Text: string);
+    procedure ProcessDCUFiles;
+    function CanProcessDCUFiles: Boolean;
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure SetSearch(const Search: string);
@@ -72,7 +76,7 @@ implementation
 
 uses
   FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor,
-  FindUnit.FormMessage;
+  FindUnit.FormMessage, FindUnit.DcuDecompiler;
 
 {$R *.dfm}
 
@@ -136,6 +140,60 @@ end;
 procedure TfrmFindUnit.btnAddClick(Sender: TObject);
 begin
   AddUnit;
+end;
+
+procedure TfrmFindUnit.btnProcessDCUsClick(Sender: TObject);
+begin
+  if CanProcessDCUFiles then
+    ProcessDCUFiles;
+end;
+
+function TfrmFindUnit.CanProcessDCUFiles: Boolean;
+const
+  MESGEM = 'The dcu32int.exe was not found. It should be at %s . If you download the project´s source you will '
+    + 'find it at {PATH}\RFindUnit\Thirdy\Dcu32Int\dcu32int.exe . Copy the executable and past it on the %s, and '
+    + 'try execute this command again. If you don´t know where to find this executable I can send you '
+    + 'to the project page, do you want I open it to you ?';
+var
+  ForMessage: string;
+  MesDlg: TForm;
+begin
+  Result := True;
+  if Dcu32IntExecutableExists then
+    Exit;
+
+  Result := False;
+
+  ForMessage := GetDcu32ExecutablePath;
+  ForMessage := Format(MESGEM, [ForMessage, ForMessage]);
+
+  MesDlg := CreateMessageDialog(ForMessage, mtError, [mbCancel, mbYes]);
+  try
+    MesDlg.Width := 900;
+    MesDlg.Position := poScreenCenter;
+    MesDlg.ShowModal;
+
+    if MesDlg.ModalResult <> mrYes then
+      Exit;
+  finally
+    MesDlg.Free;
+  end;
+
+  ShellExecute(0, 'open', PChar('https://github.com/rfrezino/RFindUnit/'), nil, nil, SW_SHOWNORMAL);
+end;
+
+procedure TfrmFindUnit.ProcessDCUFiles;
+const
+  MESGEM = 'This command will list all the DCUs files that you don´t have access to .PAS '
+   + ' and process it to make it available for search.'
+   + ' This process will slowdown your computer and can take some minutes (~2), '
+   + ' are you sure that you want to run it now ?';
+begin
+  if MessageDlg(MESGEM, mtWarning, [mbCancel, mbYes], 0) <> mrYes then
+    Exit;
+
+  btnProcessDCUs.Enabled := False;
+  FEnvControl.ProcessDCUFiles;
 end;
 
 procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
@@ -381,6 +439,7 @@ end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;
 begin
+  btnProcessDCUs.Enabled := not FEnvControl.ProcessingDCU;
   CheckLoadingStatus(FEnvControl.IsProjectsUnitReady, FEnvControl.GetProjectPathStatus, lblProjectUnitsStatus, btnRefreshProject);
   CheckLoadingStatus(FEnvControl.IsLibraryPathsUnitReady, FEnvControl.GetLibraryPathStatus, lblLibraryUnitsStatus, btnRefreshLibraryPath);
 end;

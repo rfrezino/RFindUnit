@@ -79,7 +79,8 @@ contains
   SuperObject in 'Thirdy\SuperObject\SuperObject.pas',
   TransparentCanvas in 'Thirdy\TransparentCanvas\TransparentCanvas.pas',
   FindUnit.FormMessage in 'Source\FindUnit.FormMessage.pas' {frmMessage},
-  FindUnit.DelphiVlcWrapper in 'Source\FindUnit.DelphiVlcWrapper.pas';
+  FindUnit.DelphiVlcWrapper in 'Source\FindUnit.DelphiVlcWrapper.pas',
+  FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas';
 
 end.
 

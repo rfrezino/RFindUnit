@@ -276,7 +276,17 @@ begin
 
   Logger.Debug('TFindUnitParser.Process: Parsing file %s', [FFilePath]);
   try
-    FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, FIncluder);
+
+    try
+      FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, FIncluder);
+    except
+      on E: ESyntaxTreeException do
+      begin
+        FUnitNode := e.SyntaxTree;
+        e.SyntaxTree := nil;
+      end;
+    end;
+
     if FUnitNode = nil then
       Exit;
 

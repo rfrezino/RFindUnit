@@ -15,8 +15,10 @@ type
       BPL_FILENAME = 'RFindUnit.bpl';
       DPK_FILENAME = 'RFindUnit.dpk';
       RSVARS_FILENAME = 'rsvars.bat';
+      DCU32INT_EXE = 'dcu32int.exe';
   var
-    FDelphiBplOutPut, FDelphiBinPath, FCurPath, FOutPutDir, FDelphiDesc: string;
+    FDelphiBplOutPut, FDelphiBinPath, FCurPath, FOutPutDir, FDelphiDesc,
+    FUserAppDirFindUnit, FDcu32IntPath: string;
     FReg, FRegPacks: string;
 
     procedure LoadPaths(DelphiDesc, DelphiPath: string);
@@ -28,6 +30,7 @@ type
     procedure RegisterBpl;
     procedure RemoveOldDelphiBpl;
     procedure InstallBpl;
+    procedure InstallDcu32Int;
   public
     constructor Create(DelphiDesc, DelphiPath: string);
     destructor Destroy; override;
@@ -102,6 +105,7 @@ begin
   RegisterBpl;
   RemoveOldDelphiBpl;
   InstallBpl;
+  InstallDcu32Int;
 end;
 
 procedure TInstaller.InstallBpl;
@@ -126,6 +130,12 @@ begin
   end;
 end;
 
+procedure TInstaller.InstallDcu32Int;
+begin
+  FCallBackProc('Installing Dcu32Int');
+  Windows.CopyFile(PChar(FDcu32IntPath + DCU32INT_EXE), PChar(FUserAppDirFindUnit + DCU32INT_EXE), True);
+end;
+
 procedure TInstaller.LoadPaths(DelphiDesc, DelphiPath: string);
 var
   DelphiInst: TDelphiInstallationCheck;
@@ -134,23 +144,14 @@ begin
   FDelphiBinPath := ExtractFilePath(DelphiPath);
   FCurPath := ExtractFilePath(ParamStr(0));
 
-  FDelphiBplOutPut := GetEnvironmentVariable('public') + '\Documents\';
-  CreateDir(FDelphiBplOutPut);
-  FDelphiBplOutPut := FDelphiBplOutPut + 'RAD Studio\';
-  CreateDir(FDelphiBplOutPut);
-  FDelphiBplOutPut := FDelphiBplOutPut + 'RFindUnit\';
-  CreateDir(FDelphiBplOutPut);
-  FDelphiBplOutPut := FDelphiBplOutPut + DelphiDesc + '\';
-  CreateDir(FDelphiBplOutPut);
-  FDelphiBplOutPut := FDelphiBplOutPut + 'bpl\';
-  CreateDir(FDelphiBplOutPut);
+  FDelphiBplOutPut := GetEnvironmentVariable('public') + '\Documents\RAD Studio\RFindUnit\' + DelphiDesc + '\bpl\';
+  FDcu32IntPath := FCurPath + '\Thirdy\Dcu32Int\';
+  FUserAppDirFindUnit := GetEnvironmentVariable('appdata') + '\DelphiFindUnit\';
+  FOutPutDir := FCurPath + 'Installer\build\' + FDelphiDesc + '\';
 
-  FOutPutDir := FCurPath + 'Installer\';
-  CreateDir(FOutPutDir);
-  FOutPutDir := FOutPutDir + 'build\';
-  CreateDir(FOutPutDir);
-  FOutPutDir := FOutPutDir + FDelphiDesc + '\';
-  CreateDir(FOutPutDir);
+  ForceDirectories(FUserAppDirFindUnit);
+  ForceDirectories(FDelphiBplOutPut);
+  ForceDirectories(FOutPutDir);
 
   DelphiInst := TDelphiInstallationCheck.Create;
   try

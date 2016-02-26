@@ -8,9 +8,10 @@ uses
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
   private
+    FProcessingDCU: Boolean;
+
     FProjectUnits: TUnitsController;
     FLibraryPath: TUnitsController;
-    FLastItem: string;
 
     FProjectPathWorker: TParserWorker;
     FLibraryPathWorker: TParserWorker;
@@ -26,6 +27,8 @@ type
     procedure ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure ProjectSaving(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
     procedure ProjectClosing(const ProjectOrGroup: IOTAModule);
+
+    procedure CallProcessDcuFiles;
   public
     function GetName: string;
 
@@ -43,12 +46,16 @@ type
 
     function GetLibraryPathStatus: string;
     function GetProjectPathStatus: string;
+
+    procedure ProcessDCUFiles;
+
+    property ProcessingDCU: Boolean read FProcessingDCU;
   end;
 
 implementation
 
 uses
-  FindUnit.OTAUtils;
+  FindUnit.OTAUtils, FindUnit.Utils;
 
 { TEnvUpdateControl }
 
@@ -59,7 +66,7 @@ end;
 
 procedure TEnvironmentController.CreateLibraryPathUnits;
 var
-  Paths: TStringList;
+  Paths, Files: TStringList;
   EnvironmentOptions: IOTAEnvironmentOptions;
 begin
   if FLibraryPath <> nil then
@@ -70,18 +77,17 @@ begin
   while (BorlandIDEServices as IOTAServices) = nil do
     Sleep(1000);
 
-  Paths := TStringList.Create;
-  try
-    Paths.Delimiter := ';';
-    Paths.StrictDelimiter := True;
-    EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
-    FLibraryPathWorker := TParserWorker.Create(Paths, nil);
-    FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
-  finally
-    Paths.Free;
-  end;
+  Files := nil;
+  Paths := TStringList.Create;
+  Paths.Delimiter := ';';
+  Paths.StrictDelimiter := True;
+  EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
+  Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
+  Paths.Add(FindUnitDcuDir);
+
+  FLibraryPathWorker := TParserWorker.Create(Paths, Files);
+  FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
 end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
@@ -89,8 +95,7 @@ var
   I: Integer;
   CurProject: IOTAProject;
   FileDesc: string;
-  Files: TStringList;
-
+  Files, Paths: TStringList;
 begin
   while GetCurrentProject = nil do
   begin
@@ -114,8 +119,9 @@ begin
     Files.Add(FileDesc);
   end;
 
+  Paths := nil;
   FreeAndNil(FProjectPathWorker);
-  FProjectPathWorker := TParserWorker.Create(nil, Files);
+  FProjectPathWorker := TParserWorker.Create(Paths, Files);
   FProjectPathWorker.Start(OnFinishedProjectPathScan);
 end;
 
@@ -198,12 +204,44 @@ procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectLis
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
+//  FParserLibraryWorker.Free;
 end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 begin
   FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
+end;
+
+procedure TEnvironmentController.ProcessDCUFiles;
+begin
+  Parallel.Async(CallProcessDcuFiles);
+end;
+
+procedure TEnvironmentController.CallProcessDcuFiles;
+var
+  Paths, Files: TStringList;
+  EnvironmentOptions: IOTAEnvironmentOptions;
+  DcuProcess: TParserWorker;
+  Items: TObject;
+begin
+  FProcessingDCU := True;
+  while (BorlandIDEServices as IOTAServices) = nil do
+    Sleep(1000);
+
+  Paths := TStringList.Create;
+  Paths.Delimiter := ';';
+  Paths.StrictDelimiter := True;
+  EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
+  Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
+
+  Files := nil;
+  DcuProcess := TParserWorker.Create(Paths, Files);
+  DcuProcess.ParseDcuFile := True;
+  Items := DcuProcess.Start;
+  DcuProcess.Free;
+  Items.Free;
+  FProcessingDCU := False;
 end;
 
 procedure TEnvironmentController.ProjectClosing(const ProjectOrGroup: IOTAModule);
