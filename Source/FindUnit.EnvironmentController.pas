@@ -84,7 +84,7 @@ begin
   Paths.StrictDelimiter := True;
   EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
   Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
-  Paths.Add(FindUnitDir + 'DecompiledDcus\');
+  Paths.Add(FindUnitDcuDir);
 
   FLibraryPathWorker := TParserWorker.Create(Paths, Files);
   FLibraryPathWorker.Start(OnFinishedLibraryPathScan);

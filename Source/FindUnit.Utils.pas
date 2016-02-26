@@ -30,16 +30,45 @@ function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boo
   const ACaseSensitive: Boolean = False): string; inline;
 
 function IsProcessRunning(const AExeFileName: string): Boolean;
+function GetHashCodeFromStr(Str: PChar): Integer;
 
 var
   FindUnitDir: string;
   FindUnitDirLogger: string;
+  FindUnitDcuDir: string;
   DirRealeaseWin32: string;
 
 implementation
 
 uses
   Types, SysUtils, Log4PAscal;
+
+function GetHashCodeFromStr(Str: PChar): Integer;
+var
+  Off, Len, Skip, I: Integer;
+begin
+  Result := 0;
+  Off := 1;
+  Len := StrLen(Str);
+  if Len < 16 then
+    for I := (Len - 1) downto 0 do
+    begin
+      Result := (Result * 37) + Ord(Str[Off]);
+      Inc(Off);
+    end
+  else
+  begin
+    { Only sample some characters }
+    Skip := Len div 8;
+    I := Len - 1;
+    while I >= 0 do
+    begin
+      Result := (Result * 39) + Ord(Str[Off]);
+      Dec(I, Skip);
+      Inc(Off, Skip);
+    end;
+  end;
+end;
 
 function IsProcessRunning(const AExeFileName: string): Boolean;
 var
@@ -173,9 +202,12 @@ procedure CarregarPaths;
 begin
   FindUnitDir := GetEnvironmentVariable('APPDATA') + '\DelphiFindUnit\';
   FindUnitDirLogger := FindUnitDir + 'Logger\';
+  FindUnitDcuDir := FindUnitDir + IntToStr(GetHashCodeFromStr(PChar(ParamStr(0)))) + '\';
+  FindUnitDcuDir := FindUnitDcuDir + 'DecompiledDcus\';
 
-  CreateDir(FindUnitDir);
-  CreateDir(FindUnitDirLogger);
+  ForceDirectories(FindUnitDir);
+  ForceDirectories(FindUnitDcuDir);
+  ForceDirectories(FindUnitDirLogger);
 
   DirRealeaseWin32 := ExtractFilePath(ParamStr(0));
   DirRealeaseWin32 := StringReplace(DirRealeaseWin32,'\bin','\lib\win32\release',[rfReplaceAll, rfIgnoreCase]);

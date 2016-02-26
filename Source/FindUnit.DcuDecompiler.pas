@@ -5,6 +5,9 @@ interface
 uses
   Classes, FindUnit.Utils, Windows, ShellAPI;
 
+const
+  DCU32INT_EXECUTABLE = 'dcu32int.exe';
+
 type
   TDcuDecompiler = class(TObject)
   private
@@ -17,27 +20,45 @@ type
 
     procedure ProcessFilesInternal(AFiles: TStringList);
     procedure ProcessFilesFromExe(AFiles: TStringList);
-
-    function Dcu32IntExecutableExists: Boolean;
   public
     constructor Create;
 
     procedure ProcessFiles(AFiles: TStringList);
+
+    function Dcu32IntExecutableExists: Boolean;
   end;
+
+  function Dcu32IntExecutableExists: Boolean;
+  function GetDcu32ExecutablePath: string;
 
 implementation
 
 uses
   SysUtils{$IFDEF UNICODE}, AnsiStrings{$ENDIF}, Log4Pascal;
 
-const
-  DCU32INT_EXECUTABLE = 'dcu32int.exe';
-
 { TDcuDecompiler }
+
+function GetDcu32ExecutablePath: string;
+var
+  Dcu: TDcuDecompiler;
+begin
+  Dcu := TDcuDecompiler.Create;
+  Result := Dcu.FDir;
+  Dcu.Free;
+end;
+
+function Dcu32IntExecutableExists: Boolean;
+var
+  Dcu: TDcuDecompiler;
+begin
+  Dcu := TDcuDecompiler.Create;
+  Result := Dcu.Dcu32IntExecutableExists;
+  Dcu.Free;
+end;
 
 procedure TDcuDecompiler.CreateDirs;
 begin
-  FDir := FindUnitDir + 'DecompiledDcus\';
+  FDir := FindUnitDcuDir;
   FExecutablePath := FindUnitDir + DCU32INT_EXECUTABLE;
   CreateDir(FDir);
 end;
