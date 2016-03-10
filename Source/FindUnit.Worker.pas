@@ -105,7 +105,7 @@ end;
 
 procedure TParserWorker.ListDcuFiles;
 var
-  ResultList: TOmniBlockingCollection;
+  ResultList: IOmniBlockingCollection;
   RetunrValue: TObject;
   DcuFile: TOmniValue;
 begin
@@ -145,7 +145,7 @@ end;
 
 procedure TParserWorker.ListPasFiles;
 var
-  ResultList: TOmniBlockingCollection;
+  ResultList: IOmniBlockingCollection;
   RetunrValue: TObject;
   PasValue: TOmniValue;
 begin
@@ -187,7 +187,7 @@ end;
 
 procedure TParserWorker.ParseFiles;
 var
-  ResultList: TOmniBlockingCollection;
+  ResultList: IOmniBlockingCollection;
   PasValue: TOmniValue;
 begin
   ResultList := TOmniBlockingCollection.Create;
