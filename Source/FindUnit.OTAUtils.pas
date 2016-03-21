@@ -9,6 +9,8 @@ uses
   function BrowseURL(const URL: string) : boolean;
   function GetEditView(var ASourceEditor: IOTASourceEditor; var AEditView: IOTAEditView): boolean;
   function EditorAsString(SourceEditor : IOTASourceEditor): string;
+  function ActiveSourceEditor: IOTASourceEditor;
+  function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
 
   //GeExperts
   function GxOtaGetCurrentModule: IOTAModule;
@@ -18,6 +20,7 @@ uses
   function OtaGetCurrentSourceEditor: IOTASourceEditor;
   function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
 
+
 var
   PathUserDir: string;
 
@@ -25,6 +28,33 @@ implementation
 
 uses
   Windows, ShellAPI, ShlObj, ActiveX, SysUtils;
+
+function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
+var
+  iFileCount : Integer;
+  i : Integer;
+begin
+  Result := nil;
+  if Module = nil then Exit;
+  with Module do
+  begin
+    iFileCount := GetModuleFileCount;
+    for i := 0 To iFileCount - 1 do
+      if GetModuleFileEditor(i).QueryInterface(IOTASourceEditor,Result) = S_OK then
+        Break;
+  end;
+end;
+
+function ActiveSourceEditor: IOTASourceEditor;
+var
+  CM : IOTAModule;
+begin
+  Result := Nil;
+  if BorlandIDEServices = nil then
+    Exit;
+  CM := (BorlandIDEServices as IOTAModuleServices).CurrentModule;
+  Result := SourceEditor(CM);
+end;
 
 function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
 var
