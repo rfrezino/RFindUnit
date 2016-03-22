@@ -101,11 +101,38 @@ object frmFindUnit: TfrmFindUnit
       Left = 2
       Top = 15
       Width = 576
-      Height = 308
+      Height = 261
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
       OnDblClick = lstResultDblClick
+    end
+    object pnlMsg: TPanel
+      Left = 2
+      Top = 276
+      Width = 576
+      Height = 47
+      Align = alBottom
+      TabOrder = 1
+      Visible = False
+      object lblMessage: TLabel
+        Left = 1
+        Top = 1
+        Width = 574
+        Height = 45
+        Align = alClient
+        Caption = 
+          '  Remember that you can create incremental searchs like: "string' +
+          '   replace", I'#39#39'm going to look for the arguments separataly'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 19174
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsItalic]
+        ParentFont = False
+        Layout = tlCenter
+        WordWrap = True
+      end
     end
   end
   object grpSearch: TGroupBox

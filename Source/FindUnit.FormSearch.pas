@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus,
+  Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
   FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI;
 
 type
@@ -30,6 +30,8 @@ type
     btnRefreshLibraryPath: TSpeedButton;
     btnAdd: TButton;
     btnProcessDCUs: TSpeedButton;
+    pnlMsg: TPanel;
+    lblMessage: TLabel;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -63,6 +65,7 @@ type
     procedure ShowTextOnScreen(Text: string);
     procedure ProcessDCUFiles;
     function CanProcessDCUFiles: Boolean;
+    procedure ShowMessageToMuchResults(Show: Boolean);
   public
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure SetSearch(const Search: string);
@@ -76,7 +79,7 @@ implementation
 
 uses
   FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor,
-  FindUnit.FormMessage, FindUnit.DcuDecompiler;
+  FindUnit.FormMessage, FindUnit.DcuDecompiler, FindUnit.Header;
 
 {$R *.dfm}
 
@@ -198,20 +201,23 @@ end;
 
 procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
 begin
-  TButton(Sender).Visible := False;
-  FEnvControl.LoadLibraryPath;
-  CheckLibraryStatus;
+  try
+    FEnvControl.LoadLibraryPath;
+    CheckLibraryStatus;
+  except
+  on E: exception do
+    MessageDlg('btnRefreshLibraryPathClick Error: ' + e.Message, mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TfrmFindUnit.btnRefreshProjectClick(Sender: TObject);
 begin
   try
-    TButton(Sender).Visible := False;
     FEnvControl.LoadProjectPath;
     CheckLibraryStatus;
   except
     on E: exception do
-      MessageDlg('RFindUnit Error: ' + e.Message, mtError, [mbOK], 0);
+      MessageDlg('btnRefreshProjectClick Error: ' + e.Message, mtError, [mbOK], 0);
   end;
 end;
 
@@ -270,11 +276,26 @@ begin
     Close;
 end;
 
+procedure TfrmFindUnit.ShowMessageToMuchResults(Show: Boolean);
+begin
+  pnlMsg.Visible := Show;
+  lblMessage.Caption := '  There are to many results on your search, I''m not showing everything. Type a bigger search.' + #13#10 +
+    'Remember that you can create incremental searchs like: "string   replace", I''m going to look for the arguments separataly.'
+end;
+
 procedure TfrmFindUnit.FilterItem(const SearchString: string);
 var
   Return: TStringList;
   ResultSearch: TStringList;
+  ToMuchResults: Boolean;
+
+  procedure IsThereToMuchResults;
+  begin
+    if Return.Count >= MAX_RETURN_ITEMS then
+      ToMuchResults := True;
+  end;
 begin
+  ToMuchResults := False;
   lstResult.Items.BeginUpdate;
   ResultSearch := TStringList.Create;
   try
@@ -286,6 +307,7 @@ begin
     begin
       Return := FEnvControl.GetProjectUnits(SearchString);
       ResultSearch.Text := ResultSearch.Text + Return.Text;
+      IsThereToMuchResults;
       Return.Free;
     end;
 
@@ -293,13 +315,15 @@ begin
     begin
       Return := FEnvControl.GetLibraryPathUnits(SearchString);
       ResultSearch.Text := ResultSearch.Text + Return.Text;
+      IsThereToMuchResults;
       Return.Free;
     end;
-
     ResultSearch.Sorted := True;
     lstResult.Items.Text := ResultSearch.Text;
 
     SelectTheMostSelectableItem;
+    ShowMessageToMuchResults(ToMuchResults);
+    lstResult.Count
   finally
     ResultSearch.Free;
     lstResult.Items.EndUpdate;
@@ -308,7 +332,11 @@ end;
 
 procedure TfrmFindUnit.FilterItemFromSearchString;
 begin
-  FilterItem(edtSearch.Text);
+  try
+    FilterItem(edtSearch.Text);
+  except
+    ShowMessage('FilterItemFromSearchString');
+  end;
 end;
 
 procedure TfrmFindUnit.FormClose(Sender: TObject; var Action: TCloseAction);

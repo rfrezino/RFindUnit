@@ -72,8 +72,6 @@ begin
   if FLibraryPath <> nil then
     Exit;
 
-  FLibraryPath := TUnitsController.Create;
-
   while (BorlandIDEServices as IOTAServices) = nil do
     Sleep(1000);
 
@@ -86,6 +84,8 @@ begin
   Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
   Paths.Add(FindUnitDcuDir);
 
+  FLibraryPath := TUnitsController.Create;
+  FreeAndNil(FLibraryPathWorker);
   FLibraryPathWorker := TParserWorker.Create(Paths, Files);
   FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
 end;
@@ -97,16 +97,15 @@ var
   FileDesc: string;
   Files, Paths: TStringList;
 begin
+  if FProjectUnits <> nil then
+    Exit;
+
   while GetCurrentProject = nil do
   begin
     Logger.Debug('TEnvironmentController.CreateProjectPathUnits: waiting GetCurrentProject <> nil');
     Sleep(1000);
   end;
 
-  if FProjectUnits <> nil then
-    Exit;
-
-  FProjectUnits := TUnitsController.Create;
   CurProject :=  GetCurrentProject;
 
   Files := TStringList.Create;
@@ -115,12 +114,12 @@ begin
     FileDesc := CurProject.GetModule(i).FileName;
     if FileDesc = '' then
       Continue;
-
     Files.Add(FileDesc);
   end;
 
   Paths := nil;
   FreeAndNil(FProjectPathWorker);
+  FProjectUnits := TUnitsController.Create;
   FProjectPathWorker := TParserWorker.Create(Paths, Files);
   FProjectPathWorker.Start(OnFinishedProjectPathScan);
 end;
@@ -174,12 +173,12 @@ end;
 
 function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;
 begin
-  Result := (FLibraryPath = nil) or (FLibraryPath.Ready);
+  Result := (FLibraryPath <> nil) and (FLibraryPath.Ready);
 end;
 
 function TEnvironmentController.IsProjectsUnitReady: Boolean;
 begin
-  Result := (FProjectUnits = nil) or (FProjectUnits.Ready);
+  Result := (FProjectUnits <> nil) and (FProjectUnits.Ready);
 end;
 
 procedure TEnvironmentController.LoadLibraryPath;
@@ -208,8 +207,8 @@ end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 begin
-  FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
+  FProjectUnits.Ready := True;
 end;
 
 procedure TEnvironmentController.ProcessDCUFiles;
