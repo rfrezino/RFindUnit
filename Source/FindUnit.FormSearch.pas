@@ -198,6 +198,7 @@ end;
 
 procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
 begin
+  TButton(Sender).Visible := False;
   FEnvControl.LoadLibraryPath;
   CheckLibraryStatus;
 end;
@@ -205,6 +206,7 @@ end;
 procedure TfrmFindUnit.btnRefreshProjectClick(Sender: TObject);
 begin
   try
+    TButton(Sender).Visible := False;
     FEnvControl.LoadProjectPath;
     CheckLibraryStatus;
   except

@@ -215,13 +215,19 @@ end;
 
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
   var BindingResult: TKeyBindingResult);
+var
+  SelectedText: string;
 begin
+  SelectedText := GetSelectedTextFromContext(Context);
+  if SelectedText = '' then
+    SelectedText := GetWordAtCursor;
+
   BindingResult := krHandled;
   if frmFindUnit = nil then
   begin
     frmFindUnit := TfrmFindUnit.Create(nil);
     frmFindUnit.SetEnvControl(FEnvControl);
-    frmFindUnit.SetSearch(GetWordAtCursor);
+    frmFindUnit.SetSearch(SelectedText);
     frmFindUnit.Show;
   end;
 end;

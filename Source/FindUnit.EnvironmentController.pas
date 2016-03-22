@@ -174,12 +174,12 @@ end;
 
 function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;
 begin
-  Result := (FLibraryPath <> nil) and (FLibraryPath.Ready);
+  Result := (FLibraryPath = nil) or (FLibraryPath.Ready);
 end;
 
 function TEnvironmentController.IsProjectsUnitReady: Boolean;
 begin
-  Result := (FProjectUnits <> nil) and (FProjectUnits.Ready);
+  Result := (FProjectUnits = nil) or (FProjectUnits.Ready);
 end;
 
 procedure TEnvironmentController.LoadLibraryPath;
@@ -204,7 +204,6 @@ procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectLis
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
-//  FParserLibraryWorker.Free;
 end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
