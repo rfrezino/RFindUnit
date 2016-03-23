@@ -4,6 +4,8 @@ Find unit (find uses) is a very simple tool and very used (Ctrl+Shift+A), but, a
 </br>Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions (as auto import for example).
 If you help, it'll be very good.
 
+####[Follow our updates on the blog](https://rfrezinos.wordpress.com/)
+
 ### Default Find Unit
 ![Default Version](http://i.imgur.com/8DZPGSs.png)
 
