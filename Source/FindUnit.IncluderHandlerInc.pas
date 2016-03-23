@@ -63,6 +63,9 @@ begin
   begin
     ItemPath := IncludeTrailingPathDelimiter(FPossiblePaths[i]);
     try
+      if not DirectoryExists(ItemPath) then
+        Continue;
+
       Return := GetAllFilesFromPath(ItemPath, '*.inc');
 
       for iRet := 0 to Return.Count -1 do

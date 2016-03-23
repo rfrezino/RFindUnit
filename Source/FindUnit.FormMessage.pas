@@ -16,6 +16,7 @@ type
   private
     procedure PrintOnCanvas;
   protected
+    class var CurTop: integer;
     FTexto: string;
     procedure CreateParams(var Params: TCreateParams); override;
 
@@ -25,6 +26,8 @@ type
     procedure SetPosition;
   public
     procedure ShowMessage(const Text: string);
+
+    class procedure ShowInfoToUser(const Text: string);
   end;
 
 implementation
@@ -58,7 +61,8 @@ var
 begin
   OpenRect := GetPosition;
   TextSize := GetTextWidth;
-  Top := OpenRect.Top;
+  Top := OpenRect.Top + CurTop;
+  CurTop := CurTop + 30;
   if OpenRect.Left <> OpenRect.Right then
   begin
     Width := TextSize.cx + COORNER_MARGIN * 2 + MARGIN_PADING;
@@ -68,6 +72,14 @@ begin
   else
     Left := OpenRect.Left;
   BringToFront;
+end;
+
+class procedure TfrmMessage.ShowInfoToUser(const Text: string);
+var
+  MsgForm: TfrmMessage;
+begin
+  MsgForm := TfrmMessage.Create(nil);
+  MsgForm.ShowMessage(Text);
 end;
 
 procedure TfrmMessage.ShowMessage(const Text: string);
@@ -88,6 +100,7 @@ end;
 procedure TfrmMessage.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
+  CurTop := CurTop - 30;
 end;
 
 procedure TfrmMessage.FormCreate(Sender: TObject);

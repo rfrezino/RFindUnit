@@ -3,12 +3,14 @@ unit FindUnit.EnvironmentController;
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils, Log4Pascal, FindUnit.Worker;
+  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils,
+  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
   private
     FProcessingDCU: Boolean;
+    FAutoImport: TAutoImport;
 
     FProjectUnits: TUnitsController;
     FLibraryPath: TUnitsController;
@@ -50,17 +52,22 @@ type
     procedure ProcessDCUFiles;
 
     property ProcessingDCU: Boolean read FProcessingDCU;
+    property AutoImport: TAutoImport read FAutoImport;
+
+    procedure ImportMissingUnits;
   end;
 
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage;
 
 { TEnvUpdateControl }
 
 constructor TEnvironmentController.Create;
 begin
+  FAutoImport := TAutoImport.Create(FindUnitDir + 'memoryconfig.ini');
+  FAutoImport.Load;
   LoadLibraryPath;
 end;
 
@@ -131,6 +138,7 @@ end;
 
 destructor TEnvironmentController.Destroy;
 begin
+  FAutoImport.Free;
   FProjectUnits.Free;
   FLibraryPath.Free;
   inherited;
@@ -169,6 +177,35 @@ begin
     Result := FProjectUnits.GetFindInfo(SearchString)
   else
     Result := TStringList.Create;
+end;
+
+procedure TEnvironmentController.ImportMissingUnits;
+var
+  CurEditor: IOTASourceEditor;
+  FileEditor: TSourceFileEditor;
+  ListToImport: TStringList;
+  Item: string;
+begin
+  ListToImport := FAutoImport.LoadUnitListToImport;
+  if ListToImport.Count = 0 then
+  begin
+    TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
+    ListToImport.Free;
+    Exit;
+  end;
+
+  CurEditor := OtaGetCurrentSourceEditor;
+  FileEditor := TSourceFileEditor.Create(CurEditor);
+  try
+    FileEditor.Prepare;
+    for Item in ListToImport do
+    begin
+      FileEditor.AddUsesToInterface(Item);
+      TfrmMessage.ShowInfoToUser('Unit ' + Item + ' added to interface''s uses.');
+    end;
+  finally
+    FileEditor.Free;
+  end;
 end;
 
 function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;

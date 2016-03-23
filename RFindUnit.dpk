@@ -80,7 +80,9 @@ contains
   TransparentCanvas in 'Thirdy\TransparentCanvas\TransparentCanvas.pas',
   FindUnit.FormMessage in 'Source\FindUnit.FormMessage.pas' {frmMessage},
   FindUnit.DelphiVlcWrapper in 'Source\FindUnit.DelphiVlcWrapper.pas',
-  FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas';
+  FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas',
+  FindUnit.FormSettings in 'Source\FindUnit.FormSettings.pas' {frmSettings},
+  FindUnit.AutoImport in 'Source\FindUnit.AutoImport.pas';
 
 end.
 

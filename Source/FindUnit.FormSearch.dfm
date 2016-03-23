@@ -24,7 +24,7 @@ object frmFindUnit: TfrmFindUnit
     Width = 580
     Height = 94
     Align = alBottom
-    Caption = 'Search Options'
+    Caption = 'Options'
     TabOrder = 2
     object lblProjectUnitsStatus: TLabel
       Left = 193
@@ -74,7 +74,7 @@ object frmFindUnit: TfrmFindUnit
       Caption = 'Search in Library Path'#39's Units'
       Checked = True
       State = cbChecked
-      TabOrder = 1
+      TabOrder = 2
       OnClick = chkSearchLibraryPathClick
     end
     object chkSearchProjectFiles: TCheckBox
@@ -85,8 +85,18 @@ object frmFindUnit: TfrmFindUnit
       Caption = 'Search in Project Units'
       Checked = True
       State = cbChecked
-      TabOrder = 0
+      TabOrder = 1
       OnClick = chkSearchProjectFilesClick
+    end
+    object chkMemorize: TCheckBox
+      Left = 303
+      Top = 19
+      Width = 274
+      Height = 17
+      Caption = 'Store choises to use on Auto Import (Ctrl + Shit + I)'
+      Checked = True
+      State = cbChecked
+      TabOrder = 0
     end
   end
   object grpResult: TGroupBox

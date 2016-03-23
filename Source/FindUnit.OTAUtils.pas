@@ -19,6 +19,7 @@ uses
   function GetCurrentProject: IOTAProject;
   function OtaGetCurrentSourceEditor: IOTASourceEditor;
   function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
+  function GetErrorListFromActiveModule: TOTAErrors;
 
 
 var
@@ -54,6 +55,14 @@ begin
     Exit;
   CM := (BorlandIDEServices as IOTAModuleServices).CurrentModule;
   Result := SourceEditor(CM);
+end;
+
+function GetErrorListFromActiveModule: TOTAErrors;
+var
+  ModuleErrors: IOTAModuleErrors;
+begin
+  ModuleErrors := GxOtaGetCurrentModule as IOTAModuleErrors;
+  Result := ModuleErrors.GetErrors(ActiveSourceEditor.FileName);
 end;
 
 function GetSelectedTextFromContext(Context: IOTAKeyContext): string;

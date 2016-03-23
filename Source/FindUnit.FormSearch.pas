@@ -32,6 +32,7 @@ type
     btnProcessDCUs: TSpeedButton;
     pnlMsg: TPanel;
     lblMessage: TLabel;
+    chkMemorize: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -49,7 +50,7 @@ type
   private
     FEnvControl: TEnvironmentController;
 
-    function GetSelectedItem: string;
+    procedure GetSelectedItem(out UnitName, ClassName: string);
     procedure AddUnit;
 
     procedure ProcessKeyCommand(var Msg: tagMSG; var Handled: Boolean);
@@ -62,7 +63,6 @@ type
     procedure LoadConfigs;
 
     procedure SelectTheMostSelectableItem;
-    procedure ShowTextOnScreen(Text: string);
     procedure ProcessDCUFiles;
     function CanProcessDCUFiles: Boolean;
     procedure ShowMessageToMuchResults(Show: Boolean);
@@ -70,6 +70,8 @@ type
     procedure SetEnvControl(EnvControl: TEnvironmentController);
     procedure SetSearch(const Search: string);
     procedure FilterItem(const SearchString: string);
+
+    procedure ShowTextOnScreen(Text: string);
   end;
 
 var
@@ -111,25 +113,28 @@ procedure TfrmFindUnit.AddUnit;
 var
   CurEditor: IOTASourceEditor;
   FileEditor: TSourceFileEditor;
-  ItemSelected: string;
+  SelectedUnit: string;
+  SelectedClass: string;
 begin
-  ItemSelected := GetSelectedItem;
-  if ItemSelected = '' then
+  GetSelectedItem(SelectedUnit, SelectedClass);
+  if SelectedUnit = '' then
     Exit;
 
   CurEditor := OtaGetCurrentSourceEditor;
   FileEditor := TSourceFileEditor.Create(CurEditor);
   try
-    ShowTextOnScreen(ItemSelected);
+    ShowTextOnScreen(SelectedUnit);
     FileEditor.Prepare;
     if rbInterface.Checked then
-      FileEditor.AddUsesToInterface(ItemSelected)
+      FileEditor.AddUsesToInterface(SelectedUnit)
     else
-      FileEditor.AddUsesToImplementation(ItemSelected);
+      FileEditor.AddUsesToImplementation(SelectedUnit);
   finally
     FileEditor.Free;
   end;
 
+  if chkMemorize.Checked then
+    FEnvControl.AutoImport.SetMemorizedUnit(SelectedClass, SelectedUnit);
   Close;
 end;
 
@@ -245,6 +250,7 @@ begin
     FilterItemFromSearchString;
     LabelDesc.Caption := NewCaption;
   end;
+
 end;
 
 procedure TfrmFindUnit.chkSearchLibraryPathClick(Sender: TObject);
@@ -354,7 +360,7 @@ begin
 end;
 
 
-function TfrmFindUnit.GetSelectedItem: string;
+procedure TfrmFindUnit.GetSelectedItem(out UnitName, ClassName: string);
 var
   I: Integer;
 
@@ -363,11 +369,12 @@ var
     Result := Item;
     Result := Trim(Fetch(Result, '-'));
     Result := ReverseString(Result);
-    Fetch(Result,'.');
+    ClassName := Fetch(Result,'.');
+    ClassName := ReverseString(ClassName);
     Result := ReverseString(Result);
   end;
 begin
-  Result := '';
+  UnitName := '';
   if lstResult.Count = 0 then
     Exit;
 
@@ -375,12 +382,12 @@ begin
   begin
     if lstResult.Selected[i] then
     begin
-      Result := CorrectUses(lstResult.Items[i]);
+      UnitName := CorrectUses(lstResult.Items[i]);
       Exit;
     end;
   end;
 
-  Result := CorrectUses(lstResult.Items[0])
+  UnitName := CorrectUses(lstResult.Items[0])
 end;
 
 procedure TfrmFindUnit.LoadConfigs;

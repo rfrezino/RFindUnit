@@ -167,6 +167,9 @@ begin
       PasFile: string;
       begin
         try
+          if not DirectoryExists(FDirectoriesPath[index]) then
+            Exit;
+
           PasFiles := GetAllPasFilesFromPath(FDirectoriesPath[index]);
           try
             for PasFile in PasFiles do
@@ -283,3 +286,4 @@ begin
 end;
 
 end.
+

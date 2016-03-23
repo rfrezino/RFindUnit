@@ -16,6 +16,7 @@ type
     procedure CreateMenus;
     procedure OnClickOpenFindUses(Sender: TObject);
     function GetWordAtCursor: String;
+    procedure AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
   public
     constructor Create;
     destructor Destroy; override;
@@ -169,12 +170,14 @@ End;
 procedure TRFindUnitMain.OnClickOpenFindUses(Sender: TObject);
 begin
   vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
 end;
 
 procedure TRFindUnitMain.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
 begin
   vBindingServices := BindingServices;
   BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
+  BindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
   CreateMenus;
 end;
 
@@ -211,6 +214,12 @@ end;
 function TRFindUnitMain.GetName: string;
 begin
   Result := 'RFindUnit';
+end;
+
+procedure TRFindUnitMain.AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut;
+  var BindingResult: TKeyBindingResult);
+begin
+  FEnvControl.ImportMissingUnits;
 end;
 
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
