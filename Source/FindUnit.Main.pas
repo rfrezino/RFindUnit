@@ -12,7 +12,6 @@ type
     FMenusCreated: Boolean;
     FEnvControl: TEnvironmentController;
     FProjectServiceIndex: Integer;
-    FCompilerInterceptor: TCompilerInterceptor;
 
     function GetWordAtCursor: String;
 
@@ -41,7 +40,7 @@ uses
 
 var
   vKbIndex: Integer;
-  VFindUnit: TRFindUnitMain;
+  VFindUnit: IInterface;
   AboutBoxServices : IOTAAboutBoxServices = nil;
   AboutBoxIndex : Integer = 0;
   vBindingServices: IOTAKeyBindingServices;
@@ -54,14 +53,15 @@ resourcestring
   resAboutDescription = 'Help us on GitHub https://github.com/rfrezino/RFindUnit';
 
 procedure Register;
+var
+  OtaKey: IOTAKeyboardBinding;
 begin
   Logger := TLogger.Create(FindUnitDirLogger + Format('log_%s.txt', [FormatDateTime('yyyy-mm-dd', Now)]));
 
   VFindUnit := TRFindUnitMain.Create;
+  OtaKey := VFindUnit as IOTAKeyboardBinding;
   with (BorlandIDEServices as IOTAKeyboardServices) do
-  begin
-    vKbIndex := AddKeyboardBinding(VFindUnit);
-  end;
+    vKbIndex := AddKeyboardBinding(OtaKey);
 end;
 
 procedure RegisterSplashScreen;
@@ -194,8 +194,7 @@ begin
   FEnvControl := TEnvironmentController.Create;
   FProjectServiceIndex := ProjectFileStorageService.AddNotifier(FEnvControl);
 
-  FCompilerInterceptor := TCompilerInterceptor.CompilerInterceptor;
-  FCompilerInterceptor.SetEnvControl(FEnvControl);
+  CompilerInterceptor.SetEnvControl(FEnvControl);
 end;
 
 destructor TRFindUnitMain.Destroy;

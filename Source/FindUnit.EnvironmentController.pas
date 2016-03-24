@@ -4,7 +4,7 @@ interface
 
 uses
   Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils,
-  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport;
+  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport, Windows;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -54,7 +54,7 @@ type
     property ProcessingDCU: Boolean read FProcessingDCU;
     property AutoImport: TAutoImport read FAutoImport;
 
-    procedure ImportMissingUnits;
+    procedure ImportMissingUnits(ShowNoImport: Boolean = true);
   end;
 
 implementation
@@ -179,12 +179,13 @@ begin
     Result := TStringList.Create;
 end;
 
-procedure TEnvironmentController.ImportMissingUnits;
+procedure TEnvironmentController.ImportMissingUnits(ShowNoImport: Boolean);
 var
   CurEditor: IOTASourceEditor;
   FileEditor: TSourceFileEditor;
   ListToImport: TStringList;
   Item: string;
+  OldFocus: Cardinal;
 begin
   if FAutoImport = nil then
     Exit;
@@ -193,15 +194,18 @@ begin
   if CurEditor = nil then
     Exit;
 
+  OldFocus := GetFocus;
+
   ListToImport := FAutoImport.LoadUnitListToImport;
   if ListToImport.Count = 0 then
   begin
-    TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
+    if ShowNoImport then
+      TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
     ListToImport.Free;
+    SetFocus(OldFocus);
     Exit;
   end;
 
-  CurEditor := OtaGetCurrentSourceEditor;
   FileEditor := TSourceFileEditor.Create(CurEditor);
   try
     FileEditor.Prepare;
@@ -209,6 +213,7 @@ begin
     begin
       FileEditor.AddUsesToInterface(Item);
       TfrmMessage.ShowInfoToUser('Unit ' + Item + ' added to interface''s uses.');
+      SetFocus(OldFocus);
     end;
   finally
     FileEditor.Free;
