@@ -3,7 +3,7 @@ unit FindUnit.Main;
 interface
 
 uses
-  ToolsAPI, Dialogs, Classes, Menus, FindUnit.EnvironmentController, Graphics, Windows;
+  ToolsAPI, Dialogs, Classes, Menus, FindUnit.EnvironmentController, Graphics, Windows, FindUnit.CompilerInterceptor;
 
 {$R RFindUnitSplash.res}
 type
@@ -12,11 +12,15 @@ type
     FMenusCreated: Boolean;
     FEnvControl: TEnvironmentController;
     FProjectServiceIndex: Integer;
+    FCompilerInterceptor: TCompilerInterceptor;
+
+    function GetWordAtCursor: String;
+
+    procedure AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
     procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
+
     procedure CreateMenus;
     procedure OnClickOpenFindUses(Sender: TObject);
-    function GetWordAtCursor: String;
-    procedure AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
   public
     constructor Create;
     destructor Destroy; override;
@@ -189,6 +193,9 @@ begin
   ProjectFileStorageService := BorlandIDEServices.GetService(IOTAProjectFileStorage) as IOTAProjectFileStorage;
   FEnvControl := TEnvironmentController.Create;
   FProjectServiceIndex := ProjectFileStorageService.AddNotifier(FEnvControl);
+
+  FCompilerInterceptor := TCompilerInterceptor.CompilerInterceptor;
+  FCompilerInterceptor.SetEnvControl(FEnvControl);
 end;
 
 destructor TRFindUnitMain.Destroy;

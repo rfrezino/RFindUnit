@@ -186,6 +186,13 @@ var
   ListToImport: TStringList;
   Item: string;
 begin
+  if FAutoImport = nil then
+    Exit;
+
+  CurEditor := OtaGetCurrentSourceEditor;
+  if CurEditor = nil then
+    Exit;
+
   ListToImport := FAutoImport.LoadUnitListToImport;
   if ListToImport.Count = 0 then
   begin
