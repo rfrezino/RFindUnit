@@ -64,6 +64,8 @@ var
   UnitItem: string;
 begin
   Result := TStringList.Create;
+  Result.Duplicates := dupIgnore;
+  Result.Sorted := True;
   ClassesList :=  LoadClassesToImport;
   try
     for ClassItem in ClassesList do
