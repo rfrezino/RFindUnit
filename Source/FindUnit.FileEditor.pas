@@ -3,7 +3,7 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics;
+  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics, FindUnit.Header;
 
 type
   TCharPosition = record
@@ -57,6 +57,10 @@ type
 
     procedure RemoveUsesFromInterface(const UseUnit: string);
     procedure RemoveUsesFromImplementation(const UseUnit: string);
+
+    function IsLineOnImplementationSection(Line: Integer): Boolean;
+
+    procedure AddUnit(UnitInfo: TStringPosition);
   end;
 
 implementation
@@ -65,6 +69,14 @@ uses
   SysUtils, FindUnit.Utils;
 
 { TSourceFileEditor }
+
+procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition);
+begin
+  if IsLineOnImplementationSection(UnitInfo.Line) then
+    AddUsesToImplementation(UnitInfo.Value)
+  else
+    AddUsesToInterface(UnitInfo.Value);
+end;
 
 procedure TSourceFileEditor.AddUsesToImplementation(const UseUnit: string);
 begin
@@ -180,6 +192,11 @@ begin
 
   FImplementationRegion.GetUsesFromText(FFileContent);
   FInterfaceRegion.GetUsesFromText(FFileContent);
+end;
+
+function TSourceFileEditor.IsLineOnImplementationSection(Line: Integer): Boolean;
+begin
+  Result := Line > FImplementationRegion.RegionPosition.StartLine;
 end;
 
 procedure TSourceFileEditor.ParseInformations;

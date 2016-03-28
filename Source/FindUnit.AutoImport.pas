@@ -15,7 +15,7 @@ type
     procedure SaveIniFile;
     function LoadClassesToImport: TStringList;
   public
-    constructor Create(IniFilePath: string);
+    constructor Create(const IniFilePath: string);
     destructor Destroy; override;
 
     procedure Load;
@@ -36,7 +36,7 @@ const
 
 { TAutoImport }
 
-constructor TAutoImport.Create(IniFilePath: string);
+constructor TAutoImport.Create(const IniFilePath: string);
 begin
   inherited Create;
   FIniFilePath := IniFilePath;

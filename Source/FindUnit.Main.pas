@@ -3,7 +3,7 @@ unit FindUnit.Main;
 interface
 
 uses
-  ToolsAPI, Dialogs, Classes, Menus, FindUnit.EnvironmentController, Graphics, Windows, FindUnit.CompilerInterceptor;
+  ToolsAPI, Dialogs, Classes, Menus, FindUnit.EnvironmentController, Graphics, Windows, FindUnit.CompilerInterceptor, FindUnit.Header;
 
 {$R RFindUnitSplash.res}
 type
@@ -12,8 +12,6 @@ type
     FMenusCreated: Boolean;
     FEnvControl: TEnvironmentController;
     FProjectServiceIndex: Integer;
-
-    function GetWordAtCursor: String;
 
     procedure AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
     procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
@@ -135,41 +133,7 @@ begin
   RfItemMenu.Add(NewItem);
 end;
 
-function TRFindUnitMain.GetWordAtCursor: string;
-const
-  strIdentChars = ['a'..'z', 'A'..'Z', '_', '0'..'9'];
-var
-  SE: IOTASourceEditor;
-  EP: TOTAEditPos;
-  iPosition: Integer;
-  sl: TStringList;
-begin
-  Result := '';
-  SE := ActiveSourceEditor;
-  EP := SE.EditViews[0].CursorPos;
-  sl := TStringList.Create;
-  try
-    sl.Text := EditorAsString(SE);
-    Result := sl[Pred(EP.Line)];
-    iPosition := EP.Col;
-    if (iPosition > 0) And (Length(Result) >= iPosition) and CharInSet(Result[iPosition], strIdentChars) then
-      begin
-        while (iPosition > 1) And (CharInSet(Result[Pred(iPosition)], strIdentChars)) do
-          Dec(iPosition);
-        Delete(Result, 1, Pred(iPosition));
-        iPosition := 1;
-        while CharInSet(Result[iPosition], strIdentChars) do
-          Inc(iPosition);
-        Delete(Result, iPosition, Length(Result) - iPosition + 1);
-        if CharInSet(Result[1], ['0'..'9']) then
-          Result := '';
-      end
-      else
-        Result := '';
-  finally
-    sl.Free;
-  end;
-End;
+
 
 procedure TRFindUnitMain.OnClickOpenFindUses(Sender: TObject);
 begin
@@ -231,10 +195,10 @@ end;
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
   var BindingResult: TKeyBindingResult);
 var
-  SelectedText: string;
+  SelectedText: TStringPosition;
 begin
   SelectedText := GetSelectedTextFromContext(Context);
-  if SelectedText = '' then
+  if SelectedText.Value = '' then
     SelectedText := GetWordAtCursor;
 
   BindingResult := krHandled;

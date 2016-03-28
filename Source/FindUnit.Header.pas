@@ -9,6 +9,11 @@ type
     ltContants = 3,
     ltVariables = 4);
 
+  TStringPosition = record
+    Value: string;
+    Line: Integer;
+  end;
+
 var
   strListTypeDescription: array[TListType] of string;
 

@@ -3,7 +3,7 @@ unit FindUnit.OTAUtils;
 interface
 
 uses
-  ToolsAPI;
+  ToolsAPI, FindUnit.Header, Classes;
 
   function GetVolumeLabel(const DriveChar: string): string;
   function BrowseURL(const URL: string) : boolean;
@@ -18,8 +18,10 @@ uses
   function GxOtaGetSourceEditorFromModule(Module: IOTAModule; const FileName: string = ''): IOTASourceEditor;
   function GetCurrentProject: IOTAProject;
   function OtaGetCurrentSourceEditor: IOTASourceEditor;
-  function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
+  function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
   function GetErrorListFromActiveModule: TOTAErrors;
+
+  function GetWordAtCursor: TStringPosition;
 
 
 var
@@ -65,12 +67,56 @@ begin
   Result := ModuleErrors.GetErrors(ActiveSourceEditor.FileName);
 end;
 
-function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
+function GetWordAtCursor: TStringPosition;
+const
+  strIdentChars = ['a'..'z', 'A'..'Z', '_', '0'..'9'];
+var
+  SourceEditor: IOTASourceEditor;
+  EditPos: TOTAEditPos;
+  iPosition: Integer;
+  Content: TStringList;
+  ContentTxt: string;
+begin
+  ContentTxt := '';
+  SourceEditor := ActiveSourceEditor;
+  EditPos := SourceEditor.EditViews[0].CursorPos;
+  Content := TStringList.Create;
+  try
+    Content.Text := EditorAsString(SourceEditor);
+    ContentTxt := Content[Pred(EditPos.Line)];
+    iPosition := EditPos.Col;
+    if (iPosition > 0) And (Length(ContentTxt) >= iPosition) and CharInSet(ContentTxt[iPosition], strIdentChars) then
+      begin
+        while (iPosition > 1) And (CharInSet(ContentTxt[Pred(iPosition)], strIdentChars)) do
+          Dec(iPosition);
+        Delete(ContentTxt, 1, Pred(iPosition));
+        iPosition := 1;
+        while CharInSet(ContentTxt[iPosition], strIdentChars) do
+          Inc(iPosition);
+        Delete(ContentTxt, iPosition, Length(ContentTxt) - iPosition + 1);
+        if CharInSet(ContentTxt[1], ['0'..'9']) then
+          ContentTxt := '';
+      end
+      else
+        ContentTxt := '';
+
+    Result.Value := ContentTxt;
+    Result.Line := EditPos.Line;
+  finally
+    Content.Free;
+  end;
+End;
+
+function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 var
   Editor: IOTAEditBuffer;
   EdtPosition: IOTAEditPosition;
+  EditPos: TOTAEditPos;
+  CurSourceEditor: IOTASourceEditor;
 begin
-  Result := '';
+  CurSourceEditor := ActiveSourceEditor;
+  Result.Line := CurSourceEditor.EditViews[0].CursorPos.Line;
+  Result.Value := '';
   if Context = nil then
     Exit;
 
@@ -78,8 +124,7 @@ begin
   if Editor= nil then
     Exit;
 
-  EdtPosition := Editor.EditPosition;
-  Result := Trim(Editor.EditBlock.Text);
+  Result.Value := Trim(Editor.EditBlock.Text);
 end;
 
 function GetCurrentProject: IOTAProject;  
