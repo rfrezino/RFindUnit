@@ -4,7 +4,7 @@ interface
 
 uses
   Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils,
-  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport, Windows;
+  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport, Windows, FindUnit.Header;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -60,7 +60,7 @@ type
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.StringPositionList;
 
 { TEnvUpdateControl }
 
@@ -183,8 +183,8 @@ procedure TEnvironmentController.ImportMissingUnits(ShowNoImport: Boolean);
 var
   CurEditor: IOTASourceEditor;
   FileEditor: TSourceFileEditor;
-  ListToImport: TStringList;
-  Item: string;
+  ListToImport: TStringPositionList;
+  Item: TStringPosition;
   OldFocus: Cardinal;
 begin
   if FAutoImport = nil then
@@ -211,13 +211,13 @@ begin
     FileEditor.Prepare;
     for Item in ListToImport do
     begin
-      FileEditor.AddUsesToInterface(Item);
-      TfrmMessage.ShowInfoToUser('Unit ' + Item + ' added to interface''s uses.');
+      FileEditor.AddUnit(Item);
       SetFocus(OldFocus);
     end;
   finally
     FileEditor.Free;
   end;
+  ListToImport.Free;
 end;
 
 function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;

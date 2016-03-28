@@ -3,7 +3,8 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics, FindUnit.Header;
+  ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics,
+  FindUnit.Header, FindUnit.FormMessage;
 
 type
   TCharPosition = record
@@ -60,7 +61,7 @@ type
 
     function IsLineOnImplementationSection(Line: Integer): Boolean;
 
-    procedure AddUnit(UnitInfo: TStringPosition);
+    procedure AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean = True);
   end;
 
 implementation
@@ -70,12 +71,23 @@ uses
 
 { TSourceFileEditor }
 
-procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition);
+procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean);
+var
+  MessageText: string;
 begin
   if IsLineOnImplementationSection(UnitInfo.Line) then
-    AddUsesToImplementation(UnitInfo.Value)
+  begin
+    AddUsesToImplementation(UnitInfo.Value);
+    MessageText := 'Unit ' + UnitInfo.Value + ' added to implementation''s uses.';
+  end
   else
+  begin
     AddUsesToInterface(UnitInfo.Value);
+    MessageText := 'Unit ' + UnitInfo.Value + ' added to interface''s uses.';
+  end;
+
+  if ShowMessageOnAdd then
+    TfrmMessage.ShowInfoToUser(MessageText);
 end;
 
 procedure TSourceFileEditor.AddUsesToImplementation(const UseUnit: string);
@@ -108,7 +120,12 @@ begin
     UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
   end
   else
-    UseUnit := ', ' + UseUnit;
+  begin
+    if PosChar > 80 then
+      UseUnit := ', ' + #13#10 + '  ' + UseUnit
+    else
+      UseUnit := ', ' + UseUnit;
+  end;
 
   WriteInformationAtPostion(Line, PosChar, UseUnit);
 end;

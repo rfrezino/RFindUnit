@@ -3,7 +3,7 @@ unit FindUnit.AutoImport;
 interface
 
 uses
-	IniFiles, SysUtils, Log4Pascal, Classes;
+	IniFiles, SysUtils, Log4Pascal, Classes, Contnrs, FindUnit.Header, Generics.Defaults, Generics.Collections, FindUnit.StringPositionList;
 
 type
   TAutoImport = class(TObject)
@@ -13,7 +13,8 @@ type
 
     procedure LoadIniFile;
     procedure SaveIniFile;
-    function LoadClassesToImport: TStringList;
+
+    function LoadClassesToImport: TStringPositionList;
   public
     constructor Create(const IniFilePath: string);
     destructor Destroy; override;
@@ -23,7 +24,7 @@ type
     function GetMemorizedUnit(Search: string; out MemUnit: string): Boolean;
     procedure SetMemorizedUnit(NameClass, MemUnit: string);
 
-    function LoadUnitListToImport: TStringList;
+    function LoadUnitListToImport: TStringPositionList;
   end;
 
 implementation
@@ -50,29 +51,32 @@ end;
 
 function TAutoImport.GetMemorizedUnit(Search: string; out MemUnit: string): Boolean;
 begin
-  Result := False;
-
   Search := UpperCase(Search);
   MemUnit := FSearchMemory.ReadString(SECTION, Search, '');
   Result := MemUnit <> '';
 end;
 
-function TAutoImport.LoadUnitListToImport: TStringList;
+function TAutoImport.LoadUnitListToImport: TStringPositionList;
 var
-  ClassesList: TStringList;
-  ClassItem: string;
+  ClassesList: TStringPositionList;
+  ClassItem: TStringPosition;
   UnitItem: string;
+  ItemReturn: TStringPosition;
 begin
-  Result := TStringList.Create;
+  Result := TStringPositionList.Create;
   Result.Duplicates := dupIgnore;
-  Result.Sorted := True;
-  ClassesList :=  LoadClassesToImport;
+
+  ClassesList := LoadClassesToImport;
   try
     for ClassItem in ClassesList do
     begin
-      UnitItem := FSearchMemory.ReadString(SECTION, ClassItem, '');
+      UnitItem := FSearchMemory.ReadString(SECTION, ClassItem.Value, '');
       if UnitItem <> '' then
-        Result.Add(UnitItem);
+      begin
+        ItemReturn.Value := UnitItem;
+        ItemReturn.Line := ClassItem.Line;
+        Result.Add(ItemReturn);
+      end;
     end;
   finally
     ClassesList.Free;
@@ -94,11 +98,11 @@ begin
   FSearchMemory := TIniFile.Create(FIniFilePath);
 end;
 
-function TAutoImport.LoadClassesToImport: TStringList;
+function TAutoImport.LoadClassesToImport: TStringPositionList;
 var
   Errors: TOTAErrors;
   ErrorItem: TOTAError;
-  Item: string;
+  Item: TStringPosition;
 
   function GetUndeclaredIdentifier(Text: string): string;
   const
@@ -112,15 +116,16 @@ var
     Result := Fetch(Text, #39);
   end;
 begin
-  Result := TStringList.Create;
+  Result := TStringPositionList.Create;
   Errors := GetErrorListFromActiveModule;
   for ErrorItem in Errors do
   begin
-    Item := GetUndeclaredIdentifier(ErrorItem.Text);
-    if Item = '' then
+    Item.Value := UpperCase(GetUndeclaredIdentifier(ErrorItem.Text));
+    if Item.Value = '' then
       Continue;
 
-    Result.Add(UpperCase(Item));
+    Item.Line := ErrorItem.Start.Line;
+    Result.Add(Item);
   end
 end;
 

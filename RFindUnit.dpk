@@ -83,7 +83,8 @@ contains
   FindUnit.DcuDecompiler in 'Source\FindUnit.DcuDecompiler.pas',
   FindUnit.FormSettings in 'Source\FindUnit.FormSettings.pas' {frmSettings},
   FindUnit.AutoImport in 'Source\FindUnit.AutoImport.pas',
-  FindUnit.CompilerInterceptor in 'Source\FindUnit.CompilerInterceptor.pas';
+  FindUnit.CompilerInterceptor in 'Source\FindUnit.CompilerInterceptor.pas',
+  FindUnit.StringPositionList in 'Source\FindUnit.StringPositionList.pas';
 
 end.
 
