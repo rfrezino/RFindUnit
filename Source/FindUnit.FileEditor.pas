@@ -46,15 +46,15 @@ type
     procedure GetInfos;
 
     procedure WriteInformationAtPostion(Line, Position: Integer; const Information: string);
-    procedure AddUsesToRegion(Region: TFileRegion; UseUnit: string);
+    function AddUsesToRegion(Region: TFileRegion; UseUnit: string): Boolean;
   public
     constructor Create(SourceEditor: IOTASourceEditor);
     destructor Destroy; override;
 
     function Prepare: Boolean;
 
-    procedure AddUsesToInterface(const UseUnit: string);
-    procedure AddUsesToImplementation(const UseUnit: string);
+    function AddUsesToInterface(const UseUnit: string): Boolean;
+    function AddUsesToImplementation(const UseUnit: string): Boolean;
 
     procedure RemoveUsesFromInterface(const UseUnit: string);
     procedure RemoveUsesFromImplementation(const UseUnit: string);
@@ -75,41 +75,44 @@ procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd:
 var
   MessageText: string;
 begin
+  MessageText := '';
   if IsLineOnImplementationSection(UnitInfo.Line) then
   begin
-    AddUsesToImplementation(UnitInfo.Value);
-    MessageText := 'Unit ' + UnitInfo.Value + ' added to implementation''s uses.';
+    if AddUsesToImplementation(UnitInfo.Value) then
+      MessageText := 'Unit ' + UnitInfo.Value + ' added to implementation''s uses.';
   end
   else
   begin
-    AddUsesToInterface(UnitInfo.Value);
-    MessageText := 'Unit ' + UnitInfo.Value + ' added to interface''s uses.';
+    if AddUsesToInterface(UnitInfo.Value) then
+      MessageText := 'Unit ' + UnitInfo.Value + ' added to interface''s uses.';
   end;
 
-  if ShowMessageOnAdd then
+  if (MessageText <> '') and ShowMessageOnAdd then
     TfrmMessage.ShowInfoToUser(MessageText);
 end;
 
-procedure TSourceFileEditor.AddUsesToImplementation(const UseUnit: string);
+function TSourceFileEditor.AddUsesToImplementation(const UseUnit: string): Boolean;
 begin
   RemoveUsesFromInterface(UseUnit);
-  AddUsesToRegion(FImplementationRegion, UseUnit);
+  Result := AddUsesToRegion(FImplementationRegion, UseUnit);
 end;
 
-procedure TSourceFileEditor.AddUsesToInterface(const UseUnit: string);
+function TSourceFileEditor.AddUsesToInterface(const UseUnit: string): Boolean;
 begin
   RemoveUsesFromImplementation(UseUnit);
-  AddUsesToRegion(FInterfaceRegion, UseUnit);
+  Result := AddUsesToRegion(FInterfaceRegion, UseUnit);
 end;
 
-procedure TSourceFileEditor.AddUsesToRegion(Region: TFileRegion; UseUnit: string);
+function TSourceFileEditor.AddUsesToRegion(Region: TFileRegion; UseUnit: string): Boolean;
 var
   Line: Integer;
   PosChar: Integer;
 begin
+  Result := False;
   if Region.UsesExists(UseUnit) then
     Exit;
 
+  Result := True;
   Line := Region.UsesPosition.EndLine;
   PosChar := Region.UsesPosition.EndPos -1;
   if not Region.HaveUses then
