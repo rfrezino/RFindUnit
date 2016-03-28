@@ -128,7 +128,7 @@ begin
   end;
 
   NewItem := TMenuItem.Create(nil);
-  NewItem.Caption := 'Force register Ctrl+Shift+A';
+  NewItem.Caption := 'Force register shortcuts';
   NewItem.OnClick := OnClickOpenFindUses;
   RfItemMenu.Add(NewItem);
 end;
@@ -189,6 +189,7 @@ end;
 procedure TRFindUnitMain.AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut;
   var BindingResult: TKeyBindingResult);
 begin
+  BindingResult := krHandled;
   FEnvControl.ImportMissingUnits;
 end;
 
