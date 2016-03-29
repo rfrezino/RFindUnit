@@ -4,7 +4,6 @@ uses
   Forms,
   uMain in 'uMain.pas' {FrmInstall},
   uDelphiInstallationCheck in 'uDelphiInstallationCheck.pas',
-  FindUnit.Utils in '..\Source\FindUnit.Utils.pas',
   uInstaller in 'uInstaller.pas';
 
 {$R *.res}

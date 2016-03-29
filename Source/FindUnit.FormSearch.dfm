@@ -89,7 +89,7 @@ object frmFindUnit: TfrmFindUnit
       OnClick = chkSearchProjectFilesClick
     end
     object chkMemorize: TCheckBox
-      Left = 303
+      Left = 279
       Top = 19
       Width = 274
       Height = 17

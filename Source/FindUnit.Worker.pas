@@ -270,13 +270,26 @@ begin
 end;
 
 procedure TParserWorker.RunTasks;
+var
+  Step: string;
 begin
-  FIncluder.Process;
-  ListPasFiles;
-  ListDcuFiles;
-  RemoveDcuFromExistingPasFiles;
-  GeneratePasFromDcus;
-  ParseFiles;
+  try
+    Step := 'FIncluder.Process';
+    FIncluder.Process;
+    Step := 'ListPasFiles';
+    ListPasFiles;
+    Step := 'ListDcuFiles';
+    ListDcuFiles;
+    Step := 'RemoveDcuFromExistingPasFiles';
+    RemoveDcuFromExistingPasFiles;
+    Step := 'GeneratePasFromDcus';
+    GeneratePasFromDcus;
+    Step := 'ParseFiles';
+    ParseFiles;
+  except
+    on E: exception do
+      Logger.Error('TParserWorker.RunTasks[%s]: %s ',[Step, e.Message]);
+  end;
 end;
 
 procedure TParserWorker.Start(CallBack: TOnFinished);

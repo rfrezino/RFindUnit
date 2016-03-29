@@ -3,24 +3,25 @@ unit FindUnit.OTAUtils;
 interface
 
 uses
-  ToolsAPI;
+  ToolsAPI, FindUnit.Header, Classes;
 
-  function GetVolumeLabel(const DriveChar: string): string;
-  function BrowseURL(const URL: string) : boolean;
-  function GetEditView(var ASourceEditor: IOTASourceEditor; var AEditView: IOTAEditView): boolean;
-  function EditorAsString(SourceEditor : IOTASourceEditor): string;
-  function ActiveSourceEditor: IOTASourceEditor;
-  function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
+function GetVolumeLabel(const DriveChar: string): string;
+function BrowseURL(const URL: string): boolean;
+function GetEditView(var ASourceEditor: IOTASourceEditor; var AEditView: IOTAEditView): boolean;
+function EditorAsString(SourceEditor: IOTASourceEditor): string;
+function ActiveSourceEditor: IOTASourceEditor;
+function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
 
-  //GeExperts
-  function GxOtaGetCurrentModule: IOTAModule;
-  function GxOtaGetFileEditorForModule(Module: IOTAModule; Index: Integer): IOTAEditor;
-  function GxOtaGetSourceEditorFromModule(Module: IOTAModule; const FileName: string = ''): IOTASourceEditor;
-  function GetCurrentProject: IOTAProject;
-  function OtaGetCurrentSourceEditor: IOTASourceEditor;
-  function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
-  function GetErrorListFromActiveModule: TOTAErrors;
+// GeExperts
+function GxOtaGetCurrentModule: IOTAMOdule;
+function GxOtaGetFileEditorForModule(Module: IOTAMOdule; Index: Integer): IOTAEditor;
+function GxOtaGetSourceEditorFromModule(Module: IOTAMOdule; const FileName: string = ''): IOTASourceEditor;
+function GetCurrentProject: IOTAProject;
+function OtaGetCurrentSourceEditor: IOTASourceEditor;
+function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
+function GetErrorListFromActiveModule: TOTAErrors;
 
+function GetWordAtCursor: TStringPosition;
 
 var
   PathUserDir: string;
@@ -32,23 +33,24 @@ uses
 
 function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
 var
-  iFileCount : Integer;
-  i : Integer;
+  iFileCount: Integer;
+  i: Integer;
 begin
   Result := nil;
-  if Module = nil then Exit;
+  if Module = nil then
+    Exit;
   with Module do
   begin
     iFileCount := GetModuleFileCount;
     for i := 0 To iFileCount - 1 do
-      if GetModuleFileEditor(i).QueryInterface(IOTASourceEditor,Result) = S_OK then
+      if GetModuleFileEditor(i).QueryInterface(IOTASourceEditor, Result) = S_OK then
         Break;
   end;
 end;
 
 function ActiveSourceEditor: IOTASourceEditor;
 var
-  CM : IOTAModule;
+  CM: IOTAMOdule;
 begin
   Result := Nil;
   if BorlandIDEServices = nil then
@@ -65,51 +67,94 @@ begin
   Result := ModuleErrors.GetErrors(ActiveSourceEditor.FileName);
 end;
 
-function GetSelectedTextFromContext(Context: IOTAKeyContext): string;
+function GetWordAtCursor: TStringPosition;
+const
+  strIdentChars = ['a' .. 'z', 'A' .. 'Z', '_', '0' .. '9'];
+var
+  SourceEditor: IOTASourceEditor;
+  EditPos: TOTAEditPos;
+  iPosition: Integer;
+  Content: TStringList;
+  ContentTxt: string;
+begin
+  ContentTxt := '';
+  SourceEditor := ActiveSourceEditor;
+  EditPos := SourceEditor.EditViews[0].CursorPos;
+  Content := TStringList.Create;
+  try
+    Content.Text := EditorAsString(SourceEditor);
+    ContentTxt := Content[Pred(EditPos.Line)];
+    iPosition := EditPos.Col;
+    if (iPosition > 0) And (Length(ContentTxt) >= iPosition) and CharInSet(ContentTxt[iPosition], strIdentChars) then
+    begin
+      while (iPosition > 1) And (CharInSet(ContentTxt[Pred(iPosition)], strIdentChars)) do
+        Dec(iPosition);
+      Delete(ContentTxt, 1, Pred(iPosition));
+      iPosition := 1;
+      while CharInSet(ContentTxt[iPosition], strIdentChars) do
+        Inc(iPosition);
+      Delete(ContentTxt, iPosition, Length(ContentTxt) - iPosition + 1);
+      if CharInSet(ContentTxt[1], ['0' .. '9']) then
+        ContentTxt := '';
+    end
+    else
+      ContentTxt := '';
+
+    Result.Value := ContentTxt;
+    Result.Line := EditPos.Line;
+  finally
+    Content.Free;
+  end;
+End;
+
+function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 var
   Editor: IOTAEditBuffer;
   EdtPosition: IOTAEditPosition;
+  EditPos: TOTAEditPos;
+  CurSourceEditor: IOTASourceEditor;
 begin
-  Result := '';
+  CurSourceEditor := ActiveSourceEditor;
+  Result.Line := CurSourceEditor.EditViews[0].CursorPos.Line;
+  Result.Value := '';
   if Context = nil then
     Exit;
 
   Editor := Context.EditBuffer;
-  if Editor= nil then
+  if Editor = nil then
     Exit;
 
-  EdtPosition := Editor.EditPosition;
-  Result := Trim(Editor.EditBlock.Text);
+  Result.Value := Trim(Editor.EditBlock.Text);
 end;
 
-function GetCurrentProject: IOTAProject;  
-var  
-  ModServices: IOTAModuleServices;  
-  Module: IOTAModule;  
-  Project: IOTAProject;  
-  ProjectGroup: IOTAProjectGroup;  
-  i: Integer;  
-begin  
-  Result := nil;  
-  ModServices := BorlandIDEServices as IOTAModuleServices;  
-  for i := 0 to ModServices.ModuleCount - 1 do  
-  begin  
-    Module := ModServices.Modules[i];  
-    if Supports(Module, IOTAProjectGroup, ProjectGroup) then  
-    begin  
-      Result := ProjectGroup.ActiveProject;  
-      Exit;  
-    end  
-    else if Supports(Module, IOTAProject, Project) then  
-    begin // In the case of unbound packages, return the 1st  
-      if Result = nil then  
-        Result := Project;  
-    end;  
-  end;  
+function GetCurrentProject: IOTAProject;
+var
+  ModServices: IOTAModuleServices;
+  Module: IOTAMOdule;
+  Project: IOTAProject;
+  ProjectGroup: IOTAProjectGroup;
+  i: Integer;
+begin
+  Result := nil;
+  ModServices := BorlandIDEServices as IOTAModuleServices;
+  for i := 0 to ModServices.ModuleCount - 1 do
+  begin
+    Module := ModServices.Modules[i];
+    if Supports(Module, IOTAProjectGroup, ProjectGroup) then
+    begin
+      Result := ProjectGroup.ActiveProject;
+      Exit;
+    end
+    else if Supports(Module, IOTAProject, Project) then
+    begin // In the case of unbound packages, return the 1st
+      if Result = nil then
+        Result := Project;
+    end;
+  end;
 end;
 
-//Credits to GXExperts
-function GxOtaGetCurrentModule: IOTAModule;
+// Credits to GXExperts
+function GxOtaGetCurrentModule: IOTAMOdule;
 var
   ModuleServices: IOTAModuleServices;
 begin
@@ -118,15 +163,15 @@ begin
   Result := ModuleServices.CurrentModule;
 end;
 
-//Credits to GXExperts
-function GxOtaGetFileEditorForModule(Module: IOTAModule; Index: Integer): IOTAEditor;
+// Credits to GXExperts
+function GxOtaGetFileEditorForModule(Module: IOTAMOdule; Index: Integer): IOTAEditor;
 begin
   Assert(Assigned(Module));
   Result := Module.GetModuleFileEditor(Index);
 end;
 
-//Credits to GXExperts
-function GxOtaGetSourceEditorFromModule(Module: IOTAModule; const FileName: string = ''): IOTASourceEditor;
+// Credits to GXExperts
+function GxOtaGetSourceEditorFromModule(Module: IOTAMOdule; const FileName: string = ''): IOTASourceEditor;
 var
   i: Integer;
   IEditor: IOTAEditor;
@@ -136,7 +181,7 @@ begin
   if not Assigned(Module) then
     Exit;
 
-  for i := 0 to Module.GetModuleFileCount-1 do
+  for i := 0 to Module.GetModuleFileCount - 1 do
   begin
     IEditor := GxOtaGetFileEditorForModule(Module, i);
 
@@ -185,42 +230,43 @@ end;
 
 type
   TBrowserInformation = record
-    Name     : String;
-    Path     : String;
-    Version  : String;
+    Name: String;
+    Path: String;
+    Version: String;
   end;
 
-function GetDefaultBrowser : TBrowserInformation;
+function GetDefaultBrowser: TBrowserInformation;
 var
-  tmp : PChar;
-  res : PChar;
+  tmp: PChar;
+  res: PChar;
 
 begin
   tmp := StrAlloc(255);
   res := StrAlloc(255);
   try
-    GetTempPath(255,tmp);
-    FileCreate(tmp+'htmpl.htm');
-    FindExecutable('htmpl.htm',tmp,Res);
+    GetTempPath(255, tmp);
+    FileCreate(tmp + 'htmpl.htm');
+    FindExecutable('htmpl.htm', tmp, res);
     Result.Name := ExtractFileName(res);
     Result.Path := ExtractFilePath(res);
-    SysUtils.DeleteFile(tmp+'htmpl.htm');
+    SysUtils.DeleteFile(tmp + 'htmpl.htm');
   finally
     StrDispose(tmp);
     StrDispose(res);
   end;
 end;
 
-function EditorAsString(SourceEditor : IOTASourceEditor): string;
+function EditorAsString(SourceEditor: IOTASourceEditor): string;
 const
-  iBufferSize : Integer = 1024;
+  iBufferSize: Integer = 1024;
 Var
-  Reader : IOTAEditReader;
-  iRead : Integer;
-  iPosition : Integer;
-  strBuffer : AnsiString;
+  Reader: IOTAEditReader;
+  iRead: Integer;
+  iPosition: Integer;
+  strBuffer: AnsiString;
 begin
   Result := '';
+
   Reader := SourceEditor.CreateReader;
   try
     iPosition := 0;
@@ -242,23 +288,21 @@ var
   Desktop: IShellFolder;
   WidePathName: WideString;
   AnsiPathName: AnsiString;
-
 begin
   Result := ShortPathName;
   if Succeeded(SHGetDesktopFolder(Desktop)) then
   begin
     WidePathName := ShortPathName;
-    if Succeeded(Desktop.ParseDisplayName(0, nil, PWideChar(WidePathName),
-      ULONG(nil^), PIDL, ULONG(nil^))) then
+    if Succeeded(Desktop.ParseDisplayName(0, nil, PWideChar(WidePathName), ULONG(nil^), PIDL, ULONG(nil^))) then
 
-    try
-      SetLength(AnsiPathName, MAX_PATH);
-      SHGetPathFromIDList(PIDL, PChar(AnsiPathName));
-      Result := PChar(AnsiPathName);
+      try
+        SetLength(AnsiPathName, MAX_PATH);
+        SHGetPathFromIDList(PIDL, PChar(AnsiPathName));
+        Result := PChar(AnsiPathName);
 
-    finally
-      CoTaskMemFree(PIDL);
-    end;
+      finally
+        CoTaskMemFree(PIDL);
+      end;
   end;
 end;
 
@@ -270,7 +314,7 @@ begin
   if LBufSize > 0 then
   begin
     SetLength(Result, LBufSize - 1);
-    GetEnvironmentVariable(PChar(AVarName),PChar(Result), LBufSize);
+    GetEnvironmentVariable(PChar(AVarName), PChar(Result), LBufSize);
   end
   else
     Result := '';
@@ -278,31 +322,31 @@ end;
 
 function GetVolumeLabel(const DriveChar: string): string;
 var
-  NotUsed:     DWORD;
+  NotUsed: DWORD;
   VolumeFlags: DWORD;
-  VolumeInfo:  array[0..MAX_PATH] of Char;
+  VolumeInfo: array [0 .. MAX_PATH] of Char;
   VolumeSerialNumber: DWORD;
-  Buf: array [0..MAX_PATH] of Char;
+  Buf: array [0 .. MAX_PATH] of Char;
 begin
-    GetVolumeInformation(PChar(DriveChar),
-    Buf, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed,
-    VolumeFlags, nil, 0);
- 
-    SetString(Result, Buf, StrLen(Buf));   { Set return result }
-    Result:=AnsiUpperCase(Result);
+  GetVolumeInformation(PChar(DriveChar), Buf, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed, VolumeFlags, nil, 0);
+
+  SetString(Result, Buf, StrLen(Buf)); { Set return result }
+  Result := AnsiUpperCase(Result);
 end;
 
-function BrowseURL(const URL: string) : boolean;
+function BrowseURL(const URL: string): boolean;
 var
   LBrowserInformation: TBrowserInformation;
 begin
   Result := False;
   LBrowserInformation := GetDefaultBrowser;
-  Result := ShellExecute(0, 'open', PChar(LBrowserInformation.Path + LBrowserInformation.Name), PChar(URL), nil, SW_SHOW) > 32;
+  Result := ShellExecute(0, 'open', PChar(LBrowserInformation.Path + LBrowserInformation.Name), PChar(URL), nil,
+    SW_SHOW) > 32;
 end;
 
 initialization
-  PathUserDir := GetEnvVarValue('APPDATA') + '\RfUtils';
-  CreateDir(PathUserDir);
+
+PathUserDir := GetEnvVarValue('APPDATA') + '\RfUtils';
+CreateDir(PathUserDir);
 
 end.

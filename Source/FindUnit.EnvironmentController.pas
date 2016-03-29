@@ -4,7 +4,7 @@ interface
 
 uses
   Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils,
-  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport;
+  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport, Windows, FindUnit.Header;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -54,13 +54,13 @@ type
     property ProcessingDCU: Boolean read FProcessingDCU;
     property AutoImport: TAutoImport read FAutoImport;
 
-    procedure ImportMissingUnits;
+    procedure ImportMissingUnits(ShowNoImport: Boolean = true);
   end;
 
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.StringPositionList;
 
 { TEnvUpdateControl }
 
@@ -83,18 +83,23 @@ begin
     Sleep(1000);
 
 
-  Files := nil;
-  Paths := TStringList.Create;
-  Paths.Delimiter := ';';
-  Paths.StrictDelimiter := True;
-  EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-  Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
-  Paths.Add(FindUnitDcuDir);
+  try
+    Files := nil;
+    Paths := TStringList.Create;
+    Paths.Delimiter := ';';
+    Paths.StrictDelimiter := True;
+    EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
+    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
+    Paths.Add(FindUnitDcuDir);
 
-  FLibraryPath := TUnitsController.Create;
-  FreeAndNil(FLibraryPathWorker);
-  FLibraryPathWorker := TParserWorker.Create(Paths, Files);
-  FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
+    FLibraryPath := TUnitsController.Create;
+    FreeAndNil(FLibraryPathWorker);
+    FLibraryPathWorker := TParserWorker.Create(Paths, Files);
+    FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
+  except
+    on E: exception do
+      Logger.Error('TEnvironmentController.CreateLibraryPathUnits: %s', [e.Message]);
+  end;
 end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
@@ -179,33 +184,45 @@ begin
     Result := TStringList.Create;
 end;
 
-procedure TEnvironmentController.ImportMissingUnits;
+procedure TEnvironmentController.ImportMissingUnits(ShowNoImport: Boolean);
 var
   CurEditor: IOTASourceEditor;
   FileEditor: TSourceFileEditor;
-  ListToImport: TStringList;
-  Item: string;
+  ListToImport: TStringPositionList;
+  Item: TStringPosition;
+  OldFocus: Cardinal;
 begin
+  if FAutoImport = nil then
+    Exit;
+
+  CurEditor := OtaGetCurrentSourceEditor;
+  if CurEditor = nil then
+    Exit;
+
+  OldFocus := GetFocus;
+
   ListToImport := FAutoImport.LoadUnitListToImport;
   if ListToImport.Count = 0 then
   begin
-    TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
+    if ShowNoImport then
+      TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
     ListToImport.Free;
+    SetFocus(OldFocus);
     Exit;
   end;
 
-  CurEditor := OtaGetCurrentSourceEditor;
   FileEditor := TSourceFileEditor.Create(CurEditor);
   try
     FileEditor.Prepare;
     for Item in ListToImport do
     begin
-      FileEditor.AddUsesToInterface(Item);
-      TfrmMessage.ShowInfoToUser('Unit ' + Item + ' added to interface''s uses.');
+      FileEditor.AddUnit(Item);
+      SetFocus(OldFocus);
     end;
   finally
     FileEditor.Free;
   end;
+  ListToImport.Free;
 end;
 
 function TEnvironmentController.IsLibraryPathsUnitReady: Boolean;

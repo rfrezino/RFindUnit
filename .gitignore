@@ -2,3 +2,5 @@
 *.dcu
 *.dproj*
 *.identcache
+/Resources
+/Installer/build/RAD Studio XE/RfFindUnit.bpl

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI;
+  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -49,8 +49,8 @@ type
     procedure btnProcessDCUsClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
+    FFileEditor: TSourceFileEditor;
 
-    procedure GetSelectedItem(out UnitName, ClassName: string);
     procedure AddUnit;
 
     procedure ProcessKeyCommand(var Msg: tagMSG; var Handled: Boolean);
@@ -66,9 +66,16 @@ type
     procedure ProcessDCUFiles;
     function CanProcessDCUFiles: Boolean;
     procedure ShowMessageToMuchResults(Show: Boolean);
+
+    procedure LoadCurrentFile;
+    procedure GetSelectedItem(out UnitName, ClassName: string);
   public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
     procedure SetEnvControl(EnvControl: TEnvironmentController);
-    procedure SetSearch(const Search: string);
+    procedure SetSearch(Filter: TStringPosition);
+
     procedure FilterItem(const SearchString: string);
 
     procedure ShowTextOnScreen(Text: string);
@@ -80,8 +87,7 @@ var
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor,
-  FindUnit.FormMessage, FindUnit.DcuDecompiler, FindUnit.Header;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FormMessage, FindUnit.DcuDecompiler;
 
 {$R *.dfm}
 
@@ -111,8 +117,6 @@ end;
 
 procedure TfrmFindUnit.AddUnit;
 var
-  CurEditor: IOTASourceEditor;
-  FileEditor: TSourceFileEditor;
   SelectedUnit: string;
   SelectedClass: string;
 begin
@@ -120,18 +124,12 @@ begin
   if SelectedUnit = '' then
     Exit;
 
-  CurEditor := OtaGetCurrentSourceEditor;
-  FileEditor := TSourceFileEditor.Create(CurEditor);
-  try
-    ShowTextOnScreen(SelectedUnit);
-    FileEditor.Prepare;
-    if rbInterface.Checked then
-      FileEditor.AddUsesToInterface(SelectedUnit)
-    else
-      FileEditor.AddUsesToImplementation(SelectedUnit);
-  finally
-    FileEditor.Free;
-  end;
+  ShowTextOnScreen(SelectedUnit);
+
+  if rbInterface.Checked then
+    FFileEditor.AddUsesToInterface(SelectedUnit)
+  else
+    FFileEditor.AddUsesToImplementation(SelectedUnit);
 
   if chkMemorize.Checked then
     FEnvControl.AutoImport.SetMemorizedUnit(SelectedClass, SelectedUnit);
@@ -261,6 +259,18 @@ end;
 procedure TfrmFindUnit.chkSearchProjectFilesClick(Sender: TObject);
 begin
   FilterItemFromSearchString;
+end;
+
+constructor TfrmFindUnit.Create(AOwner: TComponent);
+begin
+  inherited;
+  LoadCurrentFile;
+end;
+
+destructor TfrmFindUnit.Destroy;
+begin
+  FFileEditor.Free;
+  inherited;
 end;
 
 procedure TfrmFindUnit.edtSearchChange(Sender: TObject);
@@ -396,6 +406,15 @@ begin
   chkSearchProjectFiles.Checked := CONFIG_SearchOnProjectUnits;
 end;
 
+procedure TfrmFindUnit.LoadCurrentFile;
+var
+  CurEditor: IOTASourceEditor;
+begin
+  CurEditor := OtaGetCurrentSourceEditor;
+  FFileEditor := TSourceFileEditor.Create(CurEditor);
+  FFileEditor.Prepare;
+end;
+
 procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);
 begin
   AddUnit;
@@ -466,12 +485,15 @@ begin
   CheckLibraryStatus;
 end;
 
-procedure TfrmFindUnit.SetSearch(const Search: string);
+procedure TfrmFindUnit.SetSearch(Filter: TStringPosition);
 begin
-  if (Search = '') or (Pos(#13#10, Search) > 0) then
+  rbInterface.Checked := not FFileEditor.IsLineOnImplementationSection(Filter.Line);
+  rbImplementation.Checked := FFileEditor.IsLineOnImplementationSection(Filter.Line);
+
+  if (Filter.Value = '') or (Pos(#13#10, Filter.Value) > 0) then
     Exit;
 
-  edtSearch.Text := Search;
+  edtSearch.Text := Filter.Value;
 end;
 
 procedure TfrmFindUnit.CheckLibraryStatus;
