@@ -83,18 +83,15 @@ type
     Next: PBufferRec;
   end;
 
-  TCharProc = procedure of object;
-  TTokenKindFunc = function: TptTokenKind of object;
-
   TmwBasePasLex = class(TObject)
   private
     FCommentState: TCommentState;
-    FProcTable: array[#0..#127] of TCharProc;
+    FProcTable: array[#0..#127] of procedure of object;
     FBuffer: PBufferRec;
     RunAhead: Integer;
     TempRun: Integer;
     BufferSize: integer;
-    FIdentFuncTable: array[0..191] of TTokenKindFunc;
+    FIdentFuncTable: array[0..191] of function: TptTokenKind of object;
     FTokenPos: Integer;
     FTokenID: TptTokenKind;
     FExID: TptTokenKind;

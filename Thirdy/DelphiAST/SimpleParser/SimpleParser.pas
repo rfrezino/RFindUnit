@@ -322,6 +322,8 @@ type
     procedure ExportedHeading; virtual;
     procedure ExportsClause; virtual;
     procedure ExportsElement; virtual;
+    procedure ExportsName; virtual;
+    procedure ExportsNameId; virtual;
     procedure Expression; virtual;
     procedure ExpressionList; virtual;
     procedure ExternalDirective; virtual;
@@ -2079,7 +2081,10 @@ end;
 
 procedure TmwSimplePasPar.FormalParameterType;
 begin
-  TypeID;
+  if TokenID = ptArray then 
+    StructuredType
+  else
+    TypeID;
 end;
 
 procedure TmwSimplePasPar.FunctionMethodDeclaration;
@@ -2578,7 +2583,7 @@ begin
     InitAhead;
     AheadParse.Designator;
 
-    if AheadParse.TokenId in [ptAssign, ptSemicolon] then
+    if AheadParse.TokenId in [ptAssign, ptSemicolon, ptElse] then
       SimpleStatement
     else
       Expression;
@@ -4479,7 +4484,7 @@ end;
 procedure TmwSimplePasPar.TypeKind;
 begin
   case TokenID of
-    ptAsciiChar, ptFloat, ptIntegerConst, ptMinus, ptNil, ptPlus, ptStringConst:
+    ptAsciiChar, ptFloat, ptIntegerConst, ptMinus, ptNil, ptPlus, ptStringConst, ptConst:
       begin
         SimpleType;
       end;
@@ -5125,7 +5130,12 @@ end;
 
 procedure TmwSimplePasPar.ExportsElement;
 begin
-  Expected(ptIdentifier);
+  ExportsName;
+  if TokenID = ptRoundOpen then
+  begin
+    FormalParameterList;
+  end;
+
   if FLexer.ExID = ptIndex then
   begin
     NextToken;
@@ -5528,6 +5538,21 @@ end;
 function TmwSimplePasPar.IsDefined(const ADefine: string): Boolean;
 begin
   Result := FLexer.IsDefined(ADefine);
+end;
+
+procedure TmwSimplePasPar.ExportsNameId;
+begin
+  Expected(ptIdentifier);
+end;
+
+procedure TmwSimplePasPar.ExportsName;
+begin
+  ExportsNameId;
+  while FLexer.TokenID = ptPoint do
+  begin
+    NextToken;
+    ExportsNameId;
+  end;
 end;
 
 procedure TmwSimplePasPar.ImplementsSpecifier;

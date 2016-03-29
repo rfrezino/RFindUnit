@@ -287,7 +287,7 @@ begin
     Self.Initialize;
     try
       if FIsInit then
-        Writeln(FOutFile, Format('[%s] %s ', [FormatDateTime(FORMAT_DATETIME_DEFAULT, Now), Msg]));
+        Writeln(FOutFile, Format('[%s] [TID %d] %s ', [FormatDateTime(FORMAT_DATETIME_DEFAULT, Now), GetCurrentThreadId, Msg]));
     finally
       Self.Finalize;
     end;
