@@ -3,7 +3,7 @@ unit uInstaller;
 interface
 
 uses
-	FindUnit.Utils, ShellAPI, Windows, SysUtils, uDelphiInstallationCheck, Registry;
+	ShellAPI, Windows, SysUtils, uDelphiInstallationCheck, Registry;
 
 type
   TRetProcedure = procedure(Desc: string) of object;
@@ -40,7 +40,36 @@ type
 
 implementation
 
+uses
+  TlHelp32;
+
 { TInstaller }
+
+function IsProcessRunning(const AExeFileName: string): Boolean;
+var
+  Continuar: BOOL;
+  SnapshotHandle: THandle;
+  Entry: TProcessEntry32;
+begin
+  Result := False;
+  try
+    SnapshotHandle := CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    Entry.dwSize := SizeOf(Entry);
+    Continuar := Process32First(SnapshotHandle, Entry);
+    while Integer(Continuar) <> 0 do
+    begin
+      if ((UpperCase(ExtractFileName(Entry.szExeFile)) = UpperCase(AExeFileName)) or
+        (UpperCase(Entry.szExeFile) = UpperCase(AExeFileName))) then
+      begin
+        Result := True;
+      end;
+      Continuar := Process32Next(SnapshotHandle, Entry);
+    end;
+    CloseHandle(SnapshotHandle);
+  except
+    Result := False;
+  end;
+end;
 
 procedure TInstaller.CheckDelphiRunning;
 begin
