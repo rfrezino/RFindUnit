@@ -278,10 +278,13 @@ begin
   try
 
     try
+      Logger.Debug('TFindUnitParser.Process: Run');
       FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, FIncluder);
+      Logger.Debug('TFindUnitParser.Process: Completed');
     except
       on E: ESyntaxTreeException do
       begin
+        Logger.Debug('TFindUnitParser.Process: Completed with error');
         FUnitNode := e.SyntaxTree;
         e.SyntaxTree := nil;
       end;

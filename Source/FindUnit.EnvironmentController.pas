@@ -83,18 +83,23 @@ begin
     Sleep(1000);
 
 
-  Files := nil;
-  Paths := TStringList.Create;
-  Paths.Delimiter := ';';
-  Paths.StrictDelimiter := True;
-  EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-  Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
-  Paths.Add(FindUnitDcuDir);
+  try
+    Files := nil;
+    Paths := TStringList.Create;
+    Paths.Delimiter := ';';
+    Paths.StrictDelimiter := True;
+    EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
+    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
+    Paths.Add(FindUnitDcuDir);
 
-  FLibraryPath := TUnitsController.Create;
-  FreeAndNil(FLibraryPathWorker);
-  FLibraryPathWorker := TParserWorker.Create(Paths, Files);
-  FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
+    FLibraryPath := TUnitsController.Create;
+    FreeAndNil(FLibraryPathWorker);
+    FLibraryPathWorker := TParserWorker.Create(Paths, Files);
+    FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
+  except
+    on E: exception do
+      Logger.Error('TEnvironmentController.CreateLibraryPathUnits: %s', [e.Message]);
+  end;
 end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
