@@ -93,7 +93,7 @@ object frmFindUnit: TfrmFindUnit
       Top = 19
       Width = 274
       Height = 17
-      Caption = 'Store choises to use on Auto Import (Ctrl + Shit + I)'
+      Caption = 'Store choices to use on Auto Import (Ctrl + Shit + I)'
       Checked = True
       State = cbChecked
       TabOrder = 0
@@ -132,8 +132,8 @@ object frmFindUnit: TfrmFindUnit
         Height = 45
         Align = alClient
         Caption = 
-          '  Remember that you can create incremental searchs like: "string' +
-          '   replace", I'#39#39'm going to look for the arguments separataly'
+          '  Remember that you can create incremental searches like: "string' +
+          '   replace", I'#39'm going to look for the arguments separately'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 19174
         Font.Height = -11
