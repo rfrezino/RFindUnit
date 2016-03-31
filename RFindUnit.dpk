@@ -1,4 +1,4 @@
-package RFindUnit;
+﻿package RFindUnit;
 
 {$R *.res}
 {$ALIGN 8}
