@@ -203,18 +203,22 @@ begin
       var
         Parser: TPasFileParser;
         Item: TPasFile;
+    Step: string;
       begin
         Parser := TPasFileParser.Create(FPasFiles[index]);
         try
           try
+            Step := 'Parser.SetIncluder(FIncluder)';
             Parser.SetIncluder(FIncluder);
+            Step := 'InterlockedIncrement(FParsedItems);';
             InterlockedIncrement(FParsedItems);
+            Step := 'Parser.Process';
             Item := Parser.Process;
             if Item <> nil then
               ResultList.Add(Item);
           except
             on e: exception do
-              Logger.Error('TParserWorker.ParseFiles: ' + e.Message);
+              Logger.Error('TParserWorker.ParseFiles[%s]: %s', [Step, e.Message]);
           end;
         finally
           Parser.Free;

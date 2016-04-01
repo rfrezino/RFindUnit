@@ -267,6 +267,7 @@ end;
 
 function TPasFileParser.Process: TPasFile;
 begin
+  FUnitNode := nil;
   Result := nil;
   if not FileExists(FFilePath) then
   begin
@@ -276,7 +277,6 @@ begin
 
   Logger.Debug('TFindUnitParser.Process: Parsing file %s', [FFilePath]);
   try
-
     try
       Logger.Debug('TFindUnitParser.Process: Run');
       FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, FIncluder);
