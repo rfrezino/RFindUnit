@@ -33,7 +33,7 @@ type
 implementation
 
 uses
-  FindUnit.DelphiVlcWrapper;
+  FindUnit.DelphiVlcWrapper, Log4Pascal;
 
 const
   MARGIN_PADING = 5;
@@ -135,24 +135,29 @@ var
   TextSize: tagSIZE;
   GlassCanvas: TTransparentCanvas;
 begin
-  GlassCanvas := TTransparentCanvas.Create(ClientWidth, ClientHeight);
   try
-    GlassCanvas.Font.Name := 'Courier New';
-    GlassCanvas.Font.Size := -13;
-    GlassCanvas.Font.Color := $000146A5;
+    GlassCanvas := TTransparentCanvas.Create(ClientWidth, ClientHeight);
+    try
+      GlassCanvas.Font.Name := 'Courier New';
+      GlassCanvas.Font.Size := -13;
+      GlassCanvas.Font.Color := $000146A5;
 
-    TextSize := GlassCanvas.TextExtent(FTexto);
+      TextSize := GlassCanvas.TextExtent(FTexto);
 
-    GlassCanvas.Pen.Width := 1;
-    GlassCanvas.Pen.Color := $004080FF;
-    GlassCanvas.Brush.Color := $00CCE6FF;
-    GlassCanvas.Rectangle(COORNER_MARGIN, 0, TextSize.cx + COORNER_MARGIN + MARGIN_PADING + MARGIN_PADING, 30, 240);
+      GlassCanvas.Pen.Width := 1;
+      GlassCanvas.Pen.Color := $004080FF;
+      GlassCanvas.Brush.Color := $00CCE6FF;
+      GlassCanvas.Rectangle(COORNER_MARGIN, 0, TextSize.cx + COORNER_MARGIN + MARGIN_PADING + MARGIN_PADING, 30, 240);
 
-    GlassCanvas.GlowTextOutBackColor(COORNER_MARGIN + MARGIN_PADING, MARGIN_PADING, 0, FTexto, clBlack, taLeftJustify, 10, 255);
+      GlassCanvas.GlowTextOutBackColor(COORNER_MARGIN + MARGIN_PADING, MARGIN_PADING, 0, FTexto, clBlack, taLeftJustify, 10, 255);
 
-    GlassCanvas.DrawToGlass(0, 0, Canvas.Handle);
-  finally
-    GlassCanvas.Free;
+      GlassCanvas.DrawToGlass(0, 0, Canvas.Handle);
+    finally
+      GlassCanvas.Free;
+    end;
+  except
+    on e: exception do
+      Logger.Error('TfrmMessage.PrintOnCanvas', Self, E);
   end;
 end;
 
