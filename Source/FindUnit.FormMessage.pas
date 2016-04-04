@@ -157,7 +157,7 @@ begin
     end;
   except
     on e: exception do
-      Logger.Error('TfrmMessage.PrintOnCanvas', Self, E);
+      Logger.Error('TfrmMessage.PrintOnCanvas: %s', [E.Message]);
   end;
 end;
 

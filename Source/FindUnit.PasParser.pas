@@ -4,7 +4,7 @@ interface
 
 uses
   ComCtrls, Classes, SysUtils, DelphiAST.Classes, Generics.Collections, FindUnit.Utils,
-  SimpleParser.Lexer.Types, FindUnit.Header;
+  SimpleParser.Lexer.Types, FindUnit.Header, FindUnit.IncluderHandlerInc;
 
 type
 
@@ -134,6 +134,7 @@ const
 
 constructor TPasFileParser.Create(const FilePath: string);
 begin
+  inherited Create;
   FFilePath := FilePath;
 end;
 

@@ -3,7 +3,7 @@ unit FindUnit.Worker;
 interface
 
 uses
-  OtlCommonFU, OtlTaskFU, OtlThreadPoolFU, OtlParallelFU, OtlCollectionsFU,
+  OtlCommonFU, OtlTaskFU, OtlThreadPoolFU, OtlParallelFU, OtlCollectionsFU, SimpleParser.Lexer.Types,
   Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc, Log4Pascal;
 
 type
@@ -15,7 +15,7 @@ type
     FOnFinished: TOnFinished;
     FPasFiles: TStringList;
     FFindUnits: TObjectList<TPasFile>;
-    FIncluder: TIncludeHandlerInc;
+    FIncluder: IIncludeHandler;
     FParsedItems: Integer;
 
     FDcuFiles: TStringList;
@@ -26,6 +26,7 @@ type
 
     procedure RemoveDcuFromExistingPasFiles;
     procedure GeneratePasFromDcus;
+    procedure ParseFilesParallel;
     procedure ParseFiles;
     function GetItemsToParse: Integer;
     procedure RunTasks;
@@ -69,7 +70,7 @@ begin
 
   FFindUnits := TObjectList<TPasFile>.Create;
 
-  FIncluder := TIncludeHandlerInc.Create(FDirectoriesPath.Text);
+  FIncluder := TIncludeHandlerInc.Create(FDirectoriesPath.Text) as IIncludeHandler;
 end;
 
 destructor TParserWorker.Destroy;
@@ -190,6 +191,37 @@ end;
 
 procedure TParserWorker.ParseFiles;
 var
+  I: Integer;
+  Parser: TPasFileParser;
+  Item: TPasFile;
+  Step: string;
+begin
+  for I := 0 to FPasFiles.Count -1 do
+  begin
+    try
+      Parser := TPasFileParser.Create(FPasFiles[I]);
+      try
+        Step := 'Parser.SetIncluder(FIncluder)';
+        Parser.SetIncluder(FIncluder);
+        Step := 'InterlockedIncrement(FParsedItems);';
+        InterlockedIncrement(FParsedItems);
+        Step := 'Parser.Process';
+        Item := Parser.Process;
+        if Item <> nil then
+          FFindUnits.Add(Item);
+      except
+        on e: exception do
+          Logger.Error('TParserWorker.ParseFiles[%s]: %s', [Step, e.Message]);
+      end;
+    finally
+      Item := nil;
+      Parser.Free;
+    end;
+  end;
+end;
+
+procedure TParserWorker.ParseFilesParallel;
+var
   ResultList: IOmniBlockingCollection;
   PasValue: TOmniValue;
 begin
@@ -203,11 +235,13 @@ begin
       var
         Parser: TPasFileParser;
         Item: TPasFile;
-    Step: string;
+        Step: string;
       begin
-        Parser := TPasFileParser.Create(FPasFiles[index]);
         try
+          Parser := nil;
           try
+            Step := 'Create';
+            Parser := TPasFileParser.Create(FPasFiles[index]);
             Step := 'Parser.SetIncluder(FIncluder)';
             Parser.SetIncluder(FIncluder);
             Step := 'InterlockedIncrement(FParsedItems);';
@@ -279,7 +313,7 @@ var
 begin
   try
     Step := 'FIncluder.Process';
-    FIncluder.Process;
+    TIncludeHandlerInc(FIncluder).Process;
     Step := 'ListPasFiles';
     ListPasFiles;
     Step := 'ListDcuFiles';
@@ -289,7 +323,7 @@ begin
     Step := 'GeneratePasFromDcus';
     GeneratePasFromDcus;
     Step := 'ParseFiles';
-    ParseFiles;
+    ParseFilesParallel;
   except
     on E: exception do
       Logger.Error('TParserWorker.RunTasks[%s]: %s ',[Step, e.Message]);
