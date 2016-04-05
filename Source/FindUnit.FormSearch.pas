@@ -47,6 +47,7 @@ type
     procedure btnRefreshProjectClick(Sender: TObject);
     procedure btnRefreshLibraryPathClick(Sender: TObject);
     procedure btnProcessDCUsClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
     FFileEditor: TSourceFileEditor;
@@ -360,6 +361,11 @@ begin
   SaveConfigs;
   Action := caFree;
   frmFindUnit := nil;
+end;
+
+procedure TfrmFindUnit.FormCreate(Sender: TObject);
+begin
+  Caption := 'Find Uses - Version ' + VERSION_STR;
 end;
 
 procedure TfrmFindUnit.FormShow(Sender: TObject);

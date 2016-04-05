@@ -15,6 +15,7 @@ object frmFindUnit: TfrmFindUnit
   Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -132,8 +133,8 @@ object frmFindUnit: TfrmFindUnit
         Height = 45
         Align = alClient
         Caption = 
-          '  Remember that you can create incremental searches like: "string' +
-          '   replace", I'#39'm going to look for the arguments separately'
+          '  Remember that you can create incremental searches like: "strin' +
+          'g   replace", I'#39'm going to look for the arguments separately'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = 19174
         Font.Height = -11
