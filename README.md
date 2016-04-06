@@ -1,4 +1,4 @@
-# RFindUnit
+# RFindUnit - Version 1.0.2
 
 Find unit (find uses) is a very simple tool and very used (Ctrl+Shift+A), but, as you know Delphi Find Unit doesn't work very well, in general it crashes or it's very slow.
 </br>Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions (as auto import for example).
