@@ -236,16 +236,19 @@ begin
         Parser: TPasFileParser;
         Item: TPasFile;
         Step: string;
+        Conter: Integer;
       begin
         try
           Parser := nil;
           try
+            Step := 'InterlockedIncrement(FParsedItems);';
+            Conter := InterlockedIncrement(FParsedItems);
+            Logger.Debug('TParserWorker.ParseFiles: %d / %d. File: %s', [Conter, Index, FPasFiles[index]]);
+
             Step := 'Create';
             Parser := TPasFileParser.Create(FPasFiles[index]);
             Step := 'Parser.SetIncluder(FIncluder)';
             Parser.SetIncluder(FIncluder);
-            Step := 'InterlockedIncrement(FParsedItems);';
-            InterlockedIncrement(FParsedItems);
             Step := 'Parser.Process';
             Item := Parser.Process;
             if Item <> nil then
@@ -260,8 +263,10 @@ begin
       end
     );
 
+  Logger.Debug('TParserWorker.ParseFiles: Put results together.');
   while ResultList.Take(PasValue) do
     FFindUnits.Add(TPasFile(PasValue.AsObject));
+  Logger.Debug('TParserWorker.ParseFiles: Finished.');
 end;
 
 procedure TParserWorker.RemoveDcuFromExistingPasFiles;
@@ -310,20 +315,27 @@ end;
 procedure TParserWorker.RunTasks;
 var
   Step: string;
+
+  procedure OutPutStep(CurStep: string);
+  begin
+    Step := CurStep;
+    Logger.Debug('TParserWorker.RunTasks: ' + CurStep);
+  end;
 begin
   try
-    Step := 'FIncluder.Process';
+    OutPutStep('FIncluder.Process');
     TIncludeHandlerInc(FIncluder).Process;
-    Step := 'ListPasFiles';
+    OutPutStep('ListPasFiles');
     ListPasFiles;
-    Step := 'ListDcuFiles';
+    OutPutStep('ListDcuFiles');
     ListDcuFiles;
-    Step := 'RemoveDcuFromExistingPasFiles';
+    OutPutStep('RemoveDcuFromExistingPasFiles');
     RemoveDcuFromExistingPasFiles;
-    Step := 'GeneratePasFromDcus';
+    OutPutStep('GeneratePasFromDcus');
     GeneratePasFromDcus;
-    Step := 'ParseFiles';
+    OutPutStep('ParseFiles');
     ParseFilesParallel;
+    OutPutStep('Finished');
   except
     on E: exception do
       Logger.Error('TParserWorker.RunTasks[%s]: %s ',[Step, e.Message]);

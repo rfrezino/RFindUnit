@@ -119,9 +119,15 @@ begin
   end;
 
   Files := GetAllFilesFromProjectGroup;
-
   Paths := nil;
-  FreeAndNil(FProjectPathWorker);
+
+  try
+    FreeAndNil(FProjectPathWorker);
+  except
+    on E: exception do
+      Logger.Debug('TEnvironmentController.CreateProjectPathUnits: Error removing object');
+  end;
+
   FProjectUnits := TUnitsController.Create;
   FProjectPathWorker := TParserWorker.Create(Paths, Files);
   FProjectPathWorker.Start(OnFinishedProjectPathScan);
@@ -252,8 +258,8 @@ end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
 begin
-  FProjectUnits.Units := FindUnits;
   FProjectUnits.Ready := True;
+  FProjectUnits.Units := FindUnits;
 end;
 
 procedure TEnvironmentController.ProcessDCUFiles;

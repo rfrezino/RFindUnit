@@ -292,7 +292,10 @@ begin
     end;
 
     if FUnitNode = nil then
+    begin
+      Logger.Debug('TFindUnitParser.Process: No content in file');
       Exit;
+    end;
 
     FResultItem := TPasFile.Create;
     Result := FResultItem;
