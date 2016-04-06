@@ -21,6 +21,8 @@ function OtaGetCurrentSourceEditor: IOTASourceEditor;
 function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 function GetErrorListFromActiveModule: TOTAErrors;
 
+function GetAllFilesFromProjectGroup: TStringList;
+
 function GetWordAtCursor: TStringPosition;
 
 var
@@ -65,6 +67,42 @@ var
 begin
   ModuleErrors := GxOtaGetCurrentModule as IOTAModuleErrors;
   Result := ModuleErrors.GetErrors(ActiveSourceEditor.FileName);
+end;
+
+function GetAllFilesFromProjectGroup: TStringList;
+var
+  ModServices: IOTAModuleServices;
+  Module: IOTAMOdule;
+  ProjectGroup: IOTAProjectGroup;
+  iMod: Integer;
+  FileDesc: string;
+  iProj: Integer;
+  CurProject: IOTAProject;
+  iFile: Integer;
+begin
+  Result := TStringList.Create;
+  Result.Sorted := True;
+  Result.Duplicates := dupIgnore;
+
+  ModServices := BorlandIDEServices as IOTAModuleServices;
+  for iMod := 0 to ModServices.ModuleCount - 1 do
+  begin
+    Module := ModServices.Modules[iMod];
+    if Supports(Module, IOTAProjectGroup, ProjectGroup) then
+    begin
+      for iProj := 0 to ProjectGroup.ProjectCount -1 do
+      begin
+        CurProject := ProjectGroup.Projects[iProj];
+        for iFile := 0 to CurProject.GetModuleCount -1 do
+        begin
+          FileDesc := CurProject.GetModule(iFile).FileName;
+          if FileDesc = '' then
+            Continue;
+          Result.Add(FileDesc);
+        end;
+      end;
+    end;
+  end;
 end;
 
 function GetWordAtCursor: TStringPosition;

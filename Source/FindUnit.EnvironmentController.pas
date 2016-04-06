@@ -118,16 +118,7 @@ begin
     Sleep(1000);
   end;
 
-  CurProject :=  GetCurrentProject;
-
-  Files := TStringList.Create;
-  for I := 0 to CurProject.GetModuleCount -1 do
-  begin
-    FileDesc := CurProject.GetModule(i).FileName;
-    if FileDesc = '' then
-      Continue;
-    Files.Add(FileDesc);
-  end;
+  Files := GetAllFilesFromProjectGroup;
 
   Paths := nil;
   FreeAndNil(FProjectPathWorker);
