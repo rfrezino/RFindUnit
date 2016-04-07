@@ -159,6 +159,8 @@ begin
   FProjectServiceIndex := ProjectFileStorageService.AddNotifier(FEnvControl);
 
   CompilerInterceptor.SetEnvControl(FEnvControl);
+
+  Logger.Debug('Version ' + VERSION_STR);
 end;
 
 destructor TRFindUnitMain.Destroy;

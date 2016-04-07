@@ -243,9 +243,14 @@ end;
 
 procedure TEnvironmentController.LoadProjectPath;
 begin
+  Logger.Debug('LoadProjectPath');
   if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
+  begin
+    Logger.Debug('LoadProjectPath: no');
     Exit;
+  end;
 
+  Logger.Debug('LoadProjectPath: yes');
   FreeAndNil(FProjectUnits);
   Parallel.Async(CreateProjectPathUnits);
 end;
