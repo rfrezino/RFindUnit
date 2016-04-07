@@ -228,6 +228,7 @@ begin
   ResultList := TOmniBlockingCollection.Create;
   FParsedItems := 0;
 
+  Logger.Debug('TParserWorker.ParseFiles: Starting parseing files.');
   Parallel.ForEach(0, FPasFiles.Count -1)
     .Into(ResultList)
     .Execute(
@@ -243,8 +244,6 @@ begin
           try
             Step := 'InterlockedIncrement(FParsedItems);';
             Conter := InterlockedIncrement(FParsedItems);
-            Logger.Debug('TParserWorker.ParseFiles: %d / %d. File: %s', [Conter, Index, FPasFiles[index]]);
-
             Step := 'Create';
             Parser := TPasFileParser.Create(FPasFiles[index]);
             Step := 'Parser.SetIncluder(FIncluder)';

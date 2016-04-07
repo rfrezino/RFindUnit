@@ -54,7 +54,7 @@ procedure Register;
 var
   OtaKey: IOTAKeyboardBinding;
 begin
-  Logger := TLogger.Create(FindUnitDirLogger + Format('pdi_%d_log_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
+  Logger := TLogger.Create(FindUnitDirLogger + Format('pid_%d_log_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
 
   VFindUnit := TRFindUnitMain.Create;
   OtaKey := VFindUnit as IOTAKeyboardBinding;
@@ -193,7 +193,7 @@ procedure TRFindUnitMain.AutoImport(const Context: IOTAKeyContext; KeyCode: TSho
 begin
   BindingResult := krHandled;
   FEnvControl.ImportMissingUnits;
-  FEnvControl.LoadLibraryPath; //Force to load, if it was not loaded
+  FEnvControl.ForceLoadProjectPath;
 end;
 
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
@@ -201,7 +201,7 @@ procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShort
 var
   SelectedText: TStringPosition;
 begin
-  FEnvControl.LoadLibraryPath; //Force to load, if it was not loaded
+  FEnvControl.ForceLoadProjectPath;
   SelectedText := GetSelectedTextFromContext(Context);
   if SelectedText.Value = '' then
     SelectedText := GetWordAtCursor;

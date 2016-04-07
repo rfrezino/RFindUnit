@@ -39,6 +39,7 @@ type
 
     procedure LoadLibraryPath;
     procedure LoadProjectPath;
+    procedure ForceLoadProjectPath;
 
     function GetProjectUnits(const SearchString: string): TStringList;
     function GetLibraryPathUnits(const SearchString: string): TStringList;
@@ -79,9 +80,18 @@ begin
   if FLibraryPath <> nil then
     Exit;
 
-  while (BorlandIDEServices as IOTAServices) = nil do
-    Sleep(1000);
+  try
+    FreeAndNil(FLibraryPathWorker);
+  except
+    on e: exception do
+      Logger.Error('TEnvironmentController.CreateLibraryPathUnits: ' + e.Message);
+  end;
 
+  while (BorlandIDEServices as IOTAServices) = nil do
+  begin
+    Logger.Debug('TEnvironmentController.CreateLibraryPathUnits: waiting for IOTAServices');
+    Sleep(1000);
+  end;
 
   try
     Files := nil;
@@ -93,7 +103,6 @@ begin
     Paths.Add(FindUnitDcuDir);
 
     FLibraryPath := TUnitsController.Create;
-    FreeAndNil(FLibraryPathWorker);
     FLibraryPathWorker := TParserWorker.Create(Paths, Files);
     FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
   except
@@ -112,6 +121,13 @@ begin
   if FProjectUnits <> nil then
     Exit;
 
+  try
+    FreeAndNil(FProjectPathWorker);
+  except
+    on E: exception do
+      Logger.Debug('TEnvironmentController.CreateProjectPathUnits: Error removing object');
+  end;
+
   while GetCurrentProject = nil do
   begin
     Logger.Debug('TEnvironmentController.CreateProjectPathUnits: waiting GetCurrentProject <> nil');
@@ -120,13 +136,6 @@ begin
 
   Files := GetAllFilesFromProjectGroup;
   Paths := nil;
-
-  try
-    FreeAndNil(FProjectPathWorker);
-  except
-    on E: exception do
-      Logger.Debug('TEnvironmentController.CreateProjectPathUnits: Error removing object');
-  end;
 
   FProjectUnits := TUnitsController.Create;
   FProjectPathWorker := TParserWorker.Create(Paths, Files);
@@ -144,6 +153,12 @@ begin
   FProjectUnits.Free;
   FLibraryPath.Free;
   inherited;
+end;
+
+procedure TEnvironmentController.ForceLoadProjectPath;
+begin
+  if FProjectUnits = nil then
+    LoadProjectPath;
 end;
 
 function TEnvironmentController.GetLibraryPathStatus: string;
