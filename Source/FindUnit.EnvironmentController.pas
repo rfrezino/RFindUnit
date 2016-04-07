@@ -234,8 +234,13 @@ end;
 
 procedure TEnvironmentController.LoadLibraryPath;
 begin
+  Logger.Debug('TEnvironmentController.LoadLibraryPath');
   if (FLibraryPath <> nil) and (not FLibraryPath.Ready) then
+  begin
+    Logger.Debug('TEnvironmentController.LoadLibraryPath: no');
     Exit;
+  end;
+  Logger.Debug('TEnvironmentController.LoadLibraryPath: yes');
 
   FreeAndNil(FLibraryPath);
   Parallel.Async(CreateLibraryPathUnits);
@@ -243,14 +248,14 @@ end;
 
 procedure TEnvironmentController.LoadProjectPath;
 begin
-  Logger.Debug('LoadProjectPath');
+  Logger.Debug('TEnvironmentController.LoadProjectPath');
   if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
   begin
-    Logger.Debug('LoadProjectPath: no');
+    Logger.Debug('TEnvironmentController.LoadProjectPath: no');
     Exit;
   end;
 
-  Logger.Debug('LoadProjectPath: yes');
+  Logger.Debug('TEnvironmentController.LoadProjectPath: yes');
   FreeAndNil(FProjectUnits);
   Parallel.Async(CreateProjectPathUnits);
 end;
