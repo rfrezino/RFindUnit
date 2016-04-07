@@ -17,7 +17,7 @@ type
     procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
 
     procedure CreateMenus;
-    procedure OnClickOpenFindUses(Sender: TObject);
+    procedure ForceRegisterKeys(Sender: TObject);
   public
     constructor Create;
     destructor Destroy; override;
@@ -129,13 +129,13 @@ begin
 
   NewItem := TMenuItem.Create(nil);
   NewItem.Caption := 'Force register shortcuts';
-  NewItem.OnClick := OnClickOpenFindUses;
+  NewItem.OnClick := ForceRegisterKeys;
   RfItemMenu.Add(NewItem);
 end;
 
 
 
-procedure TRFindUnitMain.OnClickOpenFindUses(Sender: TObject);
+procedure TRFindUnitMain.ForceRegisterKeys(Sender: TObject);
 begin
   vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
@@ -191,6 +191,7 @@ procedure TRFindUnitMain.AutoImport(const Context: IOTAKeyContext; KeyCode: TSho
 begin
   BindingResult := krHandled;
   FEnvControl.ImportMissingUnits;
+  FEnvControl.LoadLibraryPath; //Force to load, if it was not loaded
 end;
 
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
@@ -198,6 +199,7 @@ procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShort
 var
   SelectedText: TStringPosition;
 begin
+  FEnvControl.LoadLibraryPath; //Force to load, if it was not loaded
   SelectedText := GetSelectedTextFromContext(Context);
   if SelectedText.Value = '' then
     SelectedText := GetWordAtCursor;

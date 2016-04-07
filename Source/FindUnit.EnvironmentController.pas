@@ -295,17 +295,17 @@ end;
 
 procedure TEnvironmentController.ProjectClosing(const ProjectOrGroup: IOTAModule);
 begin
-
+  Logger.Debug('TEnvironmentController.ProjectClosing');
 end;
 
 procedure TEnvironmentController.ProjectLoaded(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
 begin
-
+  Logger.Debug('TEnvironmentController.ProjectLoaded');
 end;
 
 procedure TEnvironmentController.ProjectSaving(const ProjectOrGroup: IOTAModule; const Node: IXMLNode);
 begin
-
+  Logger.Debug('TEnvironmentController.ProjectSaving');
 end;
 
 end.
