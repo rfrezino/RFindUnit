@@ -1,8 +1,9 @@
 unit op;
 { Generated automatically from c:\prg\codes\src\opdata4.cmd, 31.05.2012 18:10:47 }
 
-{$I RFindUnit.inc}
 interface
+
+{$DEFINE I64}
 
 uses DAsmDefs, DAsmUtil;
 

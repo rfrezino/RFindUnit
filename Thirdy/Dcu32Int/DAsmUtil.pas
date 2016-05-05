@@ -24,8 +24,8 @@ freely, subject to the following restrictions:
    distribution.
 *)
 interface
-{$I RFindUnit.inc}
 
+{$DEFINE I64}
 uses
   DasmDefs,FixUp;
 

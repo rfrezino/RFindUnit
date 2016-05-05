@@ -15,13 +15,19 @@ type
     FFiles: TStringList;
     FExecutablePath: string;
 
+    FGeneratedFiles: TStringList;
+
     procedure CreateDirs;
     function ProcessUnit(FileName: string; OutRedir: boolean): Integer;
 
     procedure ProcessFilesInternal(AFiles: TStringList);
     procedure ProcessFilesFromExe(AFiles: TStringList);
+
+    procedure FixeGeneratedFiles;
+    procedure FixeGeneratedFile(AFile: string);
   public
     constructor Create;
+    destructor Destroy; override;
 
     procedure ProcessFiles(AFiles: TStringList);
 
@@ -43,7 +49,7 @@ var
   Dcu: TDcuDecompiler;
 begin
   Dcu := TDcuDecompiler.Create;
-  Result := Dcu.FDir;
+  Result := Dcu.FExecutablePath;
   Dcu.Free;
 end;
 
@@ -66,6 +72,57 @@ end;
 function TDcuDecompiler.Dcu32IntExecutableExists: Boolean;
 begin
   Result := FileExists(FExecutablePath);
+end;
+
+destructor TDcuDecompiler.Destroy;
+begin
+  FGeneratedFiles.Free;
+  inherited;
+end;
+
+procedure TDcuDecompiler.FixeGeneratedFile(AFile: string);
+var
+  FileS: TStringList;
+  I: Integer;
+  Line: string;
+  DeleteLine: Boolean;
+  MustSave: Boolean;
+begin
+  if not FileExists(AFile) then
+  begin
+    Logger.Error('TDcuDecompiler.FixeGeneratedFile: File not fount after process: %s', [AFile]);
+    Exit;
+  end;
+
+  MustSave := False;
+
+  FileS := TStringList.Create;
+  FileS.LoadFromFile(AFile);
+  for I := FileS.Count -1 downto 0 do
+  begin
+    Line := Trim(FileS[i]);
+    if Line = '' then
+      DeleteLine := False;
+
+    if (DeleteLine) or (Pos(';;', Line) > 0) then
+    begin
+      MustSave := True;
+      DeleteLine := True;
+      FileS.Delete(I);
+    end;
+  end;
+
+  if MustSave then
+    FileS.SaveToFile(AFile);
+  FileS.Free;
+end;
+
+procedure TDcuDecompiler.FixeGeneratedFiles;
+var
+  FileS: string;
+begin
+  for FileS in FGeneratedFiles do
+    FixeGeneratedFile(FileS);
 end;
 
 function TDcuDecompiler.ProcessUnit(FileName: string; OutRedir: boolean): Integer;
@@ -95,6 +152,7 @@ end;
 
 constructor TDcuDecompiler.Create;
 begin
+  FGeneratedFiles := TStringList.Create;
   CreateDirs;
 end;
 
@@ -102,6 +160,7 @@ procedure TDcuDecompiler.ProcessFiles(AFiles: TStringList);
 begin
 //  ProcessFilesInternal(AFiles);
   ProcessFilesFromExe(AFiles);
+  FixeGeneratedFiles;
 end;
 
 procedure TDcuDecompiler.ProcessFilesFromExe(AFiles: TStringList);
@@ -124,7 +183,7 @@ begin
     FileNameOut := ExtractFileName(AFiles[i]);
     FileNameOut := StringReplace(FileNameOut, '.dcu', '.pas', [rfReplaceAll, rfIgnoreCase]);
     FileNameOut := FDir + FileNameOut;
-
+    FGeneratedFiles.Add(FileNameOut);
 
     try
       InputParams := Format('"%s" "-I" "-X%s"', [AFiles[i], FileNameOut]);
