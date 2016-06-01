@@ -99,8 +99,9 @@ begin
     Paths.Delimiter := ';';
     Paths.StrictDelimiter := True;
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
-    Paths.Add(FindUnitDcuDir);
+    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath']
+      + ';' + EnvironmentOptions.Values['BrowsingPath']
+      + ';$(BDS)\source\rtl\win';
 
     FLibraryPath := TUnitsController.Create;
     FLibraryPathWorker := TParserWorker.Create(Paths, Files);
