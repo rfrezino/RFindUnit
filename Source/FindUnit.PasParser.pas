@@ -286,7 +286,7 @@ begin
       begin
         Logger.Debug('TFindUnitParser.Process: Completed with error');
         FUnitNode := e.SyntaxTree;
-        e.SyntaxTree := nil;
+        e.SyntaxTree.Free;
       end;
     end;
 
