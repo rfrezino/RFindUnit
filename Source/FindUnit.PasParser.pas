@@ -283,7 +283,7 @@ begin
       on E: ESyntaxTreeException do
       begin
         FUnitNode := e.SyntaxTree;
-        e.SyntaxTree.Free;
+        e.SyntaxTree := nil;
       end;
     end;
 
