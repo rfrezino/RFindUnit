@@ -3,7 +3,7 @@ unit FindUnit.Header;
 interface
 
 const
-  VERSION: array[0..2] of Word = (1,0,5);//(MAJOR, RELEASE, BUILD)
+  VERSION: array[0..2] of Word = (1,0,6);//(MAJOR, RELEASE, BUILD)
 
 type
   TListType = (ltClasses = 0,
