@@ -1,4 +1,4 @@
-unit FindUnit.EnvironmentController;
+﻿unit FindUnit.EnvironmentController;
 
 interface
 
@@ -98,10 +98,11 @@ begin
     Paths := TStringList.Create;
     Paths.Delimiter := ';';
     Paths.StrictDelimiter := True;
+    Paths.Duplicates := dupIgnore;
+
     EnvironmentOptions := (BorlandIDEServices as IOTAServices).GetEnvironmentOptions;
-    Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath']
-      + ';' + EnvironmentOptions.Values['BrowsingPath']
-      + ';$(BDS)\source\rtl\win';
+    GetLibraryPath(Paths, 'Win32');
+    Paths.Add('$(BDS)\source\rtl\win');
 
     FLibraryPath := TUnitsController.Create;
     FLibraryPathWorker := TParserWorker.Create(Paths, Files);

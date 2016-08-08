@@ -1,4 +1,4 @@
-unit FindUnit.OTAUtils;
+﻿unit FindUnit.OTAUtils;
 
 interface
 
@@ -20,6 +20,7 @@ function GetCurrentProject: IOTAProject;
 function OtaGetCurrentSourceEditor: IOTASourceEditor;
 function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 function GetErrorListFromActiveModule: TOTAErrors;
+procedure GetLibraryPath(Paths: TStrings; PlatformName: string);
 
 function GetAllFilesFromProjectGroup: TStringList;
 
@@ -31,7 +32,8 @@ var
 implementation
 
 uses
-  Windows, ShellAPI, ShlObj, ActiveX, SysUtils;
+  Windows, ShellAPI, ShlObj, ActiveX, SysUtils, DCCStrs, Registry,
+  FindUnit.Utils;
 
 function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
 var
@@ -102,6 +104,54 @@ begin
         end;
       end;
     end;
+  end;
+end;
+
+procedure GetLibraryPath(Paths: TStrings; PlatformName: string);
+var
+  Svcs: IOTAServices;
+  Options: IOTAEnvironmentOptions;
+  Text: string;
+  List: TStrings;
+  ValueCompiler: string;
+  RegRead: TRegistry;
+begin
+  Svcs := BorlandIDEServices as IOTAServices;
+  if not Assigned(Svcs) then Exit;
+  Options := Svcs.GetEnvironmentOptions;
+  if not Assigned(Options) then Exit;
+
+  ValueCompiler := Svcs.GetBaseRegistryKey;
+
+  RegRead := TRegistry.Create;
+  List := TStringList.Create;
+  try
+    if PlatformName = '' then
+      Text := Options.GetOptionValue('LibraryPath')
+    else
+    begin
+      RegRead.RootKey := HKEY_CURRENT_USER;
+      RegRead.OpenKey(ValueCompiler + '\Library\' + PlatformName, False);
+      Text := RegRead.GetDataAsString('Search Path');
+    end;
+
+    List.Text := StringReplace(Text, ';', #13#10, [rfReplaceAll]);
+    Paths.AddStrings(List);
+
+    if PlatformName = '' then
+      Text := Options.GetOptionValue('BrowsingPath')
+    else
+    begin
+      RegRead.RootKey := HKEY_CURRENT_USER;
+      RegRead.OpenKey(ValueCompiler + '\Library\' + PlatformName, False);
+      Text := RegRead.GetDataAsString('Browsing Path');
+    end;
+
+    List.Text := StringReplace(Text, ';', #13#10, [rfReplaceAll]);
+    Paths.AddStrings(List);
+  finally
+    RegRead.Free;
+    List.Free;
   end;
 end;
 
