@@ -218,7 +218,7 @@ begin
   if ListToImport.Count = 0 then
   begin
     if ShowNoImport then
-      TfrmMessage.ShowInfoToUser('There is not possible uses to import.');
+      TfrmMessage.ShowInfoToUser('There is no possible uses to import.');
     ListToImport.Free;
     SetFocus(OldFocus);
     Exit;

@@ -16,7 +16,7 @@ type
   end;
 
   TFileRegion = class(TObject)
-  private
+  strict private
     FSource: IOTASourceEditor;
     FUses: TStringList;
     FUsesPosition: TCharPosition;
@@ -35,6 +35,8 @@ type
 
     property RegionPosition: TCharPosition read FRegionPosition write FRegionPosition;
     property UsesPosition: TCharPosition read FUsesPosition write FUsesPosition;
+
+    procedure SetUsesPosition(NewUsesPosition: TCharPosition);
 
     procedure GetUsesFromText(FullFileText: TStringList);
     function UsesExists(UseUnit: string): Boolean;
@@ -114,6 +116,8 @@ function TSourceFileEditor.AddUsesToRegion(Region: TFileRegion; UseUnit: string)
 var
   Line: Integer;
   PosChar: Integer;
+  NewUsesPosition: TCharPosition;
+  UnitContent: string;
 begin
   Result := False;
   if Region.UsesExists(UseUnit) then
@@ -127,7 +131,15 @@ begin
     Line := Region.RegionPosition.StartLine + 1;
     PosChar := 0;
 
-    UseUnit := #13#10 + 'uses' + #13#10 + #9 + UseUnit + ';' + #13#10
+    UnitContent := #9 + UseUnit + ';';
+    UseUnit := #13#10 + 'uses' + #13#10 + UnitContent + #13#10;
+
+    NewUsesPosition.StartLine := Line;
+    NewUsesPosition.StartPos := PosChar;
+    NewUsesPosition.EndLine := NewUsesPosition.StartLine + 2;
+    NewUsesPosition.EndPos := UnitContent.Length;
+
+    Region.SetUsesPosition(NewUsesPosition);
   end
   else
   begin
@@ -404,6 +416,11 @@ begin
     Delete(Result, Length(Result), 1);
     Result := Result + ';';
   end;
+end;
+
+procedure TFileRegion.SetUsesPosition(NewUsesPosition: TCharPosition);
+begin
+  FUsesPosition := NewUsesPosition;
 end;
 
 function TFileRegion.UsesExists(UseUnit: string): Boolean;
