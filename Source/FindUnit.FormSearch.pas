@@ -88,7 +88,8 @@ var
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FormMessage, FindUnit.DcuDecompiler;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FormMessage, FindUnit.DcuDecompiler,
+  FindUnit.ResultsImportanceCalculator;
 
 {$R *.dfm}
 
@@ -297,7 +298,7 @@ procedure TfrmFindUnit.ShowMessageToMuchResults(Show: Boolean);
 begin
   pnlMsg.Visible := Show;
   lblMessage.Caption := '  There are to many results on your search, I''m not showing everything. Type a bigger search.' + #13#10 +
-    'Remember that you can create incremental searchs like: "string   replace", I''m going to look for the arguments separataly.'
+    'Remember that you can create incremental searchs like: "string   replace", I''m going to look for the arguments separately.'
 end;
 
 procedure TfrmFindUnit.FilterItem(const SearchString: string);
@@ -317,7 +318,7 @@ begin
   ResultSearch := TStringList.Create;
   try
     lstResult.Clear;
-    if (SearchString = '') or (FEnvControl = nil) then
+    if (SearchString = '') or (FEnvControl = nil) or (SearchString = SEARCH_MESSAGE) then
       Exit;
 
     if chkSearchProjectFiles.Checked then
@@ -459,30 +460,18 @@ end;
 
 procedure TfrmFindUnit.SelectTheMostSelectableItem;
 var
-  SmallItemId: Integer;
-  SmallItemLength: Integer;
-  I: Integer;
-  List: TStrings;
-  PosSize: Integer;
+  Calculator: TResultImportanceCalculator;
 begin
-  SmallItemLength := 999999;
-  SmallItemId := -1;
-  List := lstResult.Items;
+  Calculator := TResultImportanceCalculator.Create;
+  try
+    Calculator.Config(lstResult.Items, Trim(edtSearch.Text));
+    Calculator.Process;
 
-  if List.Count = 0 then
-    Exit;
-
-  for I := 0 to List.Count -1 do
-  begin
-    PosSize := Pos('-', List[i]);
-    if PosSize < SmallItemLength then
-    begin
-      SmallItemLength := PosSize;
-      SmallItemId := I;
-    end;
+    if Calculator.MostRelevantIdx > -1 then
+      lstResult.Selected[Calculator.MostRelevantIdx] := True;
+  finally
+    Calculator.Free;
   end;
-
-  lstResult.Selected[SmallItemId] := True;
 end;
 
 procedure TfrmFindUnit.SetEnvControl(EnvControl: TEnvironmentController);

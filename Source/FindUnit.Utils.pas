@@ -31,6 +31,7 @@ function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boo
 
 function IsProcessRunning(const AExeFileName: string): Boolean;
 function GetHashCodeFromStr(Str: PChar): Integer;
+function TextExists(SubStr, Str: string; CaseSensitive: Boolean = true): Boolean; inline;
 
 var
   FindUnitDir: string;
@@ -42,6 +43,14 @@ implementation
 
 uses
   Types, SysUtils, Log4PAscal;
+
+function TextExists(SubStr, Str: string; CaseSensitive: Boolean): Boolean;
+begin
+  if CaseSensitive then
+    Result := Pos(SubStr, Str) > 0
+  else
+    Result := Pos(UpperCase(SubStr), UpperCase(Str)) > 0
+end;
 
 function GetHashCodeFromStr(Str: PChar): Integer;
 var

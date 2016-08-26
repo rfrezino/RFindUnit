@@ -88,7 +88,8 @@ contains
   FindUnit.AutoImport in 'Source\FindUnit.AutoImport.pas',
   FindUnit.CompilerInterceptor in 'Source\FindUnit.CompilerInterceptor.pas',
   FindUnit.StringPositionList in 'Source\FindUnit.StringPositionList.pas',
-  RegExpr in 'Thirdy\Andrey\RegExpr.pas';
+  RegExpr in 'Thirdy\Andrey\RegExpr.pas',
+  FindUnit.ResultsImportanceCalculator in 'Source\FindUnit.ResultsImportanceCalculator.pas';
 
 end.
 
