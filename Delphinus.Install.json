@@ -1,0 +1,40 @@
+{
+        "search_pathes": 
+    [
+        {
+            "pathes": "Core;Core\\Interfaces",
+            "platforms": "Win32;Win64;OSX32"
+        }
+    ],
+    "browsing_pathes": 
+    [
+        {
+            "pathes": "Core;Core\\Interfaces",
+            "platforms": "Win32;Win64;OSX32"
+        }
+    ],
+
+    "source_folders":
+    [
+        {
+            "folder": "source",
+            "base": "source",
+            "recursive": true,
+            "filter": "*;*.*"
+        }
+    ],
+
+    "projects":
+    [
+        {
+            "project": "RFindUnit.dpk"
+        }
+    ],
+
+    "experts":
+    [
+           {
+                   "expert": "MyExpert.dll"
+           }
+    ]
+}

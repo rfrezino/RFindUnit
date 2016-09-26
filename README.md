@@ -32,3 +32,6 @@ Rodrigo Farias Rezino
 * [OmniThreadLibrary](https://github.com/gabr42/OmniThreadLibrary)
 * [Log4Pascal](https://github.com/martinusso/log4pascal)
 * [Dcu32Int](https://github.com/rfrezino/DCU32INT)
+
+
+Delphinus-Support
