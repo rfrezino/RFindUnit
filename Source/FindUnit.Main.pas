@@ -34,7 +34,7 @@ type
 implementation
 
 uses
-  FindUnit.FormSearch, Log4PAscal, FindUnit.Utils, FindUnit.OTAUtils, SysUtils;
+  FindUnit.FormSearch, Log4PAscal, FindUnit.Utils, FindUnit.OTAUtils, SysUtils, FindUnit.Settings;
 
 var
   vKbIndex: Integer;
@@ -161,6 +161,8 @@ begin
   CompilerInterceptor.SetEnvControl(FEnvControl);
 
   Logger.Debug('Version ' + VERSION_STR);
+
+  TSettings.ReloadSettings;
 end;
 
 destructor TRFindUnitMain.Destroy;

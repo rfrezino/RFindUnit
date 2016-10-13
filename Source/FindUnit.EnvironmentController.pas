@@ -67,7 +67,7 @@ uses
 
 constructor TEnvironmentController.Create;
 begin
-  FAutoImport := TAutoImport.Create(FindUnitDir + 'memoryconfig.ini');
+  FAutoImport := TAutoImport.Create(FindUnitDir + AUTO_IMPORT_FILE);
   FAutoImport.Load;
   LoadLibraryPath;
 end;

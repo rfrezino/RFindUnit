@@ -30,7 +30,10 @@
 requires
   rtl,
   designide,
-  vcl;
+  vcl,
+  dsnap,
+  dbrtl,
+  vcldb;
 
 contains
   FindUnit.FormSearch in 'Source\FindUnit.FormSearch.pas' {frmFindUnit},
@@ -89,7 +92,8 @@ contains
   FindUnit.CompilerInterceptor in 'Source\FindUnit.CompilerInterceptor.pas',
   FindUnit.StringPositionList in 'Source\FindUnit.StringPositionList.pas',
   RegExpr in 'Thirdy\Andrey\RegExpr.pas',
-  FindUnit.ResultsImportanceCalculator in 'Source\FindUnit.ResultsImportanceCalculator.pas';
+  FindUnit.ResultsImportanceCalculator in 'Source\FindUnit.ResultsImportanceCalculator.pas',
+  FindUnit.Settings in 'Source\FindUnit.Settings.pas';
 
 end.
 

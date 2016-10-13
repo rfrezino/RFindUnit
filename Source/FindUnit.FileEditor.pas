@@ -4,7 +4,7 @@ interface
 
 uses
   ToolsApi, SimpleParser.Lexer.Types, DelphiAST.Classes, FindUnit.OtaUtils, Classes, DesignEditors, Graphics,
-  FindUnit.Header, FindUnit.FormMessage;
+  FindUnit.Header, FindUnit.FormMessage, FindUnit.Settings;
 
 type
   TCharPosition = record
@@ -85,7 +85,7 @@ var
   MessageText: string;
 begin
   MessageText := '';
-  if IsLineOnImplementationSection(UnitInfo.Line) then
+  if (not GlobalSettings.AlwaysUseInterfaceSection) and IsLineOnImplementationSection(UnitInfo.Line) then
   begin
     if AddUsesToImplementation(UnitInfo.Value) then
       MessageText := 'Unit ' + UnitInfo.Value + ' added to implementation''s uses.';

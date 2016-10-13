@@ -13,7 +13,7 @@ type
     FCurClass: string;
     FMostRelevantIdx: integer;
 
-    procedure GetCurClass;
+    function GetCurClass(ClassName: string): string;
     function GetPointsForItem(Item: string): Integer;
 
     function IsMultiSearch: Boolean;
@@ -38,50 +38,41 @@ begin
   FResult := Results;
 end;
 
-procedure TResultImportanceCalculator.GetCurClass;
+function TResultImportanceCalculator.GetCurClass(ClassName: string): string;
 var
   Base: string;
 begin
   Base := ReverseString(FBaseSearchString);
 
   if TextExists('-', Base, True) then
-    FCurClass := Trim(Fetch(Base, '-'));
+    Result := Trim(Fetch(Base, '-'));
 
-  FCurClass := ReverseString(Trim(Fetch(Base, '.')));
+  Result := ReverseString(Trim(Fetch(Base, '.')));
 end;
 
 function TResultImportanceCalculator.GetPointsForItem(Item: string): Integer;
-const
-  CONV_STR = '@$%';
 var
-  CurString: string;
   FullClass: string;
 
-  function MatchesFullName(CaseSensitive: Boolean): Boolean;
+  function MatchesFullName: Boolean;
   begin
-    if CaseSensitive then
-      CurString := StringReplace(FBaseSearchString, FullClass, CONV_STR, [])
-    else
-      CurString := StringReplace(FBaseSearchString, FullClass, CONV_STR, [rfIgnoreCase]);
-
-    CurString := Fetch(CurString, CONV_STR);
-    Result := CurString.IsEmpty;
+    Result := FCurClass.ToUpper = GetCurClass(FBaseSearchString).ToUpper;
   end;
 
 begin
-  FullClass := '.' + Item;
-  if TextExists(FullClass, FBaseSearchString, True) then
+  FullClass := '.' + FBaseSearchString;
+  if TextExists(FullClass, Item, True) then
   begin
     Result := 50;
 
-    if MatchesFullName(True) then
+    if MatchesFullName then
        Inc(Result, 10);
   end
-  else if TextExists(FullClass, FBaseSearchString, False) then
+  else if TextExists(FullClass, Item, False) then
   begin
     Result := 40;
 
-    if MatchesFullName(False) then
+    if MatchesFullName then
        Inc(Result, 5);
   end
   else
@@ -102,7 +93,7 @@ var
   CurPoints: Integer;
 begin
   FMostRelevantIdx := -1;
-  GetCurClass;
+  FCurClass := GetCurClass(FCurClass);
 
   MostImportantItemPoints := -100000;
   for iItem := 0 to FResult.Count -1 do

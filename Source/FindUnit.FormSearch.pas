@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor;
+  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
+  FindUnit.FormSettings, FindUnit.Settings;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -32,7 +33,9 @@ type
     btnProcessDCUs: TSpeedButton;
     pnlMsg: TPanel;
     lblMessage: TLabel;
-    chkMemorize: TCheckBox;
+    btn1: TSpeedButton;
+    btnConfig: TButton;
+    ilImages: TImageList;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -48,9 +51,11 @@ type
     procedure btnRefreshLibraryPathClick(Sender: TObject);
     procedure btnProcessDCUsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnConfigClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
     FFileEditor: TSourceFileEditor;
+    FfrmConfig: TfrmSettings;
 
     procedure AddUnit;
 
@@ -133,8 +138,9 @@ begin
   else
     FFileEditor.AddUsesToImplementation(SelectedUnit);
 
-  if chkMemorize.Checked then
+  if GlobalSettings.StoreChoices then
     FEnvControl.AutoImport.SetMemorizedUnit(SelectedClass, SelectedUnit);
+
   Close;
 end;
 
@@ -148,6 +154,13 @@ end;
 procedure TfrmFindUnit.btnAddClick(Sender: TObject);
 begin
   AddUnit;
+end;
+
+procedure TfrmFindUnit.btnConfigClick(Sender: TObject);
+begin
+  FfrmConfig := TfrmSettings.Create(Self);
+  FfrmConfig.ShowModal;
+  FfrmConfig := nil;
 end;
 
 procedure TfrmFindUnit.btnProcessDCUsClick(Sender: TObject);
@@ -376,7 +389,6 @@ begin
   LoadConfigs;
 end;
 
-
 procedure TfrmFindUnit.GetSelectedItem(out UnitName, ClassName: string);
 var
   I: Integer;
@@ -437,6 +449,12 @@ const
     Result := (GetKeyState(VK_CONTROL) < 0) and (Char(Msg.wParam) = 'A');
   end;
 begin
+  if FfrmConfig <> nil then
+  begin
+    Handled := False;
+    Exit;
+  end;
+
   if (Msg.wParam in MOVE_COMMANDS) then
   begin
     Msg.hwnd := lstResult.Handle;
@@ -482,8 +500,16 @@ end;
 
 procedure TfrmFindUnit.SetSearch(Filter: TStringPosition);
 begin
-  rbInterface.Checked := not FFileEditor.IsLineOnImplementationSection(Filter.Line);
-  rbImplementation.Checked := FFileEditor.IsLineOnImplementationSection(Filter.Line);
+  if GlobalSettings.AlwaysUseInterfaceSection then
+  begin
+    rbImplementation.Checked := False;
+    rbInterface.Checked := True;
+  end
+  else
+  begin
+    rbInterface.Checked := not FFileEditor.IsLineOnImplementationSection(Filter.Line);
+    rbImplementation.Checked := FFileEditor.IsLineOnImplementationSection(Filter.Line);
+  end;
 
   if (Filter.Value = '') or (Pos(#13#10, Filter.Value) > 0) then
     Exit;

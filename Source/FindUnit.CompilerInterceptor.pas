@@ -29,6 +29,9 @@ type
 
 implementation
 
+uses
+	FindUnit.Settings;
+
 procedure Register;
 var
   Services: IOTAServices;
@@ -69,7 +72,8 @@ begin
   if FEnvControl = nil then Exit;
   if not IsCodeInsight then Exit;
 
-  FEnvControl.ImportMissingUnits(False);
+  if GlobalSettings.AutoImportEnabled then
+    FEnvControl.ImportMissingUnits(False);
 end;
 
 procedure TCompilerInterceptor.FileNotification(NotifyCode: TOTAFileNotification; const FileName: string;
@@ -94,6 +98,6 @@ end;
 initialization
 
 finalization
- UnRegister;
+  UnRegister;
 
 end.
