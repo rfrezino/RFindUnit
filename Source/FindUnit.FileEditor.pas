@@ -131,7 +131,7 @@ begin
     Line := Region.RegionPosition.StartLine + 1;
     PosChar := 0;
 
-    UnitContent := #9 + UseUnit + ';';
+    UnitContent := '  ' + UseUnit + ';';
     UseUnit := #13#10 + 'uses' + #13#10 + UnitContent + #13#10;
 
     NewUsesPosition.StartLine := Line;
