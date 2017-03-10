@@ -1,0 +1,98 @@
+package RFindUnit;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  vcl,
+  dsnap,
+  dbrtl,
+  vcldb;
+
+contains
+  FindUnit.AutoImport in '..\..\Source\FindUnit.AutoImport.pas',
+  FindUnit.CompilerInterceptor in '..\..\Source\FindUnit.CompilerInterceptor.pas',
+  FindUnit.DcuDecompiler in '..\..\Source\FindUnit.DcuDecompiler.pas',
+  FindUnit.DelphiVlcWrapper in '..\..\Source\FindUnit.DelphiVlcWrapper.pas',
+  FindUnit.EnvironmentController in '..\..\Source\FindUnit.EnvironmentController.pas',
+  FindUnit.FileCache in '..\..\Source\FindUnit.FileCache.pas',
+  FindUnit.FileEditor in '..\..\Source\FindUnit.FileEditor.pas',
+  FindUnit.FormMessage in '..\..\Source\FindUnit.FormMessage.pas' {frmMessage},
+  FindUnit.FormSearch in '..\..\Source\FindUnit.FormSearch.pas' {frmFindUnit},
+  FindUnit.FormSettings in '..\..\Source\FindUnit.FormSettings.pas' {frmSettings},
+  FindUnit.Header in '..\..\Source\FindUnit.Header.pas',
+  FindUnit.IncluderHandlerInc in '..\..\Source\FindUnit.IncluderHandlerInc.pas',
+  FindUnit.Main in '..\..\Source\FindUnit.Main.pas',
+  FindUnit.OTAUtils in '..\..\Source\FindUnit.OTAUtils.pas',
+  FindUnit.PasParser in '..\..\Source\FindUnit.PasParser.pas',
+  FindUnit.ResultsImportanceCalculator in '..\..\Source\FindUnit.ResultsImportanceCalculator.pas',
+  FindUnit.SearchString in '..\..\Source\FindUnit.SearchString.pas',
+  FindUnit.Settings in '..\..\Source\FindUnit.Settings.pas',
+  FindUnit.StringPositionList in '..\..\Source\FindUnit.StringPositionList.pas',
+  FindUnit.Utils in '..\..\Source\FindUnit.Utils.pas',
+  FindUnit.Worker in '..\..\Source\FindUnit.Worker.pas',
+  RegExpr in '..\..\Thirdy\Andrey\RegExpr.pas',
+  DelphiAST.Classes in '..\..\Thirdy\DelphiAST\DelphiAST.Classes.pas',
+  DelphiAST.Consts in '..\..\Thirdy\DelphiAST\DelphiAST.Consts.pas',
+  DelphiAST in '..\..\Thirdy\DelphiAST\DelphiAST.pas',
+  DelphiAST.Writer in '..\..\Thirdy\DelphiAST\DelphiAST.Writer.pas',
+  SimpleParser.Lexer in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.Lexer.pas',
+  SimpleParser.Lexer.Types in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.Lexer.Types.pas',
+  SimpleParser in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.pas',
+  SimpleParser.Types in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.Types.pas',
+  Log4Pascal in '..\..\Thirdy\Log4pascal\Log4Pascal.pas',
+  OtlCollectionsFU in '..\..\Thirdy\OmniThreadLibrary\OtlCollectionsFU.pas',
+  OtlCommBufferTestFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommBufferTestFU.pas',
+  OtlCommFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommFU.pas',
+  OtlCommon.UtilsFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommon.UtilsFU.pas',
+  OtlCommonFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommonFU.pas',
+  OtlContainerObserverFU in '..\..\Thirdy\OmniThreadLibrary\OtlContainerObserverFU.pas',
+  OtlContainersFU in '..\..\Thirdy\OmniThreadLibrary\OtlContainersFU.pas',
+  OtlDataManagerFU in '..\..\Thirdy\OmniThreadLibrary\OtlDataManagerFU.pas',
+  OtlEventMonitorFU in '..\..\Thirdy\OmniThreadLibrary\OtlEventMonitorFU.pas',
+  OtlHooksFU in '..\..\Thirdy\OmniThreadLibrary\OtlHooksFU.pas',
+  OtlLoggerFU in '..\..\Thirdy\OmniThreadLibrary\OtlLoggerFU.pas',
+  OtlParallelFU in '..\..\Thirdy\OmniThreadLibrary\OtlParallelFU.pas',
+  OtlSuperObjectFU in '..\..\Thirdy\OmniThreadLibrary\OtlSuperObjectFU.pas',
+  OtlSyncFU in '..\..\Thirdy\OmniThreadLibrary\OtlSyncFU.pas',
+  OtlTaskControlFU in '..\..\Thirdy\OmniThreadLibrary\OtlTaskControlFU.pas',
+  OtlTaskFU in '..\..\Thirdy\OmniThreadLibrary\OtlTaskFU.pas',
+  OtlThreadPoolFU in '..\..\Thirdy\OmniThreadLibrary\OtlThreadPoolFU.pas',
+  DetailedRTTIFU in '..\..\Thirdy\OmniThreadLibrary\src\DetailedRTTIFU.pas',
+  DSiWin32FU in '..\..\Thirdy\OmniThreadLibrary\src\DSiWin32FU.pas',
+  GpListsFU in '..\..\Thirdy\OmniThreadLibrary\src\GpListsFU.pas',
+  GpLockFreeQueueFU in '..\..\Thirdy\OmniThreadLibrary\src\GpLockFreeQueueFU.pas',
+  GpStringHashFU in '..\..\Thirdy\OmniThreadLibrary\src\GpStringHashFU.pas',
+  GpStuffFU in '..\..\Thirdy\OmniThreadLibrary\src\GpStuffFU.pas',
+  HVStringBuilderFU in '..\..\Thirdy\OmniThreadLibrary\src\HVStringBuilderFU.pas',
+  HVStringDataFU in '..\..\Thirdy\OmniThreadLibrary\src\HVStringDataFU.pas',
+  TransparentCanvas in '..\..\Thirdy\TransparentCanvas\TransparentCanvas.pas',
+  SuperObject in '..\..\Thirdy\SuperObject\SuperObject.pas';
+
+end.

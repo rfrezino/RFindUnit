@@ -59,25 +59,42 @@ var
     Result := FCurClass.ToUpper = GetCurClass(FBaseSearchString).ToUpper;
   end;
 
+  function MatchesPlusSpace: Boolean;
+  begin
+    Result := String(Item.ToUpper + ' ').Contains(GetCurClass(FBaseSearchString).ToUpper + ' ');
+  end;
+
 begin
   FullClass := '.' + FBaseSearchString;
   if TextExists(FullClass, Item, True) then
   begin
-    Result := 50;
+    Result := 1000 + (1000 - Length(Item));
 
     if MatchesFullName then
-       Inc(Result, 10);
+       Inc(Result, 100);
+
+    if MatchesPlusSpace then
+       Inc(Result, 100);
   end
   else if TextExists(FullClass, Item, False) then
   begin
-    Result := 40;
+    Result := 100 + (100 - Length(Item));
 
     if MatchesFullName then
-       Inc(Result, 5);
+       Inc(Result, 50);
+
+    if MatchesPlusSpace then
+       Inc(Result, 50);
   end
   else
   begin
-    Result := 0 - Abs(FBaseSearchString.Length - Item.Length);
+    Result := 0 - Item.Length;
+
+    if MatchesFullName then
+       Inc(Result, 5);
+
+    if MatchesPlusSpace then
+       Inc(Result, 5);
   end
 end;
 
