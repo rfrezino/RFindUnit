@@ -394,11 +394,19 @@ var
   I: Integer;
 
   function CorrectUses(Item: string): string;
+  var
+    IsSetEnumItem: Boolean;
   begin
+    IsSetEnumItem := Item.EndsWith(' item');
+
     Result := Item;
     Result := Trim(Fetch(Result, '-'));
     Result := ReverseString(Result);
     ClassName := Fetch(Result,'.');
+
+    if IsSetEnumItem then
+      ClassName := Fetch(Result,'.');
+
     ClassName := ReverseString(ClassName);
     Result := ReverseString(Result);
   end;
