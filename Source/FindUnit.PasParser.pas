@@ -145,6 +145,8 @@ var
   TypeDesc: TSyntaxNode;
   Description: string[50];
   ItemClassName: string;
+  EnumType: TSyntaxNode;
+  IdenType: TSyntaxNode;
 begin
   SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
 
@@ -169,6 +171,26 @@ begin
           Description := ' - ' + Description;
         end;
         FResultItem.FClasses.Add(ItemClassName + Description);
+
+        if TypeDesc.GetAttribute(anType) = 'set' then
+          EnumType := TypeDesc.FindNode(ntType)
+        else if TypeDesc.GetAttribute(anName) = 'enum' then
+          EnumType := TypeDesc
+        else
+          EnumType := nil;
+
+        if EnumType <> nil then
+        begin
+          IdenType := EnumType.FindNode(ntIdentifier);
+          while IdenType <> nil do
+          begin
+            FResultItem.FClasses.Add(ItemClassName + '.' + IdenType.GetAttribute(anName) + Description + ' item');
+
+            EnumType.DeleteChild(IdenType);
+            IdenType := EnumType.FindNode(ntIdentifier);
+          end;
+        end;
+
       except
         on e: exception do
           Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
