@@ -3,7 +3,7 @@ unit FindUnit.FileCache;
 interface
 
 uses
-  Generics.Collections, Classes, FindUnit.PasParser;
+  System.Generics.Collections, FindUnit.PasParser, System.Classes;
 
 type
   TUnitsController = class(TObject)

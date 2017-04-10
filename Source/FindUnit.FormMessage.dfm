@@ -2,7 +2,7 @@ object frmMessage: TfrmMessage
   Left = 0
   Top = 0
   Caption = 'Message'
-  ClientHeight = 11
+  ClientHeight = 49
   ClientWidth = 613
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

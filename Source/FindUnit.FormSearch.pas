@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
   FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
-  FindUnit.FormSettings, FindUnit.Settings;
+  FindUnit.FormSettings, FindUnit.Settings, System.ImageList;
 
 type
   TFuncBoolean = function: Boolean of object;

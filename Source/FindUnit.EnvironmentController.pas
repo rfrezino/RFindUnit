@@ -3,8 +3,19 @@
 interface
 
 uses
-  Classes, Generics.Collections, FindUnit.PasParser, OtlParallelFU, ToolsAPI, XMLIntf, FindUnit.FileCache, SysUtils,
-  Log4Pascal, FindUnit.Worker, FindUnit.AutoImport, Windows, FindUnit.Header;
+  FindUnit.AutoImport,
+  System.SysUtils,
+  System.Classes,
+  FindUnit.PasParser,
+  FindUnit.FileCache,
+  FindUnit.Worker,
+  ToolsAPI,
+  System.Generics.Collections,
+  Xml.XMLIntf,
+  FindUnit.Header,
+  Log4Pascal,
+  Winapi.Windows,
+  OtlParallelFU;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)

@@ -23,7 +23,7 @@ object frmSettings: TfrmSettings
     Top = 0
     Width = 654
     Height = 437
-    ActivePage = tsAutoImport
+    ActivePage = tsGeneral
     Align = alClient
     TabOrder = 0
     object tsGeneral: TTabSheet
@@ -55,6 +55,33 @@ object frmSettings: TfrmSettings
           State = cbChecked
           TabOrder = 1
         end
+        object chkBreakline: TCheckBox
+          Left = 15
+          Top = 66
+          Width = 210
+          Height = 17
+          Caption = 'Break line at each new uses entry'
+          TabOrder = 2
+        end
+        object chkSortAfterAdding: TCheckBox
+          Left = 15
+          Top = 89
+          Width = 210
+          Height = 17
+          Caption = 'Sort uses after inserting'
+          TabOrder = 3
+        end
+        object grpSearchAlgorithm: TRadioGroup
+          Left = 15
+          Top = 136
+          Width = 167
+          Height = 81
+          Caption = 'Search match algorithm '
+          Items.Strings = (
+            'Default'
+            'Levenshtein')
+          TabOrder = 4
+        end
       end
     end
     object tsAutoImport: TTabSheet
@@ -67,7 +94,7 @@ object frmSettings: TfrmSettings
         Align = alClient
         DataSource = dtsAutoImport
         Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgTitleClick, dgTitleHotTrack]
-        TabOrder = 0
+        TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
@@ -94,14 +121,14 @@ object frmSettings: TfrmSettings
         Height = 48
         Align = alTop
         Caption = 'Settings'
-        TabOrder = 1
+        TabOrder = 0
         object chkAutoEnabled: TCheckBox
           Left = 16
           Top = 18
           Width = 65
           Height = 21
           Caption = 'Enabled'
-          TabOrder = 0
+          TabOrder = 1
         end
         object btn1: TButton
           Left = 512
@@ -109,7 +136,7 @@ object frmSettings: TfrmSettings
           Width = 125
           Height = 25
           Caption = 'Open Settings File'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btn1Click
         end
       end

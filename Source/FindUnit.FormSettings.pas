@@ -24,6 +24,9 @@ type
     chkAlwaysImportToInterfaceSection: TCheckBox;
     chkMemorize: TCheckBox;
     btn1: TButton;
+    chkBreakline: TCheckBox;
+    chkSortAfterAdding: TCheckBox;
+    grpSearchAlgorithm: TRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -53,6 +56,11 @@ begin
   FSettings.AutoImportEnabled := chkAutoEnabled.Checked;
   FSettings.AlwaysUseInterfaceSection := chkAlwaysImportToInterfaceSection.Checked;
   FSettings.StoreChoices := chkMemorize.Checked;
+
+  FSettings.BreakLine := chkBreakline.Checked;
+  FSettings.SortUsesAfterAdding := chkSortAfterAdding.Checked;
+
+  FSettings.UseDefaultSearchMatch := grpSearchAlgorithm.ItemIndex = 0;
   InsertDataSetInAutoImport;
 end;
 
@@ -68,6 +76,13 @@ begin
   chkAutoEnabled.Checked := FSettings.AutoImportEnabled;
   chkAlwaysImportToInterfaceSection.Checked := FSettings.AlwaysUseInterfaceSection;
   chkMemorize.Checked := FSettings.StoreChoices;
+  chkBreakline.Checked := FSettings.BreakLine;
+  chkSortAfterAdding.Checked := FSettings.SortUsesAfterAdding;
+
+  if FSettings.UseDefaultSearchMatch then
+    grpSearchAlgorithm.ItemIndex := 0
+  else
+    grpSearchAlgorithm.ItemIndex := 1;
 end;
 
 procedure TfrmSettings.ConfigurePages;
