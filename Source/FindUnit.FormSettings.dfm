@@ -70,16 +70,25 @@ object frmSettings: TfrmSettings
           Height = 17
           Caption = 'Sort uses after inserting'
           TabOrder = 3
+          OnClick = chkSortAfterAddingClick
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 15
-          Top = 136
+          Top = 152
           Width = 167
           Height = 81
           Caption = 'Search match algorithm '
           Items.Strings = (
             'Default'
             'Levenshtein')
+          TabOrder = 5
+        end
+        object chkBlankLineBtwNamespace: TCheckBox
+          Left = 32
+          Top = 109
+          Width = 193
+          Height = 17
+          Caption = 'Blank line between namescapes'
           TabOrder = 4
         end
       end

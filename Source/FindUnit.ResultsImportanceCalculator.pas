@@ -16,8 +16,6 @@ type
     function GetCurClass(ClassName: string): string;
     function GetPointsForItem(Item: string): Integer;
 
-    function IsMultiSearch: Boolean;
-
     function LevenshteinDistance(Item1, Item2: string): integer;
     function RodrigoDistanceCalculator(Item1, Item2: string): Integer;
   public
@@ -109,14 +107,9 @@ end;
 function TResultImportanceCalculator.GetPointsForItem(Item: string): Integer;
 begin
   if GlobalSettings.UseDefaultSearchMatch then
-    RodrigoDistanceCalculator(Item, FBaseSearchString)
+    Result := RodrigoDistanceCalculator(Item, FBaseSearchString)
   else
-    LevenshteinDistance(Item, FBaseSearchString);
-end;
-
-function TResultImportanceCalculator.IsMultiSearch: Boolean;
-begin
-  Result := TextExists(' ', FBaseSearchString);
+    Result := LevenshteinDistance(Item, FBaseSearchString);
 end;
 
 procedure TResultImportanceCalculator.Process;

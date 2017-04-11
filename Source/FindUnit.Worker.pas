@@ -107,7 +107,6 @@ end;
 procedure TParserWorker.ListDcuFiles;
 var
   ResultList: IOmniBlockingCollection;
-  RetunrValue: TObject;
   DcuFile: TOmniValue;
 begin
   if not FParseDcuFile then
@@ -147,7 +146,6 @@ end;
 procedure TParserWorker.ListPasFiles;
 var
   ResultList: IOmniBlockingCollection;
-  RetunrValue: TObject;
   PasValue: TOmniValue;
 begin
   //DEBUG
@@ -214,7 +212,6 @@ begin
           Logger.Error('TParserWorker.ParseFiles[%s]: %s', [Step, e.Message]);
       end;
     finally
-      Item := nil;
       Parser.Free;
     end;
   end;
@@ -237,13 +234,12 @@ begin
         Parser: TPasFileParser;
         Item: TPasFile;
         Step: string;
-        Conter: Integer;
       begin
         try
           Parser := nil;
           try
             Step := 'InterlockedIncrement(FParsedItems);';
-            Conter := InterlockedIncrement(FParsedItems);
+            InterlockedIncrement(FParsedItems);
             Step := 'Create';
             Parser := TPasFileParser.Create(FPasFiles[index]);
             Step := 'Parser.SetIncluder(FIncluder)';
@@ -257,7 +253,6 @@ begin
               Logger.Error('TParserWorker.ParseFiles[%s]: %s', [Step, e.Message]);
           end;
         finally
-          Parser.Free;
         end;
       end
     );
@@ -270,7 +265,6 @@ end;
 
 procedure TParserWorker.RemoveDcuFromExistingPasFiles;
 var
-  DcuFilesName: TStringList;
   PasFilesName: TStringList;
   I: Integer;
   PasFile: string;

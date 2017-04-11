@@ -26,18 +26,19 @@ uses
 
 function TStringPositionList.Add(const Value: TStringPosition): Integer;
 begin
+  Result := 0;
   case Duplicates of
     dupIgnore:
     begin
       if not IsDuplicated(Value) then
-        inherited Add(Value);
+        Result := inherited Add(Value);
     end;
-    dupAccept: inherited Add(Value);
+    dupAccept: Result := inherited Add(Value);
     dupError:
     begin
       if IsDuplicated(Value) then
         raise Exception.Create('Duplicated item');
-      inherited Add(Value);
+      Result := inherited Add(Value);
     end;
   end;
 end;

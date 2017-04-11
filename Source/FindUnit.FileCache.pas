@@ -10,9 +10,7 @@ type
   private
     FSearchHistory: TDictionary<string,string>;
 
-    FNeedGenerateFindInfo: Boolean;
     FUnits: TObjectList<TPasFile>;
-    FContent: TStringList;
     FReady: Boolean;
 
     function SearchOnHistory(const SearchString: string): TStringList;

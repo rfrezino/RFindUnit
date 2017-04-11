@@ -13,6 +13,7 @@ type
     BreakLine: Boolean;
     SortUsesAfterAdding: Boolean;
     UseDefaultSearchMatch: Boolean;
+    BlankLineBtwNameScapes: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -39,6 +40,9 @@ type
 
     function GetUseDefaultSearchMatch: Boolean;
     procedure SetUseDefaultSearchMatch(const Value: Boolean);
+
+    function GetBlankLineBtwNameScapes: Boolean;
+    procedure SetBlankLineBtwNameScapes(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -50,6 +54,7 @@ type
     property BreakLine: Boolean read GetBreakLine write SetBreakLine;
     property SortUsesAfterAdding: Boolean read GetSortUsesAfterAdding write SetSortUsesAfterAdding;
     property UseDefaultSearchMatch: Boolean read GetUseDefaultSearchMatch write SetUseDefaultSearchMatch;
+    property BlankLineBtwNameScapes: Boolean read GetBlankLineBtwNameScapes write SetBlankLineBtwNameScapes;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -72,6 +77,7 @@ const
   CONF_BREAK_LINE = 'BREAK_LINE';
   CONF_SORT_AFTER_ADDING = 'SORT_AFTER_ADDING';
   CONF_DEFAULT_SORT_MATCH = 'DEFAULT_SORT_MATCH';
+  CONF_BLANKLINE_BTW_NAMESCAPE = 'BLANKLINE_BTW_NAMESCAPE';
 
 { TSettings }
 
@@ -87,6 +93,7 @@ begin
     Result.BreakLine := Settings.BreakLine;
     Result.SortUsesAfterAdding := Settings.SortUsesAfterAdding;
     Result.UseDefaultSearchMatch := Settings.UseDefaultSearchMatch;
+    Result.BlankLineBtwNameScapes := Settings.BlankLineBtwNameScapes;
   finally
     Settings.Free;
   end;
@@ -117,6 +124,11 @@ function TSettings.GetAutoImportValue: TStrings;
 begin
   Result := TStringList.Create;
   FIni.ReadSectionValues(AUTO_IMPORT_SECTION, Result);
+end;
+
+function TSettings.GetBlankLineBtwNameScapes: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BLANKLINE_BTW_NAMESCAPE, False);
 end;
 
 function TSettings.GetBreakLine: Boolean;
@@ -164,6 +176,12 @@ begin
   for I := 0 to Value.Count -1 do
     FIni.WriteString(AUTO_IMPORT_SECTION, Value.Names[i], Value.ValueFromIndex[i]);
 
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetBlankLineBtwNameScapes(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_BLANKLINE_BTW_NAMESCAPE, Value);
   FIni.UpdateFile;
 end;
 

@@ -198,8 +198,6 @@ End;
 function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 var
   Editor: IOTAEditBuffer;
-  EdtPosition: IOTAEditPosition;
-  EditPos: TOTAEditPos;
   CurSourceEditor: IOTASourceEditor;
 begin
   CurSourceEditor := ActiveSourceEditor;
@@ -290,7 +288,6 @@ end;
 function OtaGetCurrentSourceEditor: IOTASourceEditor;
 var
   LEditorServices: IOTAEditorServices;
-  LFileName: string;
   LEditBuffer: IOTAEditBuffer;
 begin
   Result := nil;

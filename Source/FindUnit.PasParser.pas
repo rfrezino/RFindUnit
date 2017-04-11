@@ -10,7 +10,6 @@ type
 
   TPasFile = class(TObject)
   private
-    FHashKey: string;
     FLastModification: TDateTime;
     FOriginUnitName: string;
 
@@ -262,7 +261,6 @@ var
   VariablesNode: TSyntaxNode;
   Variable: TSyntaxNode;
   VariableName: TSyntaxNode;
-  Attr: TPair<TAttributeName, string>;
 begin
   VariablesNode := FInterfaceNode.FindNode(ntVariables);
   while VariablesNode <> nil do

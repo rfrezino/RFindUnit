@@ -93,7 +93,6 @@ var
   iString: Integer;
   ItemToFind: string;
   MatchList: TStringList;
-  FoundAll: Boolean;
 begin
   MatchList := TStringList.Create;
   LocalSearchUpperCase := TStringList.Create;
@@ -123,7 +122,6 @@ function TSearchString.GetMatchesOnItem(Item: TPasFile; SearchString: TStringLis
 var
   ListType: TListType;
   List: TStringList;
-  I: TListType;
 begin
   Result := '';
   for ListType := Low(TListType) to High(TListType) do

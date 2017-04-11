@@ -126,9 +126,6 @@ end;
 
 procedure TEnvironmentController.CreateProjectPathUnits;
 var
-  I: Integer;
-  CurProject: IOTAProject;
-  FileDesc: string;
   Files, Paths: TStringList;
 begin
   if FProjectUnits <> nil then

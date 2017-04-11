@@ -27,10 +27,12 @@ type
     chkBreakline: TCheckBox;
     chkSortAfterAdding: TCheckBox;
     grpSearchAlgorithm: TRadioGroup;
+    chkBlankLineBtwNamespace: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btn1Click(Sender: TObject);
+    procedure chkSortAfterAddingClick(Sender: TObject);
   private
     FSettings: TSettings;
 
@@ -41,6 +43,7 @@ type
 
     procedure ConfigureAutoImportPage;
     procedure ConfigurePages;
+    procedure ToggleEnableItems;
   end;
 
 implementation
@@ -59,6 +62,7 @@ begin
 
   FSettings.BreakLine := chkBreakline.Checked;
   FSettings.SortUsesAfterAdding := chkSortAfterAdding.Checked;
+  FSettings.BlankLineBtwNameScapes := chkBlankLineBtwNamespace.Checked;
 
   FSettings.UseDefaultSearchMatch := grpSearchAlgorithm.ItemIndex = 0;
   InsertDataSetInAutoImport;
@@ -67,6 +71,16 @@ end;
 procedure TfrmSettings.btn1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar(TSettings.SettingsFilePath), nil, nil, SW_SHOWNORMAL)
+end;
+
+procedure TfrmSettings.chkSortAfterAddingClick(Sender: TObject);
+begin
+  ToggleEnableItems;
+end;
+
+procedure TfrmSettings.ToggleEnableItems;
+begin
+  chkBlankLineBtwNamespace.Enabled := chkSortAfterAdding.Checked;
 end;
 
 procedure TfrmSettings.ConfigureAutoImportPage;
@@ -78,11 +92,14 @@ begin
   chkMemorize.Checked := FSettings.StoreChoices;
   chkBreakline.Checked := FSettings.BreakLine;
   chkSortAfterAdding.Checked := FSettings.SortUsesAfterAdding;
+  chkBlankLineBtwNamespace.Checked := FSettings.BlankLineBtwNameScapes;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0
   else
     grpSearchAlgorithm.ItemIndex := 1;
+
+  ToggleEnableItems;
 end;
 
 procedure TfrmSettings.ConfigurePages;
@@ -98,7 +115,6 @@ end;
 procedure TfrmSettings.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
-  TSettings.ReloadSettings;
 end;
 
 procedure TfrmSettings.FormCreate(Sender: TObject);
@@ -110,6 +126,7 @@ end;
 procedure TfrmSettings.FormDestroy(Sender: TObject);
 begin
   SaveSettings;
+  TSettings.ReloadSettings;
   FSettings.Free;
 end;
 
@@ -144,7 +161,6 @@ end;
 procedure TfrmSettings.InsertDataSetInAutoImport;
 var
   Values: TStrings;
-  I: Integer;
 begin
   Values := TStringList.Create;
   cdsAutoImport.DisableControls;

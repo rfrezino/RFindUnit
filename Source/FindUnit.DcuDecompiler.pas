@@ -100,6 +100,7 @@ begin
   FileS.LoadFromFile(AFile);
   for I := FileS.Count -1 downto 0 do
   begin
+    DeleteLine := True;
     Line := Trim(FileS[i]);
     if Line = '' then
       DeleteLine := False;
@@ -197,10 +198,10 @@ begin
 end;
 
 procedure TDcuDecompiler.ProcessFilesInternal(AFiles: TStringList);
-var
-  I: Integer;
-  FileNameOut: string;
-  DeveSair: Boolean;
+//var
+//  I: Integer;
+//  FileNameOut: string;
+//  DeveSair: Boolean;
 begin
   {I'not using this method 'cause there are to much leaks on dcu32int that by now
   make it unusable on a single exe'}
