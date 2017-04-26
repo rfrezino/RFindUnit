@@ -8,13 +8,22 @@ If you help, it'll be very good.
 [![IMAGE ALT TEXT](https://i.ytimg.com/vi/SYNUQcg_y58/hqdefault.jpg)](https://www.youtube.com/watch?v=3Y1GengunuAE "Demonstration")
 
 
-####[Follow our updates on the blog](https://rfrezinos.wordpress.com/)
+### [Follow our updates on the blog](https://rfrezinos.wordpress.com/)
 
 ### Default Find Unit
 ![Default Version](http://i.imgur.com/8DZPGSs.png)
 
 ### New Find Unit
 ![RFindUnit Screen](https://github.com/rfrezino/RFindUnit/blob/master/Resources/RFindUnitImage.png)
+
+### Auto organize uses feature
+It's possible to auto organize uses (Ctrl + Shift + O). It's possible to sort then by alphabetical order and split it by line and namespae, as you can see: 
+
+Before:
+![Before](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeBefore.png)
+
+After:
+![After](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeAfter.png)
 
 ## Delphi Version
 It requires Delphi XE or above.
