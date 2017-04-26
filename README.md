@@ -10,23 +10,25 @@ If you help, it'll be very good.
 
 ### [Follow our updates on the blog](https://rfrezinos.wordpress.com/)
 
-### Default Find Unit
+### Find unit feature
+Before: 
+
 ![Default Version](http://i.imgur.com/8DZPGSs.png)
 
-### New Find Unit
+After:
+
 ![RFindUnit Screen](https://github.com/rfrezino/RFindUnit/blob/master/Resources/RFindUnitImage.png)
 
 ### Auto organize uses feature
 It's possible to auto organize uses (Ctrl + Shift + O). It's possible to sort then by alphabetical order and split it by line and namespae, as you can see: 
 
 Before:
+
 ![Before](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeBefore.png)
 
 After:
-![After](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeAfter.png)
 
-## Delphi Version
-It requires Delphi XE or above.
+![After](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeAfter.png)
 
 ### Instalation
 1. Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), or clone the project.
