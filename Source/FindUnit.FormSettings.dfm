@@ -62,6 +62,7 @@ object frmSettings: TfrmSettings
           Height = 17
           Caption = 'Break line at each new uses entry'
           TabOrder = 3
+          OnClick = chkBreaklineClick
         end
         object chkSortAfterAdding: TCheckBox
           Left = 15
@@ -70,7 +71,6 @@ object frmSettings: TfrmSettings
           Height = 17
           Caption = 'Sort uses after inserting'
           TabOrder = 2
-          OnClick = chkSortAfterAddingClick
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 15
