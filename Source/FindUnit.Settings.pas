@@ -14,6 +14,7 @@ type
     SortUsesAfterAdding: Boolean;
     UseDefaultSearchMatch: Boolean;
     BlankLineBtwNameScapes: Boolean;
+    OrganizeUses: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -43,6 +44,9 @@ type
 
     function GetBlankLineBtwNameScapes: Boolean;
     procedure SetBlankLineBtwNameScapes(const Value: Boolean);
+
+    function GetOrganizeUses: Boolean;
+    procedure SetOrganizeUses(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -55,6 +59,7 @@ type
     property SortUsesAfterAdding: Boolean read GetSortUsesAfterAdding write SetSortUsesAfterAdding;
     property UseDefaultSearchMatch: Boolean read GetUseDefaultSearchMatch write SetUseDefaultSearchMatch;
     property BlankLineBtwNameScapes: Boolean read GetBlankLineBtwNameScapes write SetBlankLineBtwNameScapes;
+    property OrganizeUses: Boolean read GetOrganizeUses write SetOrganizeUses;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -78,6 +83,7 @@ const
   CONF_SORT_AFTER_ADDING = 'SORT_AFTER_ADDING';
   CONF_DEFAULT_SORT_MATCH = 'DEFAULT_SORT_MATCH';
   CONF_BLANKLINE_BTW_NAMESCAPE = 'BLANKLINE_BTW_NAMESCAPE';
+  CONF_ORGANIZE_USES = 'ORGANIZE_USES';
 
 { TSettings }
 
@@ -94,9 +100,15 @@ begin
     Result.SortUsesAfterAdding := Settings.SortUsesAfterAdding;
     Result.UseDefaultSearchMatch := Settings.UseDefaultSearchMatch;
     Result.BlankLineBtwNameScapes := Settings.BlankLineBtwNameScapes;
+    Result.OrganizeUses := Settings.OrganizeUses;
   finally
     Settings.Free;
   end;
+end;
+
+function TSettings.GetOrganizeUses: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_ORGANIZE_USES, True);
 end;
 
 constructor TSettings.Create;
@@ -188,6 +200,12 @@ end;
 procedure TSettings.SetBreakLine(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_BREAK_LINE, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetOrganizeUses(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_ORGANIZE_USES, Value);
   FIni.UpdateFile;
 end;
 

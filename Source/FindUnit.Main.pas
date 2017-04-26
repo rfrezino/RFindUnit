@@ -14,6 +14,7 @@ type
     FProjectServiceIndex: Integer;
 
     procedure AutoImport(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
+    procedure OrganizeUses(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
     procedure OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
 
     procedure CreateMenus;
@@ -133,12 +134,11 @@ begin
   RfItemMenu.Add(NewItem);
 end;
 
-
-
 procedure TRFindUnitMain.ForceRegisterKeys(Sender: TObject);
 begin
   vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('O'), [ssCtrl, ssShift])], OrganizeUses, nil);
 end;
 
 procedure TRFindUnitMain.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
@@ -146,6 +146,7 @@ begin
   vBindingServices := BindingServices;
   BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   BindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
+  BindingServices.AddKeyBinding([ShortCut(Ord('O'), [ssCtrl, ssShift])], OrganizeUses, nil);
   CreateMenus;
 end;
 
@@ -216,6 +217,16 @@ begin
     frmFindUnit.SetSearch(SelectedText);
     frmFindUnit.Show;
   end;
+end;
+
+procedure TRFindUnitMain.OrganizeUses(const Context: IOTAKeyContext; KeyCode: TShortCut;
+  var BindingResult: TKeyBindingResult);
+begin
+  if not GlobalSettings.OrganizeUses then
+    Exit;
+
+  BindingResult := krHandled;
+  FEnvControl.OrganizeUses;
 end;
 
 procedure Clear;

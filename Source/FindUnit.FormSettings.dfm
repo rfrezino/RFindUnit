@@ -37,63 +37,104 @@ object frmSettings: TfrmSettings
         Align = alClient
         Caption = 'Settings'
         TabOrder = 0
-        object chkAlwaysImportToInterfaceSection: TCheckBox
-          Left = 15
-          Top = 20
-          Width = 229
-          Height = 17
-          Caption = 'Always import to interface section'
-          TabOrder = 0
-        end
-        object chkMemorize: TCheckBox
-          Left = 15
-          Top = 43
-          Width = 274
-          Height = 17
-          Caption = 'Store choices to use on Auto Import (Ctrl + Shit + I)'
-          Checked = True
-          State = cbChecked
-          TabOrder = 1
-        end
-        object chkBreakline: TCheckBox
-          Left = 15
-          Top = 87
-          Width = 210
-          Height = 17
-          Caption = 'Break line at each new uses entry'
-          TabOrder = 3
-          OnClick = chkBreaklineClick
-        end
-        object chkSortAfterAdding: TCheckBox
-          Left = 15
-          Top = 66
-          Width = 210
-          Height = 17
-          Caption = 'Sort uses after inserting'
-          TabOrder = 2
-          OnClick = chkSortAfterAddingClick
+        object lblLink: TLabel
+          Left = 242
+          Top = 387
+          Width = 181
+          Height = 13
+          Cursor = crHandPoint
+          Caption = 'https://github.com/rfrezino/RFindUnit'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsItalic, fsUnderline]
+          ParentFont = False
+          OnClick = lblLinkClick
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 15
-          Top = 152
-          Width = 167
+          Top = 246
+          Width = 297
           Height = 81
           Caption = 'Search match algorithm '
           Items.Strings = (
             'Default'
             'Levenshtein')
-          TabOrder = 5
+          TabOrder = 2
         end
-        object chkBlankLineBtwNamespace: TCheckBox
-          Left = 32
-          Top = 109
-          Width = 193
-          Height = 17
-          Hint = 
-            'Sort and Break line should be checked in order to use this optio' +
-            'n'
-          Caption = 'Blank line between namescapes'
-          TabOrder = 4
+        object grpShotCuts: TGroupBox
+          Left = 15
+          Top = 20
+          Width = 297
+          Height = 77
+          Caption = 'Shortcuts'
+          TabOrder = 0
+          object chkMemorize: TCheckBox
+            Left = 12
+            Top = 23
+            Width = 274
+            Height = 17
+            Caption = 'Store choices to use on Auto Import (Ctrl + Shit + I)'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object chkOrganizeUses: TCheckBox
+            Left = 12
+            Top = 46
+            Width = 194
+            Height = 17
+            Caption = 'Organize uses (Ctrl + Shift + O)'
+            TabOrder = 1
+          end
+        end
+        object grpUsesOrganization: TGroupBox
+          Left = 15
+          Top = 108
+          Width = 297
+          Height = 124
+          Caption = 'Uses Organization'
+          TabOrder = 1
+          object chkAlwaysImportToInterfaceSection: TCheckBox
+            Left = 15
+            Top = 20
+            Width = 229
+            Height = 17
+            Caption = 'Always import to interface section'
+            TabOrder = 0
+          end
+          object chkSortAfterAdding: TCheckBox
+            Left = 15
+            Top = 40
+            Width = 210
+            Height = 17
+            Caption = 'Sort uses after inserting'
+            TabOrder = 1
+            OnClick = chkSortAfterAddingClick
+          end
+          object chkBreakline: TCheckBox
+            Left = 15
+            Top = 64
+            Width = 210
+            Height = 17
+            Caption = 'Break line at each new uses entry'
+            TabOrder = 2
+            OnClick = chkBreaklineClick
+          end
+          object chkBlankLineBtwNamespace: TCheckBox
+            Left = 32
+            Top = 88
+            Width = 193
+            Height = 17
+            Hint = 
+              'Sort and Break line should be checked in order to use this optio' +
+              'n'
+            Caption = 'Blank line between namescapes'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+          end
         end
       end
     end
@@ -168,8 +209,8 @@ object frmSettings: TfrmSettings
   object cdsAutoImport: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 519
-    Top = 353
+    Left = 583
+    Top = 41
     object cdsAutoImportIDENTIFIER: TStringField
       FieldName = 'IDENTIFIER'
       Size = 200
@@ -181,7 +222,7 @@ object frmSettings: TfrmSettings
   end
   object dtsAutoImport: TDataSource
     DataSet = cdsAutoImport
-    Left = 596
-    Top = 356
+    Left = 582
+    Top = 96
   end
 end

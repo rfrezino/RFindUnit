@@ -21,19 +21,24 @@ type
     nvgAutoImport: TDBNavigator;
     tsGeneral: TTabSheet;
     grpGeneralSettings: TGroupBox;
-    chkAlwaysImportToInterfaceSection: TCheckBox;
-    chkMemorize: TCheckBox;
     btn1: TButton;
-    chkBreakline: TCheckBox;
-    chkSortAfterAdding: TCheckBox;
     grpSearchAlgorithm: TRadioGroup;
+    grpShotCuts: TGroupBox;
+    chkMemorize: TCheckBox;
+    chkOrganizeUses: TCheckBox;
+    grpUsesOrganization: TGroupBox;
+    chkAlwaysImportToInterfaceSection: TCheckBox;
+    chkSortAfterAdding: TCheckBox;
+    chkBreakline: TCheckBox;
     chkBlankLineBtwNamespace: TCheckBox;
+    lblLink: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btn1Click(Sender: TObject);
     procedure chkBreaklineClick(Sender: TObject);
     procedure chkSortAfterAddingClick(Sender: TObject);
+    procedure lblLinkClick(Sender: TObject);
   private
     FSettings: TSettings;
 
@@ -59,6 +64,7 @@ procedure TfrmSettings.SaveSettings;
 begin
   FSettings.AutoImportEnabled := chkAutoEnabled.Checked;
   FSettings.AlwaysUseInterfaceSection := chkAlwaysImportToInterfaceSection.Checked;
+  FSettings.OrganizeUses := chkOrganizeUses.Checked;
   FSettings.StoreChoices := chkMemorize.Checked;
 
   FSettings.BreakLine := chkBreakline.Checked;
@@ -66,6 +72,7 @@ begin
   FSettings.BlankLineBtwNameScapes := chkBlankLineBtwNamespace.Checked;
 
   FSettings.UseDefaultSearchMatch := grpSearchAlgorithm.ItemIndex = 0;
+
   InsertDataSetInAutoImport;
 end;
 
@@ -99,6 +106,7 @@ begin
   chkBreakline.Checked := FSettings.BreakLine;
   chkSortAfterAdding.Checked := FSettings.SortUsesAfterAdding;
   chkBlankLineBtwNamespace.Checked := FSettings.BlankLineBtwNameScapes;
+  chkOrganizeUses.Checked := FSettings.OrganizeUses;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0
@@ -181,7 +189,14 @@ begin
   finally
     Values.Free;
   end;
+end;
 
+procedure TfrmSettings.lblLinkClick(Sender: TObject);
+var
+  Link: string;
+begin
+  Link := 'https://github.com/rfrezino/RFindUnit';
+  ShellExecute(Application.Handle, PChar('open'), PChar(Link), nil, nil, SW_SHOW);
 end;
 
 end.

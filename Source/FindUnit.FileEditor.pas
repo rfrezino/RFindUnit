@@ -59,6 +59,7 @@ type
     procedure RemoveUses(UseUnit: string; var Writer: IOTAEditWriter);
     procedure RemoveAllSection(var Writer: IOTAEditWriter);
     function AddUses(UseUnit: string; var Writer: IOTAEditWriter): Boolean;
+    procedure OrganizeUses(var Writer: IOTAEditWriter);
 
     function GetUsesList: TStringList;
     function AreThereUnparsableCharsInSection: Boolean;
@@ -85,6 +86,9 @@ type
 
     function AddUsesToInterface(const UseUnit: string): Boolean;
     function AddUsesToImplementation(const UseUnit: string): Boolean;
+
+    procedure OrganizeUsesInterface;
+    procedure OrganizeUsesImplementation;
 
     procedure RemoveUsesFromInterface(const UseUnit: string);
     procedure RemoveUsesFromImplementation(const UseUnit: string);
@@ -235,6 +239,22 @@ begin
   Result := Line > FImplementationRegion.RegionPosition.StartLine;
 end;
 
+procedure TSourceFileEditor.OrganizeUsesImplementation;
+var
+  Writer: IOTAEditWriter;
+begin
+  Writer :=  nil;
+  FImplementationRegion.OrganizeUses(Writer);
+end;
+
+procedure TSourceFileEditor.OrganizeUsesInterface;
+var
+  Writer: IOTAEditWriter;
+begin
+  Writer :=  nil;
+  FInterfaceRegion.OrganizeUses(Writer);
+end;
+
 procedure TSourceFileEditor.ParseInformations;
 begin
   GetInfos;
@@ -328,6 +348,7 @@ begin
     NewUses := GetUsesList;
     NewUses.Add(UseUnit);
     AddUsesInternal(NewUses, Writer);
+    NewUses.Free;
   end
   else
     AddUsesInternal(UseUnit, Writer);
@@ -532,6 +553,24 @@ end;
 function TFileRegion.HaveUses: Boolean;
 begin
   Result := UsesPosition.StartLine > 0;
+end;
+
+procedure TFileRegion.OrganizeUses(var Writer: IOTAEditWriter);
+var
+  NewUses: TStringList;
+begin
+  if not HaveUses then
+    Exit;
+
+  if GlobalSettings.SortUsesAfterAdding and (not AreThereUnparsableCharsInSection) then
+  begin
+    RemoveAllSection(Writer);
+    Writer := nil;
+
+    NewUses := GetUsesList;
+    AddUsesInternal(NewUses, Writer);
+    NewUses.Free;
+  end;
 end;
 
 procedure TFileRegion.RemoveAllSection(var Writer: IOTAEditWriter);

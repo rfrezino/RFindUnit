@@ -3,18 +3,7 @@
 interface
 
 uses
-  FindUnit.AutoImport,
-  System.SysUtils,
-  System.Classes,
-  FindUnit.PasParser,
-  FindUnit.FileCache,
-  FindUnit.Worker,
-  ToolsAPI,
-  System.Generics.Collections,
-  Xml.XMLIntf,
-  FindUnit.Header,
-  Log4Pascal,
-  Winapi.Windows;
+  FindUnit.AutoImport, FindUnit.FileCache, FindUnit.Header, FindUnit.PasParser, FindUnit.Settings, FindUnit.Worker, Log4Pascal, System.Classes, System.Generics.Collections, System.SysUtils, ToolsAPI, Winapi.Windows, Xml.XMLIntf;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -66,6 +55,7 @@ type
     property AutoImport: TAutoImport read FAutoImport;
 
     procedure ImportMissingUnits(ShowNoImport: Boolean = true);
+    procedure OrganizeUses;
   end;
 
 implementation
@@ -314,6 +304,25 @@ procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectLis
 begin
   FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
+end;
+
+procedure TEnvironmentController.OrganizeUses;
+var
+  FileEditor: TSourceFileEditor;
+  CurEditor: IOTASourceEditor;
+begin
+  CurEditor := OtaGetCurrentSourceEditor;
+  if CurEditor = nil then
+    Exit;
+
+  FileEditor := TSourceFileEditor.Create(CurEditor);
+  try
+    FileEditor.Prepare;
+    FileEditor.OrganizeUsesImplementation;
+    FileEditor.OrganizeUsesInterface;
+  finally
+    FileEditor.Free;
+  end;
 end;
 
 procedure TEnvironmentController.ProcessDCUFiles;
