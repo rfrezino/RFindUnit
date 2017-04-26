@@ -20,8 +20,11 @@ If you help, it'll be very good.
 It requires Delphi XE or above.
 
 ### Instalation
-**Delphi XE**: Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), unzip and run Installer.exe.
-</br>**Other versions**: The installer identify all Delphi's Version, and will try to install in every one you ask for. But, as I just have Delphi XE, I just tried to compile to it. Certanly, you will not spend too much time, even it's necessary to add some compilation flag on the project. I'll work on the compability issue soon. 
+1. Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), or clone the project.
+1. Go to the Packages directory and choose your corresponding version
+2. Open the RFindUnit.dproj on your Delphi and right click on the project and install it.
+
+![Example](https://github.com/rfrezino/RFindUnit/blob/master/Resources/InstallationHelp.png)
 
 #### Contact
 Rodrigo Farias Rezino
