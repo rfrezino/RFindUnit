@@ -66,11 +66,12 @@ object frmSettings: TfrmSettings
         end
         object chkSortAfterAdding: TCheckBox
           Left = 15
-          Top = 65
+          Top = 66
           Width = 210
           Height = 17
           Caption = 'Sort uses after inserting'
           TabOrder = 2
+          OnClick = chkSortAfterAddingClick
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 15
@@ -88,6 +89,9 @@ object frmSettings: TfrmSettings
           Top = 109
           Width = 193
           Height = 17
+          Hint = 
+            'Sort and Break line should be checked in order to use this optio' +
+            'n'
           Caption = 'Blank line between namescapes'
           TabOrder = 4
         end

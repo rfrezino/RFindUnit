@@ -33,6 +33,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btn1Click(Sender: TObject);
     procedure chkBreaklineClick(Sender: TObject);
+    procedure chkSortAfterAddingClick(Sender: TObject);
   private
     FSettings: TSettings;
 
@@ -78,9 +79,14 @@ begin
   ToggleEnableItems;
 end;
 
+procedure TfrmSettings.chkSortAfterAddingClick(Sender: TObject);
+begin
+  ToggleEnableItems;
+end;
+
 procedure TfrmSettings.ToggleEnableItems;
 begin
-  chkBlankLineBtwNamespace.Enabled := chkBreakline.Checked;
+  chkBlankLineBtwNamespace.Enabled := chkBreakline.Checked and chkSortAfterAdding.Checked;
 end;
 
 procedure TfrmSettings.ConfigureAutoImportPage;

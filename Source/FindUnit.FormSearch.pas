@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts, Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
+  FindUnit.EnvironmentController, StrUtils, AppEvnts,
+  Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
   FindUnit.FormSettings, FindUnit.Settings, System.ImageList;
 
 type

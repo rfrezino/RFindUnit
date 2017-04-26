@@ -3,8 +3,8 @@ unit FindUnit.Worker;
 interface
 
 uses
-  OtlCommonFU, OtlTaskFU, OtlThreadPoolFU, OtlParallelFU, OtlCollectionsFU, SimpleParser.Lexer.Types,
-  Classes,FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc, Log4Pascal;
+  SimpleParser.Lexer.Types, Classes,FindUnit.PasParser, Generics.Collections,
+  FindUnit.IncluderHandlerInc, Log4Pascal, System.Threading;
 
 type
   TOnFinished = procedure(FindUnits: TObjectList<TPasFile>) of object;
@@ -106,20 +106,17 @@ end;
 
 procedure TParserWorker.ListDcuFiles;
 var
-  ResultList: IOmniBlockingCollection;
-  DcuFile: TOmniValue;
+  ResultList: TThreadList<string>;
+  DcuFile: string;
 begin
   if not FParseDcuFile then
     Exit;
 
   FDirectoriesPath.Add(DirRealeaseWin32);
+  ResultList := TThreadList<string>.Create;
 
-  ResultList := TOmniBlockingCollection.Create;
-
-  Parallel.ForEach(0, FDirectoriesPath.Count -1)
-    .Into(ResultList)
-    .Execute(
-      procedure (const index: Integer; var result: TOmniValue)
+  TParallel.&For(0, FDirectoriesPath.Count -1,
+    procedure (index: Integer)
       var
       DcuFiles: TStringList;
       DcuFile: string;
@@ -136,17 +133,18 @@ begin
           on E: exception do
             Logger.Error('TParserWorker.ListDcuFiles: ' + e.Message);
         end;
-      end
-    );
+      end);
 
-  while ResultList.Take(DcuFile) do
-    FDcuFiles.Add(DcuFile.AsString);
+  for DcuFile in ResultList.LockList do
+    FDcuFiles.Add(DcuFile);
+
+  ResultList.Free;
 end;
 
 procedure TParserWorker.ListPasFiles;
 var
-  ResultList: IOmniBlockingCollection;
-  PasValue: TOmniValue;
+  ResultList: TThreadList<string>;
+  PasValue: string;
 begin
   //DEBUG
 //  FPasFiles.Add('C:\Program Files (x86)\Embarcadero\RAD Studio\8.0\source\rtl\common\Classes.pas');
@@ -155,12 +153,10 @@ begin
   if FPasFiles.Count > 0 then
     Exit;
 
-  ResultList := TOmniBlockingCollection.Create;
+  ResultList := TThreadList<string>.Create;
 
-  Parallel.ForEach(0, FDirectoriesPath.Count -1)
-    .Into(ResultList)
-    .Execute(
-      procedure (const index: Integer; var result: TOmniValue)
+  TParallel.&For(0, FDirectoriesPath.Count -1,
+      procedure (index: Integer)
       var
       PasFiles: TStringList;
       PasFile: string;
@@ -183,8 +179,11 @@ begin
       end
     );
 
-  while ResultList.Take(PasValue) do
-    FPasFiles.Add(PasValue.AsString);
+
+  for PasValue in ResultList.LockList do
+    FPasFiles.Add(PasValue);
+
+  ResultList.Free;
 end;
 
 procedure TParserWorker.ParseFiles;
@@ -219,17 +218,15 @@ end;
 
 procedure TParserWorker.ParseFilesParallel;
 var
-  ResultList: IOmniBlockingCollection;
-  PasValue: TOmniValue;
+  ResultList: TThreadList<TPasFile>;
+  PasValue: TPasFile;
 begin
-  ResultList := TOmniBlockingCollection.Create;
+  ResultList := TThreadList<TPasFile>.Create;
   FParsedItems := 0;
 
   Logger.Debug('TParserWorker.ParseFiles: Starting parseing files.');
-  Parallel.ForEach(0, FPasFiles.Count -1)
-    .Into(ResultList)
-    .Execute(
-      procedure (const index: Integer; var result: TOmniValue)
+  TParallel.&For(0, FPasFiles.Count -1,
+      procedure (index: Integer)
       var
         Parser: TPasFileParser;
         Item: TPasFile;
@@ -258,9 +255,12 @@ begin
     );
 
   Logger.Debug('TParserWorker.ParseFiles: Put results together.');
-  while ResultList.Take(PasValue) do
-    FFindUnits.Add(TPasFile(PasValue.AsObject));
+  for PasValue in ResultList.LockList do
+    FFindUnits.Add(PasValue);
+
   Logger.Debug('TParserWorker.ParseFiles: Finished.');
+
+  ResultList.Free;
 end;
 
 procedure TParserWorker.RemoveDcuFromExistingPasFiles;

@@ -14,8 +14,7 @@ uses
   Xml.XMLIntf,
   FindUnit.Header,
   Log4Pascal,
-  Winapi.Windows,
-  OtlParallelFU;
+  Winapi.Windows;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -72,7 +71,8 @@ type
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.StringPositionList;
+  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.StringPositionList,
+  System.Threading;
 
 { TEnvUpdateControl }
 
@@ -258,6 +258,8 @@ begin
 end;
 
 procedure TEnvironmentController.LoadLibraryPath;
+var
+  LocalThread: TThread;
 begin
   Logger.Debug('TEnvironmentController.LoadLibraryPath');
   if (FLibraryPath <> nil) and (not FLibraryPath.Ready) then
@@ -268,10 +270,19 @@ begin
   Logger.Debug('TEnvironmentController.LoadLibraryPath: yes');
 
   FreeAndNil(FLibraryPath);
-  Parallel.Async(CreateLibraryPathUnits);
+  LocalThread := TThread.CreateAnonymousThread(
+    procedure
+    begin
+      CreateLibraryPathUnits;
+    end
+    );
+  LocalThread.FreeOnTerminate := True;
+  LocalThread.Start;
 end;
 
 procedure TEnvironmentController.LoadProjectPath;
+var
+  LocalThread: TThread;
 begin
   Logger.Debug('TEnvironmentController.LoadProjectPath');
   if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
@@ -282,7 +293,15 @@ begin
 
   Logger.Debug('TEnvironmentController.LoadProjectPath: yes');
   FreeAndNil(FProjectUnits);
-  Parallel.Async(CreateProjectPathUnits);
+
+  LocalThread := TThread.CreateAnonymousThread(
+    procedure
+    begin
+      CreateProjectPathUnits;
+    end
+    );
+  LocalThread.FreeOnTerminate := True;
+  LocalThread.Start;
 end;
 
 procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
@@ -298,8 +317,17 @@ begin
 end;
 
 procedure TEnvironmentController.ProcessDCUFiles;
+var
+  LocalThread: TThread;
 begin
-  Parallel.Async(CallProcessDcuFiles);
+  LocalThread := TThread.CreateAnonymousThread(
+    procedure
+    begin
+      CallProcessDcuFiles;
+    end
+    );
+  LocalThread.FreeOnTerminate := True;
+  LocalThread.Start;
 end;
 
 procedure TEnvironmentController.CallProcessDcuFiles;
