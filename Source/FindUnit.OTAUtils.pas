@@ -165,6 +165,7 @@ var
   Content: TStringList;
   ContentTxt: string;
 begin
+  try
   ContentTxt := '';
   SourceEditor := ActiveSourceEditor;
   EditPos := SourceEditor.EditViews[0].CursorPos;
@@ -193,7 +194,14 @@ begin
   finally
     Content.Free;
   end;
-End;
+  except
+    on E: exception do
+    begin
+      Result.Value := '';
+      Result.Line := -1;
+    end;
+  end;
+end;
 
 function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 var

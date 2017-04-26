@@ -57,19 +57,19 @@ object frmSettings: TfrmSettings
         end
         object chkBreakline: TCheckBox
           Left = 15
-          Top = 66
+          Top = 87
           Width = 210
           Height = 17
           Caption = 'Break line at each new uses entry'
-          TabOrder = 2
+          TabOrder = 3
         end
         object chkSortAfterAdding: TCheckBox
           Left = 15
-          Top = 89
+          Top = 65
           Width = 210
           Height = 17
           Caption = 'Sort uses after inserting'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = chkSortAfterAddingClick
         end
         object grpSearchAlgorithm: TRadioGroup

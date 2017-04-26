@@ -454,6 +454,10 @@ var
   I: Integer;
   UsesText: TStringList;
 begin
+  Result := False;
+  if not HaveUses then
+    Exit;
+
   UsesText := TStringList.Create;
   try
     for I := FUsesPosition.StartLine to FUsesPosition.EndLine do
@@ -544,6 +548,7 @@ var
   I: Integer;
   LocalUses: TStringList;
 begin
+
   if not UsesExists(UseUnit) then
     Exit;
 
