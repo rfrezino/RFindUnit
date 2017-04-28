@@ -3,8 +3,8 @@ unit FindUnit.Worker;
 interface
 
 uses
-  SimpleParser.Lexer.Types, Classes,FindUnit.PasParser, Generics.Collections,
-  FindUnit.IncluderHandlerInc, Log4Pascal, System.Threading;
+  Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, Generics.Collections, Log4Pascal, SimpleParser.Lexer.Types,
+  System.Threading;
 
 type
   TOnFinished = procedure(FindUnits: TObjectList<TPasFile>) of object;
@@ -46,7 +46,7 @@ type
 implementation
 
 uses
-  FindUnit.Utils, SysUtils, Windows, FindUnit.DcuDecompiler;
+  FindUnit.DcuDecompiler, FindUnit.Utils, SysUtils, Windows;
 
 { TParserWorker }
 

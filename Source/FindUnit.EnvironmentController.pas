@@ -3,7 +3,8 @@
 interface
 
 uses
-  FindUnit.AutoImport, FindUnit.FileCache, FindUnit.Header, FindUnit.PasParser, FindUnit.Settings, FindUnit.Worker, Log4Pascal, System.Classes, System.Generics.Collections, System.SysUtils, ToolsAPI, Winapi.Windows, Xml.XMLIntf;
+  FindUnit.AutoImport, FindUnit.FileCache, FindUnit.Header, FindUnit.PasParser, FindUnit.Settings, FindUnit.Worker,
+  Log4Pascal, System.Classes, System.Generics.Collections, System.SysUtils, ToolsAPI, Winapi.Windows, Xml.XMLIntf;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
@@ -61,7 +62,7 @@ type
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.StringPositionList,
+  FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.OTAUtils, FindUnit.StringPositionList, FindUnit.Utils,
   System.Threading;
 
 { TEnvUpdateControl }

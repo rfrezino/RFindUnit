@@ -3,9 +3,9 @@ unit FindUnit.FormSettings;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,Vcl.StdCtrls,
-  System.IniFiles, Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.DBCtrls,
-  FindUnit.Settings, System.SyncObjs, Winapi.ShellAPI;
+  Classes, ComCtrls, Controls, Data.DB, Datasnap.DBClient, Dialogs, FindUnit.Settings, Forms, Graphics, Messages,
+  System.IniFiles, System.SyncObjs, System.SysUtils, Variants, Vcl.DBCtrls, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.Mask, Vcl.StdCtrls, Winapi.ShellAPI, Windows;
 
 type
   TfrmSettings = class(TForm)
@@ -32,6 +32,9 @@ type
     chkBreakline: TCheckBox;
     chkBlankLineBtwNamespace: TCheckBox;
     lblLink: TLabel;
+    chbOrganizeUsesAfterInsertingNewUsesUnit: TCheckBox;
+    medtBreakUsesLineAtPosition: TMaskEdit;
+    lblBreakLineAt: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -54,11 +57,7 @@ type
 
 implementation
 
-uses
-	FindUnit.Utils, FindUnit.Header;
-
 {$R *.dfm}
-
 
 procedure TfrmSettings.SaveSettings;
 begin
@@ -72,6 +71,9 @@ begin
   FSettings.BlankLineBtwNameScapes := chkBlankLineBtwNamespace.Checked;
 
   FSettings.UseDefaultSearchMatch := grpSearchAlgorithm.ItemIndex = 0;
+
+  FSettings.OrganizeUsesAfterAddingNewUsesUnit := chbOrganizeUsesAfterInsertingNewUsesUnit.Checked;
+  FSettings.BreakUsesLineAtPosition := StrToInt(Trim(medtBreakUsesLineAtPosition.Text));
 
   InsertDataSetInAutoImport;
 end;
@@ -107,6 +109,8 @@ begin
   chkSortAfterAdding.Checked := FSettings.SortUsesAfterAdding;
   chkBlankLineBtwNamespace.Checked := FSettings.BlankLineBtwNameScapes;
   chkOrganizeUses.Checked := FSettings.OrganizeUses;
+  medtBreakUsesLineAtPosition.Text := IntToStr(FSettings.BreakUsesLineAtPosition);
+  chbOrganizeUsesAfterInsertingNewUsesUnit.Checked := FSettings.OrganizeUsesAfterAddingNewUsesUnit;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0

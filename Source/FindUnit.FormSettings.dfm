@@ -54,7 +54,7 @@ object frmSettings: TfrmSettings
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 15
-          Top = 246
+          Top = 286
           Width = 297
           Height = 81
           Caption = 'Search match algorithm '
@@ -93,38 +93,45 @@ object frmSettings: TfrmSettings
           Left = 15
           Top = 108
           Width = 297
-          Height = 124
+          Height = 165
           Caption = 'Uses Organization'
           TabOrder = 1
+          object lblBreakLineAt: TLabel
+            Left = 15
+            Top = 136
+            Width = 124
+            Height = 13
+            Caption = 'Break uses line at position'
+          end
           object chkAlwaysImportToInterfaceSection: TCheckBox
             Left = 15
-            Top = 20
+            Top = 42
             Width = 229
             Height = 17
             Caption = 'Always import to interface section'
-            TabOrder = 0
+            TabOrder = 1
           end
           object chkSortAfterAdding: TCheckBox
-            Left = 15
-            Top = 40
-            Width = 210
-            Height = 17
-            Caption = 'Sort uses after inserting'
-            TabOrder = 1
-            OnClick = chkSortAfterAddingClick
-          end
-          object chkBreakline: TCheckBox
             Left = 15
             Top = 64
             Width = 210
             Height = 17
-            Caption = 'Break line at each new uses entry'
+            Caption = 'Sort uses by alphabetical order'
             TabOrder = 2
+            OnClick = chkSortAfterAddingClick
+          end
+          object chkBreakline: TCheckBox
+            Left = 15
+            Top = 86
+            Width = 210
+            Height = 17
+            Caption = 'Break line at each new uses entry'
+            TabOrder = 3
             OnClick = chkBreaklineClick
           end
           object chkBlankLineBtwNamespace: TCheckBox
             Left = 32
-            Top = 88
+            Top = 110
             Width = 193
             Height = 17
             Hint = 
@@ -133,7 +140,25 @@ object frmSettings: TfrmSettings
             Caption = 'Blank line between namescapes'
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 3
+            TabOrder = 4
+          end
+          object chbOrganizeUsesAfterInsertingNewUsesUnit: TCheckBox
+            Left = 15
+            Top = 21
+            Width = 266
+            Height = 17
+            Caption = 'Organize uses after inserting a new Uses unit'
+            TabOrder = 0
+          end
+          object medtBreakUsesLineAtPosition: TMaskEdit
+            Left = 147
+            Top = 133
+            Width = 34
+            Height = 21
+            EditMask = '!9!9!9;1; '
+            MaxLength = 3
+            TabOrder = 5
+            Text = '120'
           end
         end
       end

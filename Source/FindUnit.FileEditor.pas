@@ -3,20 +3,8 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  Classes,
-  DelphiAST.Classes,
-  DesignEditors,
-  FindUnit.FormMessage,
-  FindUnit.Header,
-  FindUnit.OtaUtils,
-  FindUnit.Settings,
-  FindUnit.Utils,
-  Graphics,
-  RegExpr,
-  SimpleParser.Lexer.Types,
-  SysUtils,
-  ToolsApi,
-  Vcl.Dialogs;
+  Classes, DelphiAST.Classes, DesignEditors, FindUnit.FormMessage, FindUnit.Header, FindUnit.OtaUtils, FindUnit.Settings,
+  FindUnit.Utils, Graphics, Log4Pascal, RegExpr, SimpleParser.Lexer.Types, SysUtils, ToolsApi, Vcl.Dialogs;
 
 type
   TCharPosition = record
@@ -340,7 +328,7 @@ begin
   if UsesExists(UseUnit) then
     Exit;
 
-  if GlobalSettings.SortUsesAfterAdding and (not AreThereUnparsableCharsInSection) then
+  if GlobalSettings.OrganizeUsesAfterAddingNewUses and GlobalSettings.SortUsesAfterAdding and (not AreThereUnparsableCharsInSection) then
   begin
     RemoveAllSection(Writer);
     Writer := nil;
@@ -387,7 +375,7 @@ begin
   end
   else
   begin
-    if (PosChar > 80) or (GlobalSettings.BreakLine)  then
+    if (PosChar > GlobalSettings.BreakUsesLineAt) or (GlobalSettings.BreakLine)  then
       UseUnit := ',' + #13#10 + '  ' + UseUnit
     else
       UseUnit := ', ' + UseUnit;
@@ -406,6 +394,9 @@ var
   CurDomain: string;
   LastDomain: string;
   MustBreak: Boolean;
+  CharCount: Integer;
+  UseCurLength: Integer;
+  FinalUseCur: string;
 begin
   Result := True;
 
@@ -414,6 +405,7 @@ begin
 
   LastDomain := '';
   NewUses := '';
+  CharCount := 0;
   for UseCur in UseUnit do
   begin
     if (UseCur.Trim.ToUpper = 'USES')
@@ -423,6 +415,8 @@ begin
     if NewUses.IsEmpty then
     begin
       NewUses := '  ' + UseCur;
+
+      CharCount := Length(NewUses);
 
       LastDomain := UseCur;
       LastDomain := Fetch(LastDomain, '.', False);
@@ -447,7 +441,20 @@ begin
       MustBreak := False;
     end
     else
-      NewUses := NewUses + ', ' + UseCur;
+    begin
+      UseCurLength := Length(UseCur);
+      if (CharCount + UseCurLength) >= GlobalSettings.BreakUsesLineAt then
+      begin
+        NewUses := NewUses + ',' + #13#10 + '  ' + UseCur;
+        CharCount := UseCurLength + 2 {padding};
+      end
+      else
+      begin
+        FinalUseCur := ', ' + UseCur;
+        NewUses := NewUses + FinalUseCur;
+        CharCount := CharCount + Length(FinalUseCur);
+      end;
+    end;
   end;
   NewUses := NewUses + ';';
 

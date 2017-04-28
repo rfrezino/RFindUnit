@@ -15,6 +15,8 @@ type
     UseDefaultSearchMatch: Boolean;
     BlankLineBtwNameScapes: Boolean;
     OrganizeUses: Boolean;
+    OrganizeUsesAfterAddingNewUses: Boolean;
+    BreakUsesLineAt: Cardinal;
   end;
 
   TSettings = class(TObject)
@@ -47,6 +49,12 @@ type
 
     function GetOrganizeUses: Boolean;
     procedure SetOrganizeUses(const Value: Boolean);
+
+    function GetBreakUsesLineAtPosition: Cardinal;
+    procedure SetBreakUsesLineAtPosition(const Value: Cardinal);
+
+    function GetOrganizeUsesAfterAddingNewUsesUnit: Boolean;
+    procedure SetOrganizeUsesAfterAddingNewUsesUnit(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -60,6 +68,8 @@ type
     property UseDefaultSearchMatch: Boolean read GetUseDefaultSearchMatch write SetUseDefaultSearchMatch;
     property BlankLineBtwNameScapes: Boolean read GetBlankLineBtwNameScapes write SetBlankLineBtwNameScapes;
     property OrganizeUses: Boolean read GetOrganizeUses write SetOrganizeUses;
+    property BreakUsesLineAtPosition: Cardinal read GetBreakUsesLineAtPosition write SetBreakUsesLineAtPosition;
+    property OrganizeUsesAfterAddingNewUsesUnit: Boolean read GetOrganizeUsesAfterAddingNewUsesUnit write SetOrganizeUsesAfterAddingNewUsesUnit;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -84,6 +94,8 @@ const
   CONF_DEFAULT_SORT_MATCH = 'DEFAULT_SORT_MATCH';
   CONF_BLANKLINE_BTW_NAMESCAPE = 'BLANKLINE_BTW_NAMESCAPE';
   CONF_ORGANIZE_USES = 'ORGANIZE_USES';
+  CONF_BREAK_USES_LINE_AT_POSITION = 'BREAK_USES_LINE_AT_POSITION';
+  CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT = 'ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT';
 
 { TSettings }
 
@@ -101,6 +113,8 @@ begin
     Result.UseDefaultSearchMatch := Settings.UseDefaultSearchMatch;
     Result.BlankLineBtwNameScapes := Settings.BlankLineBtwNameScapes;
     Result.OrganizeUses := Settings.OrganizeUses;
+    Result.BreakUsesLineAt := Settings.BreakUsesLineAtPosition;
+    Result.OrganizeUsesAfterAddingNewUses := Settings.OrganizeUsesAfterAddingNewUsesUnit;
   finally
     Settings.Free;
   end;
@@ -109,6 +123,11 @@ end;
 function TSettings.GetOrganizeUses: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_ORGANIZE_USES, True);
+end;
+
+function TSettings.GetOrganizeUsesAfterAddingNewUsesUnit: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT, False);
 end;
 
 constructor TSettings.Create;
@@ -146,6 +165,11 @@ end;
 function TSettings.GetBreakLine: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BREAK_LINE, False);
+end;
+
+function TSettings.GetBreakUsesLineAtPosition: Cardinal;
+begin
+  Result := FIni.ReadInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, 120);
 end;
 
 function TSettings.GetSortUsesAfterAdding: Boolean;
@@ -209,6 +233,12 @@ begin
   FIni.UpdateFile;
 end;
 
+procedure TSettings.SetOrganizeUsesAfterAddingNewUsesUnit(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT, Value);
+  FIni.UpdateFile;
+end;
+
 procedure TSettings.SetSortUsesAfterAdding(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_SORT_AFTER_ADDING, Value);
@@ -229,6 +259,12 @@ end;
 procedure TSettings.SetUseDefaultSearchMatch(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_DEFAULT_SORT_MATCH, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetBreakUsesLineAtPosition(const Value: Cardinal);
+begin
+  FIni.WriteInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, Value);
   FIni.UpdateFile;
 end;
 
