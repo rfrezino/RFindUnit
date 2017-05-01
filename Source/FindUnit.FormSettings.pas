@@ -3,9 +3,34 @@ unit FindUnit.FormSettings;
 interface
 
 uses
-  Classes, ComCtrls, Controls, Data.DB, Datasnap.DBClient, Dialogs, FindUnit.Settings, Forms, Graphics, Messages,
-  System.IniFiles, System.SyncObjs, System.SysUtils, Variants, Vcl.DBCtrls, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.Grids,
-  Vcl.Mask, Vcl.StdCtrls, Winapi.ShellAPI, Windows;
+  Classes,
+  ComCtrls,
+  Controls,
+  Dialogs,
+  Forms,
+  Graphics,
+  Messages,
+  Variants,
+  Windows,
+
+  Data.DB,
+
+  Datasnap.DBClient,
+
+  FindUnit.Settings,
+
+  System.IniFiles,
+  System.SyncObjs,
+  System.SysUtils,
+
+  Vcl.DBCtrls,
+  Vcl.DBGrids,
+  Vcl.ExtCtrls,
+  Vcl.Grids,
+  Vcl.Mask,
+  Vcl.StdCtrls,
+
+  Winapi.ShellAPI;
 
 type
   TfrmSettings = class(TForm)
@@ -35,6 +60,7 @@ type
     chbOrganizeUsesAfterInsertingNewUsesUnit: TCheckBox;
     medtBreakUsesLineAtPosition: TMaskEdit;
     lblBreakLineAt: TLabel;
+    chbGroupNonNameSpaceUnits: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -74,6 +100,7 @@ begin
 
   FSettings.OrganizeUsesAfterAddingNewUsesUnit := chbOrganizeUsesAfterInsertingNewUsesUnit.Checked;
   FSettings.BreakUsesLineAtPosition := StrToInt(Trim(medtBreakUsesLineAtPosition.Text));
+  FSettings.GroupNonNamespaceUnits := chbGroupNonNameSpaceUnits.Checked;
 
   InsertDataSetInAutoImport;
 end;
@@ -96,6 +123,7 @@ end;
 procedure TfrmSettings.ToggleEnableItems;
 begin
   chkBlankLineBtwNamespace.Enabled := chkBreakline.Checked and chkSortAfterAdding.Checked;
+  chbGroupNonNameSpaceUnits.Enabled := chkBreakline.Checked and chkSortAfterAdding.Checked;
 end;
 
 procedure TfrmSettings.ConfigureAutoImportPage;
@@ -111,6 +139,7 @@ begin
   chkOrganizeUses.Checked := FSettings.OrganizeUses;
   medtBreakUsesLineAtPosition.Text := IntToStr(FSettings.BreakUsesLineAtPosition);
   chbOrganizeUsesAfterInsertingNewUsesUnit.Checked := FSettings.OrganizeUsesAfterAddingNewUsesUnit;
+  chbGroupNonNameSpaceUnits.Checked := FSettings.GroupNonNamespaceUnits;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0

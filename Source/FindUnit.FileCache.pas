@@ -3,7 +3,10 @@ unit FindUnit.FileCache;
 interface
 
 uses
-  FindUnit.PasParser, System.Classes, System.Generics.Collections;
+  FindUnit.PasParser,
+
+  System.Classes,
+  System.Generics.Collections;
 
 type
   TUnitsController = class(TObject)
@@ -30,7 +33,9 @@ type
 implementation
 
 uses
-  FindUnit.SearchString, SysUtils;
+  SysUtils,
+
+  FindUnit.SearchString;
 
 { TUnitUpdateController }
 

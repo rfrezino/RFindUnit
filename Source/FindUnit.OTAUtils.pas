@@ -3,7 +3,10 @@
 interface
 
 uses
-  ToolsAPI, FindUnit.Header, Classes;
+  Classes,
+  ToolsAPI,
+
+  FindUnit.Header;
 
 function GetVolumeLabel(const DriveChar: string): string;
 function BrowseURL(const URL: string): boolean;
@@ -32,7 +35,14 @@ var
 implementation
 
 uses
-  Windows, ShellAPI, ShlObj, ActiveX, SysUtils, DCCStrs, Registry,
+  ActiveX,
+  DCCStrs,
+  Registry,
+  ShellAPI,
+  ShlObj,
+  SysUtils,
+  Windows,
+
   FindUnit.Utils;
 
 function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;

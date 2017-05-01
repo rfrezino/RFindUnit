@@ -25,7 +25,6 @@ package RFindUnit;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$IMPLICITBUILD ON}
 
 requires
   rtl,
@@ -67,32 +66,8 @@ contains
   SimpleParser in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.pas',
   SimpleParser.Types in '..\..\Thirdy\DelphiAST\SimpleParser\SimpleParser.Types.pas',
   Log4Pascal in '..\..\Thirdy\Log4pascal\Log4Pascal.pas',
-  OtlCollectionsFU in '..\..\Thirdy\OmniThreadLibrary\OtlCollectionsFU.pas',
-  OtlCommBufferTestFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommBufferTestFU.pas',
-  OtlCommFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommFU.pas',
-  OtlCommon.UtilsFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommon.UtilsFU.pas',
-  OtlCommonFU in '..\..\Thirdy\OmniThreadLibrary\OtlCommonFU.pas',
-  OtlContainerObserverFU in '..\..\Thirdy\OmniThreadLibrary\OtlContainerObserverFU.pas',
-  OtlContainersFU in '..\..\Thirdy\OmniThreadLibrary\OtlContainersFU.pas',
-  OtlDataManagerFU in '..\..\Thirdy\OmniThreadLibrary\OtlDataManagerFU.pas',
-  OtlEventMonitorFU in '..\..\Thirdy\OmniThreadLibrary\OtlEventMonitorFU.pas',
-  OtlHooksFU in '..\..\Thirdy\OmniThreadLibrary\OtlHooksFU.pas',
-  OtlLoggerFU in '..\..\Thirdy\OmniThreadLibrary\OtlLoggerFU.pas',
-  OtlParallelFU in '..\..\Thirdy\OmniThreadLibrary\OtlParallelFU.pas',
-  OtlSuperObjectFU in '..\..\Thirdy\OmniThreadLibrary\OtlSuperObjectFU.pas',
-  OtlSyncFU in '..\..\Thirdy\OmniThreadLibrary\OtlSyncFU.pas',
-  OtlTaskControlFU in '..\..\Thirdy\OmniThreadLibrary\OtlTaskControlFU.pas',
-  OtlTaskFU in '..\..\Thirdy\OmniThreadLibrary\OtlTaskFU.pas',
-  OtlThreadPoolFU in '..\..\Thirdy\OmniThreadLibrary\OtlThreadPoolFU.pas',
-  DetailedRTTIFU in '..\..\Thirdy\OmniThreadLibrary\src\DetailedRTTIFU.pas',
-  DSiWin32FU in '..\..\Thirdy\OmniThreadLibrary\src\DSiWin32FU.pas',
-  GpListsFU in '..\..\Thirdy\OmniThreadLibrary\src\GpListsFU.pas',
-  GpLockFreeQueueFU in '..\..\Thirdy\OmniThreadLibrary\src\GpLockFreeQueueFU.pas',
-  GpStringHashFU in '..\..\Thirdy\OmniThreadLibrary\src\GpStringHashFU.pas',
-  GpStuffFU in '..\..\Thirdy\OmniThreadLibrary\src\GpStuffFU.pas',
-  HVStringBuilderFU in '..\..\Thirdy\OmniThreadLibrary\src\HVStringBuilderFU.pas',
-  HVStringDataFU in '..\..\Thirdy\OmniThreadLibrary\src\HVStringDataFU.pas',
-  TransparentCanvas in '..\..\Thirdy\TransparentCanvas\TransparentCanvas.pas',
-  SuperObject in '..\..\Thirdy\SuperObject\SuperObject.pas';
+  TransparentCanvas in '..\..\Thirdy\TransparentCanvas\TransparentCanvas.pas';
+
+{$I Jedi.inc}
 
 end.

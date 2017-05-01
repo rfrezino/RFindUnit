@@ -3,7 +3,10 @@ unit FindUnit.CompilerInterceptor;
 interface
 
 uses
-	ToolsAPI, FindUnit.EnvironmentController, SysUtils;
+  SysUtils,
+  ToolsAPI,
+
+  FindUnit.EnvironmentController;
 
 type
   TCompilerInterceptor = class(TNotifierObject, IOTANotifier, IOTAIDENotifier, IOTAIDENotifier50)
@@ -30,7 +33,7 @@ type
 implementation
 
 uses
-	FindUnit.Settings;
+  FindUnit.Settings;
 
 procedure Register;
 var

@@ -3,8 +3,20 @@ unit FindUnit.AutoImport;
 interface
 
 uses
-  Classes, Contnrs, FindUnit.Header, FindUnit.OTAUtils, FindUnit.StringPositionList, FindUnit.Utils, Generics.Collections,
-  Generics.Defaults, IniFiles, Log4Pascal, SysUtils, ToolsAPI;
+  Classes,
+  Contnrs,
+  IniFiles,
+  Log4Pascal,
+  SysUtils,
+  ToolsAPI,
+
+  FindUnit.Header,
+  FindUnit.OTAUtils,
+  FindUnit.StringPositionList,
+  FindUnit.Utils,
+
+  Generics.Collections,
+  Generics.Defaults;
 
 type
   TAutoImport = class(TObject)

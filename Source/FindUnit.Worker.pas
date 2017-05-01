@@ -3,8 +3,9 @@ unit FindUnit.Worker;
 interface
 
 uses
-  Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, Generics.Collections, Log4Pascal, SimpleParser.Lexer.Types,
-  System.Threading;
+  Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, Generics.Collections,
+  Log4Pascal, SimpleParser.Lexer.Types
+  {$IFDEF DELPHIX_SEATTLE_UP}, System.Threading {$ENDIF};
 
 type
   TOnFinished = procedure(FindUnits: TObjectList<TPasFile>) of object;
@@ -46,7 +47,11 @@ type
 implementation
 
 uses
-  FindUnit.DcuDecompiler, FindUnit.Utils, SysUtils, Windows;
+  SysUtils,
+  Windows,
+
+  FindUnit.DcuDecompiler,
+  FindUnit.Utils;
 
 { TParserWorker }
 
@@ -115,6 +120,7 @@ begin
   FDirectoriesPath.Add(DirRealeaseWin32);
   ResultList := TThreadList<string>.Create;
 
+  {$IFDEF DELPHIX_SEATTLE_UP}
   TParallel.&For(0, FDirectoriesPath.Count -1,
     procedure (index: Integer)
       var
@@ -134,6 +140,7 @@ begin
             Logger.Error('TParserWorker.ListDcuFiles: ' + e.Message);
         end;
       end);
+  {$ENDIF}
 
   for DcuFile in ResultList.LockList do
     FDcuFiles.Add(DcuFile);
@@ -155,6 +162,7 @@ begin
 
   ResultList := TThreadList<string>.Create;
 
+  {$IFDEF DELPHIX_SEATTLE_UP}
   TParallel.&For(0, FDirectoriesPath.Count -1,
       procedure (index: Integer)
       var
@@ -178,7 +186,7 @@ begin
         end;
       end
     );
-
+    {$ENDIF}
 
   for PasValue in ResultList.LockList do
     FPasFiles.Add(PasValue);
@@ -225,6 +233,8 @@ begin
   FParsedItems := 0;
 
   Logger.Debug('TParserWorker.ParseFiles: Starting parseing files.');
+
+  {$IFDEF DELPHIX_SEATTLE_UP}
   TParallel.&For(0, FPasFiles.Count -1,
       procedure (index: Integer)
       var
@@ -253,6 +263,7 @@ begin
         end;
       end
     );
+    {$ENDIF}
 
   Logger.Debug('TParserWorker.ParseFiles: Put results together.');
   for PasValue in ResultList.LockList do

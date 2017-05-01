@@ -7,7 +7,8 @@ uses
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
   FindUnit.EnvironmentController, StrUtils, AppEvnts,
   Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
-  FindUnit.FormSettings, FindUnit.Settings, System.ImageList;
+  FindUnit.FormSettings, FindUnit.Settings, System.ImageList
+  {$IFDEF DELPHIX_SEATTLE_UP}, System.ImageList {$ENDIF};
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -94,8 +95,11 @@ var
 implementation
 
 uses
-  FindUnit.OTAUtils, FindUnit.Utils, FindUnit.FormMessage, FindUnit.DcuDecompiler,
-  FindUnit.ResultsImportanceCalculator;
+  FindUnit.DcuDecompiler,
+  FindUnit.FormMessage,
+  FindUnit.OTAUtils,
+  FindUnit.ResultsImportanceCalculator,
+  FindUnit.Utils;
 
 {$R *.dfm}
 

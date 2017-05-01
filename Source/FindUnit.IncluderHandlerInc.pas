@@ -3,7 +3,11 @@ unit FindUnit.IncluderHandlerInc;
 interface
 
 uses
-  Classes, Generics.Collections, SimpleParser.Lexer.Types;
+  Classes,
+
+  Generics.Collections,
+
+  SimpleParser.Lexer.Types;
 
 type
   TIncItem = record
@@ -31,7 +35,10 @@ type
 implementation
 
 uses
-  FindUnit.Utils, SysUtils, Log4Pascal;
+  Log4Pascal,
+  SysUtils,
+
+  FindUnit.Utils;
 
 { TIncludeHandlerInc }
 

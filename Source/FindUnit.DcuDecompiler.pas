@@ -3,7 +3,11 @@ unit FindUnit.DcuDecompiler;
 interface
 
 uses
-  Classes, FindUnit.Utils, Windows, ShellAPI;
+  Classes,
+  ShellAPI,
+  Windows,
+
+  FindUnit.Utils;
 
 const
   DCU32INT_EXECUTABLE = 'dcu32int.exe';

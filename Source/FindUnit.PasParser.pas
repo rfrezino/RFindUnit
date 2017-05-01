@@ -3,8 +3,21 @@ unit FindUnit.PasParser;
 interface
 
 uses
-  Classes, ComCtrls, CommonOptionStrs, DelphiAST.Classes, FindUnit.DcuDecompiler, FindUnit.Header,
-  FindUnit.IncluderHandlerInc, FindUnit.Utils, Generics.Collections, SimpleParser.Lexer.Types, SysUtils;
+  Classes,
+  ComCtrls,
+  CommonOptionStrs,
+  SysUtils,
+
+  DelphiAST.Classes,
+
+  FindUnit.DcuDecompiler,
+  FindUnit.Header,
+  FindUnit.IncluderHandlerInc,
+  FindUnit.Utils,
+
+  Generics.Collections,
+
+  SimpleParser.Lexer.Types;
 
 type
 
@@ -68,7 +81,11 @@ type
 implementation
 
 uses
-  DelphiAST, DelphiAST.Consts, IOUtils, Log4PAscal;
+  DelphiAST,
+  IOUtils,
+  Log4PAscal,
+
+  DelphiAST.Consts;
 
 { TFindUnitItem }
 

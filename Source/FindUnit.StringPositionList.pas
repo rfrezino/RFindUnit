@@ -3,7 +3,11 @@ unit FindUnit.StringPositionList;
 interface
 
 uses
-	FindUnit.Header, Generics.Collections, Classes;
+  Classes,
+
+  FindUnit.Header,
+
+  Generics.Collections;
 
 type
   TStringPositionList = class(TList<TStringPosition>)
@@ -20,7 +24,7 @@ type
 implementation
 
 uses
-	SysUtils;
+  SysUtils;
 
 { TStringPositionList }
 

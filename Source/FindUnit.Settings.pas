@@ -3,7 +3,8 @@
 interface
 
 uses
-	System.IniFiles, System.Classes;
+  System.Classes,
+  System.IniFiles;
 
 type
   TCacheSettings = record
@@ -13,10 +14,11 @@ type
     BreakLine: Boolean;
     SortUsesAfterAdding: Boolean;
     UseDefaultSearchMatch: Boolean;
-    BlankLineBtwNameScapes: Boolean;
+    BlankLineBtwNamespaces: Boolean;
     OrganizeUses: Boolean;
     OrganizeUsesAfterAddingNewUses: Boolean;
     BreakUsesLineAt: Cardinal;
+    GroupNonNamespaceUnits: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -55,6 +57,9 @@ type
 
     function GetOrganizeUsesAfterAddingNewUsesUnit: Boolean;
     procedure SetOrganizeUsesAfterAddingNewUsesUnit(const Value: Boolean);
+
+    function GetGroupNonNamespaceUnits: Boolean;
+    procedure SetGroupNonNamespaceUnits(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -70,6 +75,7 @@ type
     property OrganizeUses: Boolean read GetOrganizeUses write SetOrganizeUses;
     property BreakUsesLineAtPosition: Cardinal read GetBreakUsesLineAtPosition write SetBreakUsesLineAtPosition;
     property OrganizeUsesAfterAddingNewUsesUnit: Boolean read GetOrganizeUsesAfterAddingNewUsesUnit write SetOrganizeUsesAfterAddingNewUsesUnit;
+    property GroupNonNamespaceUnits: Boolean read GetGroupNonNamespaceUnits write SetGroupNonNamespaceUnits;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -82,7 +88,8 @@ var
 implementation
 
 uses
-	FindUnit.Utils, FindUnit.Header;
+  FindUnit.Header,
+  FindUnit.Utils;
 
 const
   SETTINGS_SECTION = 'SETTINGS';
@@ -96,6 +103,7 @@ const
   CONF_ORGANIZE_USES = 'ORGANIZE_USES';
   CONF_BREAK_USES_LINE_AT_POSITION = 'BREAK_USES_LINE_AT_POSITION';
   CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT = 'ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT';
+  CONF_GROUP_NONNAMESPACE_UNITS = 'GROUP_NONNAMESPACE_UNITS';
 
 { TSettings }
 
@@ -111,13 +119,19 @@ begin
     Result.BreakLine := Settings.BreakLine;
     Result.SortUsesAfterAdding := Settings.SortUsesAfterAdding;
     Result.UseDefaultSearchMatch := Settings.UseDefaultSearchMatch;
-    Result.BlankLineBtwNameScapes := Settings.BlankLineBtwNameScapes;
+    Result.BlankLineBtwNamespaces := Settings.BlankLineBtwNameScapes;
     Result.OrganizeUses := Settings.OrganizeUses;
     Result.BreakUsesLineAt := Settings.BreakUsesLineAtPosition;
     Result.OrganizeUsesAfterAddingNewUses := Settings.OrganizeUsesAfterAddingNewUsesUnit;
+    Result.GroupNonNamespaceUnits := Settings.GroupNonNamespaceUnits;
   finally
     Settings.Free;
   end;
+end;
+
+function TSettings.GetGroupNonNamespaceUnits: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_GROUP_NONNAMESPACE_UNITS, True);
 end;
 
 function TSettings.GetOrganizeUses: Boolean;
@@ -265,6 +279,12 @@ end;
 procedure TSettings.SetBreakUsesLineAtPosition(const Value: Cardinal);
 begin
   FIni.WriteInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetGroupNonNamespaceUnits(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_GROUP_NONNAMESPACE_UNITS, Value);
   FIni.UpdateFile;
 end;
 

@@ -53,15 +53,15 @@ object frmSettings: TfrmSettings
           OnClick = lblLinkClick
         end
         object grpSearchAlgorithm: TRadioGroup
-          Left = 15
-          Top = 286
+          Left = 335
+          Top = 20
           Width = 297
           Height = 81
           Caption = 'Search match algorithm '
           Items.Strings = (
             'Default'
             'Levenshtein')
-          TabOrder = 2
+          TabOrder = 1
         end
         object grpShotCuts: TGroupBox
           Left = 15
@@ -93,12 +93,12 @@ object frmSettings: TfrmSettings
           Left = 15
           Top = 108
           Width = 297
-          Height = 165
+          Height = 197
           Caption = 'Uses Organization'
-          TabOrder = 1
+          TabOrder = 2
           object lblBreakLineAt: TLabel
             Left = 15
-            Top = 136
+            Top = 160
             Width = 124
             Height = 13
             Caption = 'Break uses line at position'
@@ -131,7 +131,7 @@ object frmSettings: TfrmSettings
           end
           object chkBlankLineBtwNamespace: TCheckBox
             Left = 32
-            Top = 110
+            Top = 108
             Width = 193
             Height = 17
             Hint = 
@@ -152,13 +152,26 @@ object frmSettings: TfrmSettings
           end
           object medtBreakUsesLineAtPosition: TMaskEdit
             Left = 147
-            Top = 133
+            Top = 157
             Width = 34
             Height = 21
             EditMask = '!9!9!9;1; '
             MaxLength = 3
-            TabOrder = 5
+            TabOrder = 6
             Text = '120'
+          end
+          object chbGroupNonNameSpaceUnits: TCheckBox
+            Left = 32
+            Top = 130
+            Width = 193
+            Height = 17
+            Hint = 
+              'Sort and Break line should be checked in order to use this optio' +
+              'n'
+            Caption = 'Group non-namepace units'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 5
           end
         end
       end

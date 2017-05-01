@@ -3,7 +3,12 @@ unit FindUnit.Utils;
 interface
 
 uses
-  IOUtils, Classes, SimpleParser.Lexer.Types, TlHelp32, Windows;
+  Classes,
+  IOUtils,
+  TlHelp32,
+  Windows,
+
+  SimpleParser.Lexer.Types;
 
 type
   TIncludeHandler = class(TInterfacedObject, IIncludeHandler)
@@ -42,7 +47,9 @@ var
 implementation
 
 uses
-  Types, SysUtils, Log4PAscal;
+  Log4PAscal,
+  SysUtils,
+  Types;
 
 function TextExists(SubStr, Str: string; CaseSensitive: Boolean): Boolean;
 begin

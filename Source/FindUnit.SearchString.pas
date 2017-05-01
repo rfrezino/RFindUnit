@@ -3,7 +3,12 @@ unit FindUnit.SearchString;
 interface
 
 uses
-  Classes, FindUnit.PasParser, Generics.Collections, FindUnit.Header;
+  Classes,
+
+  FindUnit.Header,
+  FindUnit.PasParser,
+
+  Generics.Collections;
 
 type
   TSearchString = class(TObject)

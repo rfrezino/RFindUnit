@@ -3,8 +3,25 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  Classes, DelphiAST.Classes, DesignEditors, FindUnit.FormMessage, FindUnit.Header, FindUnit.OtaUtils, FindUnit.Settings,
-  FindUnit.Utils, Graphics, Log4Pascal, RegExpr, SimpleParser.Lexer.Types, SysUtils, ToolsApi, Vcl.Dialogs;
+  Classes,
+  DesignEditors,
+  Graphics,
+  Log4Pascal,
+  RegExpr,
+  SysUtils,
+  ToolsApi,
+
+  DelphiAST.Classes,
+
+  FindUnit.FormMessage,
+  FindUnit.Header,
+  FindUnit.OtaUtils,
+  FindUnit.Settings,
+  FindUnit.Utils,
+
+  SimpleParser.Lexer.Types,
+
+  Vcl.Dialogs;
 
 type
   TCharPosition = record
@@ -384,6 +401,27 @@ begin
   WriteInformationAtPostion(Line, PosChar, UseUnit, Writer);
 end;
 
+function CompareNamespaces(List: TStringList; Index1, Index2: Integer): Integer;
+var
+  ItemOne: string;
+  ItemTwo: string;
+  ItemOneHasDot: Boolean;
+  ItemTwoHasDot: Boolean;
+begin
+  ItemOne := List[Index1];
+  ItemTwo := List[Index2];
+
+  ItemOneHasDot := Pos('.', ItemOne) > 0;
+  ItemTwoHasDot := Pos('.', ItemTwo) > 0;
+
+  if (ItemOneHasDot = ItemTwoHasDot) then
+    Result := CompareStr(ItemOne, ItemTwo)
+  else if ItemOneHasDot then
+    Result := 1
+  else
+    Result := -1;
+end;
+
 function TFileRegion.AddUsesInternal(UseUnit: TStringList; var Writer: IOTAEditWriter): Boolean;
 var
   Line: Integer;
@@ -393,15 +431,21 @@ var
   UseCur: string;
   CurDomain: string;
   LastDomain: string;
-  MustBreak: Boolean;
+  MustAddBlankLine: Boolean;
   CharCount: Integer;
   UseCurLength: Integer;
   FinalUseCur: string;
+  HasNamespace: Boolean;
 begin
   Result := True;
 
   if GlobalSettings.SortUsesAfterAdding then
-    UseUnit.Sort;
+  begin
+    if GlobalSettings.GroupNonNamespaceUnits then
+      UseUnit.CustomSort(CompareNamespaces)
+    else
+      UseUnit.Sort;
+  end;
 
   LastDomain := '';
   NewUses := '';
@@ -424,21 +468,25 @@ begin
     else if GlobalSettings.BreakLine then
     begin
 
-      if GlobalSettings.BlankLineBtwNameScapes then
+      if GlobalSettings.BlankLineBtwNamespaces then
       begin
+        HasNamespace := Pos('.', UseCur) > 0;
         CurDomain := UseCur;
         CurDomain := Fetch(CurDomain, '.', False);
-        if not LastDomain.IsEmpty  then
-          MustBreak := not CurDomain.Equals(LastDomain);
+
+        if GlobalSettings.GroupNonNamespaceUnits and (not HasNamespace) then
+          MustAddBlankLine := False
+        else if not LastDomain.IsEmpty  then
+          MustAddBlankLine := not CurDomain.Equals(LastDomain);
         LastDomain := CurDomain;
       end;
 
-      if MustBreak then
+      if MustAddBlankLine then
         NewUses := NewUses + ',' + #13#10 + #13#10 + '  ' + UseCur
       else
         NewUses := NewUses + ',' + #13#10 + '  ' + UseCur;
 
-      MustBreak := False;
+      MustAddBlankLine := False;
     end
     else
     begin

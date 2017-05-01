@@ -3,7 +3,10 @@ unit FindUnit.ResultsImportanceCalculator;
 interface
 
 uses
-	System.Classes, System.Math, FindUnit.Settings;
+  FindUnit.Settings,
+
+  System.Classes,
+  System.Math;
 
 type
   TResultImportanceCalculator = class(TObject)
@@ -29,7 +32,10 @@ type
 implementation
 
 uses
-	FindUnit.Utils, System.StrUtils, System.SysUtils;
+  FindUnit.Utils,
+
+  System.StrUtils,
+  System.SysUtils;
 
 { TResultImportanceCalculator }
 
