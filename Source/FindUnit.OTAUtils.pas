@@ -27,7 +27,7 @@ procedure GetLibraryPath(Paths: TStrings; PlatformName: string);
 
 function GetAllFilesFromProjectGroup: TStringList;
 
-function GetWordAtCursor: TStringPosition;
+function GetWordAtCursor(DeltaCharPosition: Integer = 0): TStringPosition;
 
 var
   PathUserDir: string;
@@ -165,7 +165,7 @@ begin
   end;
 end;
 
-function GetWordAtCursor: TStringPosition;
+function GetWordAtCursor(DeltaCharPosition: Integer): TStringPosition;
 const
   strIdentChars = ['a' .. 'z', 'A' .. 'Z', '_', '0' .. '9'];
 var
@@ -176,34 +176,34 @@ var
   ContentTxt: string;
 begin
   try
-  ContentTxt := '';
-  SourceEditor := ActiveSourceEditor;
-  EditPos := SourceEditor.EditViews[0].CursorPos;
-  Content := TStringList.Create;
-  try
-    Content.Text := EditorAsString(SourceEditor);
-    ContentTxt := Content[Pred(EditPos.Line)];
-    iPosition := EditPos.Col;
-    if (iPosition > 0) And (Length(ContentTxt) >= iPosition) and CharInSet(ContentTxt[iPosition], strIdentChars) then
-    begin
-      while (iPosition > 1) And (CharInSet(ContentTxt[Pred(iPosition)], strIdentChars)) do
-        Dec(iPosition);
-      Delete(ContentTxt, 1, Pred(iPosition));
-      iPosition := 1;
-      while CharInSet(ContentTxt[iPosition], strIdentChars) do
-        Inc(iPosition);
-      Delete(ContentTxt, iPosition, Length(ContentTxt) - iPosition + 1);
-      if CharInSet(ContentTxt[1], ['0' .. '9']) then
+    ContentTxt := '';
+    SourceEditor := ActiveSourceEditor;
+    EditPos := SourceEditor.EditViews[0].CursorPos;
+    Content := TStringList.Create;
+    try
+      Content.Text := EditorAsString(SourceEditor);
+      ContentTxt := Content[Pred(EditPos.Line)];
+      iPosition := EditPos.Col + DeltaCharPosition;
+      if (iPosition > 0) And (Length(ContentTxt) >= iPosition) and CharInSet(ContentTxt[iPosition], strIdentChars) then
+      begin
+        while (iPosition > 1) And (CharInSet(ContentTxt[Pred(iPosition)], strIdentChars)) do
+          Dec(iPosition);
+        Delete(ContentTxt, 1, Pred(iPosition));
+        iPosition := 1;
+        while CharInSet(ContentTxt[iPosition], strIdentChars) do
+          Inc(iPosition);
+        Delete(ContentTxt, iPosition, Length(ContentTxt) - iPosition + 1);
+        if CharInSet(ContentTxt[1], ['0' .. '9']) then
+          ContentTxt := '';
+      end
+      else
         ContentTxt := '';
-    end
-    else
-      ContentTxt := '';
 
-    Result.Value := ContentTxt;
-    Result.Line := EditPos.Line;
-  finally
-    Content.Free;
-  end;
+      Result.Value := ContentTxt;
+      Result.Line := EditPos.Line;
+    finally
+      Content.Free;
+    end;
   except
     on E: exception do
     begin
@@ -211,6 +211,9 @@ begin
       Result.Line := -1;
     end;
   end;
+
+  if (DeltaCharPosition = 0) and (Result.Value = '') then
+    Result := GetWordAtCursor(-1);
 end;
 
 function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
