@@ -33,6 +33,7 @@ type
     FFunctions: TStringList;
     FConstants: TStringList;
     FVariables: TStringList;
+    FFilePath: string;
 
     procedure PrepareList(List: TStringList; const Description: string);
   public
@@ -47,6 +48,7 @@ type
     property Functions: TStringList read FFunctions;
     property Constants: TStringList read FConstants;
     property Variables: TStringList read FVariables;
+    property FilePath: string read FFilePath write FFilePath;
 
     function GetListFromType(ListType: TListType): TStringList;
   end;
@@ -71,6 +73,7 @@ type
     function HaveInterfaceNode: Boolean;
   public
     constructor Create(const FilePath: string);
+    destructor Destroy; override;
 
     function Process: TPasFile;
 
@@ -154,6 +157,12 @@ begin
   FFilePath := FilePath;
 end;
 
+destructor TPasFileParser.Destroy;
+begin
+  FUnitNode.Free;
+  inherited;
+end;
+
 procedure TPasFileParser.GetClasses;
 var
   SectionTypesNode: TSyntaxNode;
@@ -163,6 +172,7 @@ var
   ItemClassName: string;
   EnumType: TSyntaxNode;
   IdenType: TSyntaxNode;
+  AttrName: string;
 begin
   SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
 
@@ -172,10 +182,12 @@ begin
     while TypeNode <> nil do
     begin
       try
-        Description := ' - Class';
+        Description := '.* - Class';
         ItemClassName := TypeNode.GetAttribute(anName);
 
         TypeDesc := TypeNode.FindNode(ntType);
+        EnumType := nil;
+
         if TypeDesc <> nil then
         begin
           Description := TypeDesc.GetAttribute(anType);
@@ -185,15 +197,18 @@ begin
 
           Description[1] := UpCase(Description[1]);
           Description := ' - ' + Description;
-        end;
-        FResultItem.FClasses.Add(ItemClassName + Description);
 
-        if TypeDesc.GetAttribute(anType) = 'set' then
-          EnumType := TypeDesc.FindNode(ntType)
-        else if TypeDesc.GetAttribute(anName) = 'enum' then
-          EnumType := TypeDesc
-        else
-          EnumType := nil;
+          FResultItem.FClasses.Add(ItemClassName + Description);
+
+          AttrName := TypeDesc.GetAttribute(anType);
+
+          if AttrName = 'set' then
+            EnumType := TypeDesc.FindNode(ntType)
+          else if AttrName = 'enum' then
+            EnumType := TypeDesc
+          else
+            EnumType := nil;
+        end;
 
         if EnumType <> nil then
         begin
@@ -209,8 +224,12 @@ begin
 
       except
         on e: exception do
+        begin
           Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
-
+          {$IFDEF RAISEMAD}
+          raise;
+          {$ENDIF}
+        end;
       end;
       SectionTypesNode.DeleteChild(TypeNode);
       TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
@@ -248,7 +267,10 @@ end;
 
 procedure TPasFileParser.GetFileLastModification;
 begin
-  FResultItem.FLastModification := IOUtils.TFile.GetLastWriteTime(FFilePath);
+  try
+    FResultItem.FLastModification := IOUtils.TFile.GetLastWriteTime(FFilePath);
+  except
+  end;
 end;
 
 procedure TPasFileParser.GetMethods;
@@ -270,7 +292,8 @@ end;
 
 procedure TPasFileParser.GetUnitName;
 begin
-  FResultItem.OriginUnitName := FUnitNode.GetAttribute(anName);
+  if FUnitNode <> nil then
+    FResultItem.OriginUnitName := FUnitNode.GetAttribute(anName);
 end;
 
 procedure TPasFileParser.GetVariables;
@@ -299,11 +322,16 @@ end;
 
 function TPasFileParser.HaveInterfaceNode: Boolean;
 begin
+  if FUnitNode = nil then
+    Exit(False);
+
   FInterfaceNode := FUnitNode.FindNode(ntInterface);
   Result := FInterfaceNode <> nil;
 end;
 
 function TPasFileParser.Process: TPasFile;
+var
+  Step: string;
 begin
   FUnitNode := nil;
   Result := nil;
@@ -331,25 +359,30 @@ begin
 
     FResultItem := TPasFile.Create;
     Result := FResultItem;
-    try
-      GetUnitName;
-      GetFileLastModification;
 
-      if not HaveInterfaceNode then
-        Exit;
+    Step := 'GetUnitName';
+    GetUnitName;
 
-      GetClasses;
-      GetMethods;
-      GetVariables;
-      GetConstants;
-    finally
-      FUnitNode.Free;
-    end;
+    Step := 'GetFileLastModification';
+    GetFileLastModification;
+
+    if not HaveInterfaceNode then
+      Exit;
+
+    Step := 'GetClasses';
+    GetClasses;
+    Step := 'GetMethods';
+    GetMethods;
+    Step := 'GetVariables';
+    GetVariables;
+    Step := 'GetConstants';
+    GetConstants;
   except
     on E: Exception do
     begin
-      Logger.Error('TFindUnitParser.Process: Trying to parse %s. Msg: %s', [FFilePath, E.Message]);
+      Logger.Error('TFindUnitParser.Process: Trying to parse %s. Msg: %s | Step: %s', [FFilePath, E.Message, Step]);
       Result := nil;
+      {$IFDEF RAISEMAD} raise; {$ENDIF}
     end;
   end;
 end;

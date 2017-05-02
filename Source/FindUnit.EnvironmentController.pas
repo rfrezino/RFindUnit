@@ -33,11 +33,11 @@ type
     FProjectPathWorker: TParserWorker;
     FLibraryPathWorker: TParserWorker;
 
-    procedure CreateLibraryPathUnits;
-    procedure OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
+    procedure CreateLibraryPathUnits(OldItems: TDictionary<string, TPasFile>);
+    procedure OnFinishedLibraryPathScan(FindUnits: TDictionary<string, TPasFile>);
 
-    procedure CreateProjectPathUnits;
-    procedure OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
+    procedure CreateProjectPathUnits(OldFiles: TDictionary<string, TPasFile>);
+    procedure OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
 
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
     //Dummy
@@ -78,8 +78,7 @@ implementation
 
 uses
   FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.OTAUtils,
-  FindUnit.StringPositionList, FindUnit.Utils
-  {$IFDEF DELPHIX_SEATTLE_UP}, System.Threading {$ENDIF};
+  FindUnit.StringPositionList, FindUnit.Utils, System.Threading;
 
 { TEnvUpdateControl }
 
@@ -90,9 +89,10 @@ begin
   LoadLibraryPath;
 end;
 
-procedure TEnvironmentController.CreateLibraryPathUnits;
+procedure TEnvironmentController.CreateLibraryPathUnits(OldItems: TDictionary<string, TPasFile>);
 var
-  Paths, Files: TStringList;
+  Paths: TStringList;
+  Files: TDictionary<string, TFileInfo>;
   EnvironmentOptions: IOTAEnvironmentOptions;
 begin
   if FLibraryPath <> nil then
@@ -102,7 +102,10 @@ begin
     FreeAndNil(FLibraryPathWorker);
   except
     on e: exception do
+    begin
       Logger.Error('TEnvironmentController.CreateLibraryPathUnits: ' + e.Message);
+      {$IFDEF RAISEMAD} raise; {$ENDIF}
+    end;
   end;
 
   while (BorlandIDEServices as IOTAServices) = nil do
@@ -123,17 +126,21 @@ begin
     Paths.Add('$(BDS)\source\rtl\win');
 
     FLibraryPath := TUnitsController.Create;
-    FLibraryPathWorker := TParserWorker.Create(Paths, Files);
+    FLibraryPathWorker := TParserWorker.Create(Paths, Files, OldItems);
     FLibraryPathWorker.Start(OnFinishedLibraryPathScan);
   except
     on E: exception do
+    begin
       Logger.Error('TEnvironmentController.CreateLibraryPathUnits: %s', [e.Message]);
+      {$IFDEF RAISEMAD} raise; {$ENDIF}
+    end;
   end;
 end;
 
-procedure TEnvironmentController.CreateProjectPathUnits;
+procedure TEnvironmentController.CreateProjectPathUnits(OldFiles: TDictionary<string, TPasFile>);
 var
-  Files, Paths: TStringList;
+  Files: TDictionary<string, TFileInfo>;
+  Paths: TStringList;
 begin
   if FProjectUnits <> nil then
     Exit;
@@ -142,7 +149,10 @@ begin
     FreeAndNil(FProjectPathWorker);
   except
     on E: exception do
+    begin
       Logger.Debug('TEnvironmentController.CreateProjectPathUnits: Error removing object');
+      {$IFDEF RAISEMAD} raise; {$ENDIF}
+    end;
   end;
 
   while GetCurrentProject = nil do
@@ -155,7 +165,7 @@ begin
   Paths := nil;
 
   FProjectUnits := TUnitsController.Create;
-  FProjectPathWorker := TParserWorker.Create(Paths, Files);
+  FProjectPathWorker := TParserWorker.Create(Paths, Files, OldFiles);
   FProjectPathWorker.Start(OnFinishedProjectPathScan);
 end;
 
@@ -267,6 +277,7 @@ end;
 procedure TEnvironmentController.LoadLibraryPath;
 var
   LocalThread: TThread;
+  OldLibraryPath: TDictionary<string, TPasFile>;
 begin
   Logger.Debug('TEnvironmentController.LoadLibraryPath');
   if (FLibraryPath <> nil) and (not FLibraryPath.Ready) then
@@ -276,11 +287,18 @@ begin
   end;
   Logger.Debug('TEnvironmentController.LoadLibraryPath: yes');
 
-  FreeAndNil(FLibraryPath);
+  OldLibraryPath := nil;
+  if FLibraryPath <> nil then
+  begin
+    OldLibraryPath := FLibraryPath.Units;
+    FLibraryPath.Units := nil;
+    FreeAndNil(FLibraryPath);
+  end;
+
   LocalThread := TThread.CreateAnonymousThread(
     procedure
     begin
-      CreateLibraryPathUnits;
+      CreateLibraryPathUnits(OldLibraryPath);
     end
     );
   LocalThread.FreeOnTerminate := True;
@@ -290,6 +308,7 @@ end;
 procedure TEnvironmentController.LoadProjectPath;
 var
   LocalThread: TThread;
+  OldFiles: TDictionary<string, TPasFile>;
 begin
   Logger.Debug('TEnvironmentController.LoadProjectPath');
   if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
@@ -299,25 +318,32 @@ begin
   end;
 
   Logger.Debug('TEnvironmentController.LoadProjectPath: yes');
-  FreeAndNil(FProjectUnits);
+
+  OldFiles := nil;
+  if FProjectUnits <> nil then
+  begin
+    OldFiles := FProjectUnits.Units;
+    FProjectUnits.Units := nil;
+    FreeAndNil(FProjectUnits);
+  end;
 
   LocalThread := TThread.CreateAnonymousThread(
     procedure
     begin
-      CreateProjectPathUnits;
+      CreateProjectPathUnits(OldFiles);
     end
     );
   LocalThread.FreeOnTerminate := True;
   LocalThread.Start;
 end;
 
-procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TObjectList<TPasFile>);
+procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TDictionary<string, TPasFile>);
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
 end;
 
-procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TObjectList<TPasFile>);
+procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
 begin
   FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
@@ -358,7 +384,8 @@ end;
 
 procedure TEnvironmentController.CallProcessDcuFiles;
 var
-  Paths, Files: TStringList;
+  Paths: TStringList;
+  Files: TDictionary<string, TFileInfo>;
   EnvironmentOptions: IOTAEnvironmentOptions;
   DcuProcess: TParserWorker;
   Items: TObject;
@@ -374,7 +401,7 @@ begin
   Paths.DelimitedText := EnvironmentOptions.Values['LibraryPath'] + ';' + EnvironmentOptions.Values['BrowsingPath'];
 
   Files := nil;
-  DcuProcess := TParserWorker.Create(Paths, Files);
+  DcuProcess := TParserWorker.Create(Paths, Files, nil);
   DcuProcess.ParseDcuFile := True;
   Items := DcuProcess.Start;
   DcuProcess.Free;

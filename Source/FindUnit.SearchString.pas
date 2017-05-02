@@ -13,14 +13,14 @@ uses
 type
   TSearchString = class(TObject)
   protected
-    FCandidates: TObjectList<TPasFile>;
+    FCandidates: TDictionary<string, TPasFile>;
 
     function FoundAllEntries(Entries: TStringList; const Text: string): Boolean;
 
     function GetMatcherOnItemListType(Item: TPasFile; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
     function GetMatchesOnItem(Item: TPasFile; SearchString: TStringList; var ItensFound: integer): string;
   public
-    constructor Create(Candidates: TObjectList<TPasFile>);
+    constructor Create(Candidates: TDictionary<string, TPasFile>);
     destructor Destroy; override;
 
     function GetMatch(const SearchString: string): TStringList;
@@ -33,7 +33,7 @@ uses
 
 { TSearchString }
 
-constructor TSearchString.Create(Candidates: TObjectList<TPasFile>);
+constructor TSearchString.Create(Candidates: TDictionary<string, TPasFile>);
 begin
   FCandidates := Candidates;
 end;
@@ -73,10 +73,8 @@ begin
     SearchList.Delimiter := ' ';
     SearchList.DelimitedText := UpperCase(SearchString);
 
-    for I := 0 to FCandidates.Count - 1 do
+    for Item in FCandidates.Values do
     begin
-      Item := FCandidates[I];
-
       if FoundAllEntries(SearchList, UpperCase(Item.OriginUnitName) + '.') then
       begin
         Result.Text := Result.Text + Item.OriginUnitName + '.* - Unit';

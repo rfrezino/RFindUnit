@@ -16,7 +16,6 @@ type
   TDcuDecompiler = class(TObject)
   private
     FDir: string;
-    FFiles: TStringList;
     FExecutablePath: string;
 
     FGeneratedFiles: TStringList;
@@ -195,7 +194,10 @@ begin
       ShellExecute(0, 'open', PChar(FExecutablePath), PChar(InputParams), nil, SW_HIDE);
     except
       on e: exception do
+      begin
         Logger.Error('TDcuDecompiler.ProcessFile[%s]: %s', [AFiles[i], E.Message]);
+        {$IFDEF RAISEMAD} raise; {$ENDIF}
+      end;
     end;
   end;
 

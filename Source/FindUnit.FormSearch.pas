@@ -227,8 +227,13 @@ begin
     FEnvControl.LoadLibraryPath;
     CheckLibraryStatus;
   except
-  on E: exception do
-    MessageDlg('btnRefreshLibraryPathClick Error: ' + e.Message, mtError, [mbOK], 0);
+    on E: exception do
+    begin
+      MessageDlg('btnRefreshLibraryPathClick Error: ' + e.Message, mtError, [mbOK], 0);
+      {$IFDEF RAISEMAD}
+      raise;
+      {$ENDIF}
+    end;
   end;
 end;
 
@@ -239,7 +244,12 @@ begin
     CheckLibraryStatus;
   except
     on E: exception do
+    begin
       MessageDlg('btnRefreshProjectClick Error: ' + e.Message, mtError, [mbOK], 0);
+      {$IFDEF RAISEMAD}
+      raise;
+      {$ENDIF}
+    end;
   end;
 end;
 

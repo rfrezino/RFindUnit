@@ -29,6 +29,7 @@ type
     CompilerInterceptor: TCompilerInterceptor;
 
   procedure Register;
+  procedure CompilerInterceptorUnRegister;
 
 implementation
 
@@ -90,7 +91,7 @@ begin
   FEnvControl := Env;
 end;
 
-procedure UnRegister;
+procedure CompilerInterceptorUnRegister;
 var
   Services: IOTAServices;
 begin
@@ -101,6 +102,6 @@ end;
 initialization
 
 finalization
-  UnRegister;
+  CompilerInterceptorUnRegister;
 
 end.
