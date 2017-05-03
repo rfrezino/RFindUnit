@@ -78,6 +78,7 @@ end;
 destructor TParserWorker.Destroy;
 var
   Step: string;
+  Files: TObject;
 begin
   try
     Step := 'FPasFiles';
@@ -85,6 +86,10 @@ begin
     Step := 'FDirectoriesPath';
     FDirectoriesPath.Free;
     Step := 'FOldItems';
+
+    for Files in FCacheFiles.Values do
+      Files.Free;
+
     FCacheFiles.Free;
     Step := 'FDcuFiles';
   //  FIncluder.Free; //Weak reference
