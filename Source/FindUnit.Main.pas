@@ -70,7 +70,7 @@ procedure Register;
 var
   OtaKey: IOTAKeyboardBinding;
 begin
-  Logger := TLogger.Create(FindUnitDirLogger + Format('pid_%d_log_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
+  Logger := TLogger.Create(FindUnitDirLogger + Format('rfindunitlog_%d_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
 
   VFindUnit := TRFindUnitMain.Create;
   OtaKey := VFindUnit as IOTAKeyboardBinding;

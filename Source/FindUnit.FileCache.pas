@@ -6,27 +6,30 @@ uses
   FindUnit.PasParser,
 
   System.Classes,
-  System.Generics.Collections;
+  System.Generics.Collections, Winapi.Windows, System.SyncObjs;
 
 type
   TUnitsController = class(TObject)
   private
     FSearchHistory: TDictionary<string,string>;
 
-    FUnits: TObjectList<TPasFile>;
+    FUnits: TDictionary<string, TPasFile>;
     FReady: Boolean;
+    FRc: TCriticalSection;
 
     function SearchOnHistory(const SearchString: string): TStringList;
     procedure AddToHistory(const SearchString, Content: string);
 
-    procedure SetUnits(const Value: TObjectList<TPasFile>);
+    procedure SetUnits(const Value: TDictionary<string, TPasFile>);
   public
     constructor Create;
     destructor Destroy; override;
 
     function GetFindInfo(const SearchString: string): TStringList;
+    function GetPasFile(FilePath: string): TPasFile;
+    function ExtractPasFile(FilePath: string): TPasFile;
 
-    property Units: TObjectList<TPasFile> read FUnits write SetUnits;
+    property Units: TDictionary<string, TPasFile> read FUnits write SetUnits;
     property Ready: Boolean read FReady write FReady;
   end;
 
@@ -48,14 +51,29 @@ end;
 
 constructor TUnitsController.Create;
 begin
+  FRc := TCriticalSection.Create;
   inherited;
 end;
 
 destructor TUnitsController.Destroy;
 begin
+  FRc.Free;
   FSearchHistory.Free;
   FUnits.Free;
   inherited;
+end;
+
+function TUnitsController.ExtractPasFile(FilePath: string): TPasFile;
+var
+  Item: TPair<string, TPasFile>;
+begin
+  FRc.Acquire;
+  try
+    Item := FUnits.ExtractPair(FilePath);
+    Result := Item.Value;
+  finally
+    FRc.Release;
+  end;
 end;
 
 function TUnitsController.GetFindInfo(const SearchString: string): TStringList;
@@ -72,6 +90,16 @@ begin
     AddToHistory(SearchString, Result.Text);
   finally
     Search.Free;
+  end;
+end;
+
+function TUnitsController.GetPasFile(FilePath: string): TPasFile;
+begin
+  FRc.Acquire;
+  try
+    FUnits.TryGetValue(FilePath, Result);
+  finally
+    FRc.Release;
   end;
 end;
 
@@ -92,10 +120,11 @@ begin
   end;
 end;
 
-procedure TUnitsController.SetUnits(const Value: TObjectList<TPasFile>);
+procedure TUnitsController.SetUnits(const Value: TDictionary<string, TPasFile>);
 begin
   FUnits := Value;
   FSearchHistory.Free;
+
   FSearchHistory := TDictionary<string,string>.Create;
 end;
 

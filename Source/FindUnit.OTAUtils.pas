@@ -5,8 +5,11 @@ interface
 uses
   Classes,
   ToolsAPI,
+  IOUtils,
 
-  FindUnit.Header;
+  FindUnit.Header,
+  FindUnit.Utils,
+  System.Generics.Collections;
 
 function GetVolumeLabel(const DriveChar: string): string;
 function BrowseURL(const URL: string): boolean;
@@ -25,7 +28,7 @@ function GetSelectedTextFromContext(Context: IOTAKeyContext): TStringPosition;
 function GetErrorListFromActiveModule: TOTAErrors;
 procedure GetLibraryPath(Paths: TStrings; PlatformName: string);
 
-function GetAllFilesFromProjectGroup: TStringList;
+function GetAllFilesFromProjectGroup: TDictionary<string, TFileInfo>;
 
 function GetWordAtCursor(DeltaCharPosition: Integer = 0): TStringPosition;
 
@@ -41,9 +44,7 @@ uses
   ShellAPI,
   ShlObj,
   SysUtils,
-  Windows,
-
-  FindUnit.Utils;
+  Windows;
 
 function SourceEditor(Module: IOTAMOdule): IOTASourceEditor;
 var
@@ -81,7 +82,7 @@ begin
   Result := ModuleErrors.GetErrors(ActiveSourceEditor.FileName);
 end;
 
-function GetAllFilesFromProjectGroup: TStringList;
+function GetAllFilesFromProjectGroup: TDictionary<string, TFileInfo>;
 var
   ModServices: IOTAModuleServices;
   Module: IOTAMOdule;
@@ -91,10 +92,9 @@ var
   iProj: Integer;
   CurProject: IOTAProject;
   iFile: Integer;
+  FileInfo: TFileInfo;
 begin
-  Result := TStringList.Create;
-  Result.Sorted := True;
-  Result.Duplicates := dupIgnore;
+  Result := TDictionary<string, TFileInfo>.Create;
 
   ModServices := BorlandIDEServices as IOTAModuleServices;
   for iMod := 0 to ModServices.ModuleCount - 1 do
@@ -110,7 +110,13 @@ begin
           FileDesc := CurProject.GetModule(iFile).FileName;
           if FileDesc = '' then
             Continue;
-          Result.Add(FileDesc);
+
+          FileInfo.Path := FileDesc;
+          if FileExists(FileDesc) then
+            FileInfo.LastAccess := IOUtils.TFile.GetLastWriteTime(FileDesc)
+          else
+            FileInfo.LastAccess := 0;
+          Result.AddOrSetValue(FileInfo.Path, FileInfo);
         end;
       end;
     end;

@@ -169,7 +169,10 @@ begin
     end;
   except
     on e: exception do
+    begin
       Logger.Error('TfrmMessage.PrintOnCanvas: %s', [E.Message]);
+      {$IFDEF RAISEMAD} raise; {$ENDIF}
+    end;
   end;
 end;
 

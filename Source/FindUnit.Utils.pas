@@ -7,10 +7,14 @@ uses
   IOUtils,
   TlHelp32,
   Windows,
-
-  SimpleParser.Lexer.Types;
+  SimpleParser.Lexer.Types, System.Generics.Collections;
 
 type
+  TFileInfo = record
+    Path: string;
+    LastAccess: TDateTime;
+  end;
+
   TIncludeHandler = class(TInterfacedObject, IIncludeHandler)
   private
     FPath: string;
@@ -27,9 +31,9 @@ type
     class function ConvertPathsToFullPath(Paths: string): string;
   end;
 
-function GetAllFilesFromPath(const Path, Filter: string): TStringList;
-function GetAllPasFilesFromPath(const Path: string): TStringList;
-function GetAllDcuFilesFromPath(const Path: string): TStringList;
+function GetAllFilesFromPath(const Path, Filter: string): TDictionary<string, TFileInfo>;
+function GetAllPasFilesFromPath(const Path: string): TDictionary<string, TFileInfo>;
+function GetAllDcuFilesFromPath(const Path: string): TDictionary<string, TFileInfo>;
 
 function Fetch(var AInput: string; const ADelim: string = ''; const ADelete: Boolean = True;
   const ACaseSensitive: Boolean = False): string; inline;
@@ -171,24 +175,33 @@ begin
   end;
 end;
 
-function GetAllFilesFromPath(const Path, Filter: string): TStringList;
+function GetAllFilesFromPath(const Path, Filter: string): TDictionary<string, TFileInfo>;
 var
   Files: TStringDynArray;
   FilePath: string;
+  FileInfo: TFileInfo;
 begin
   Files := IOUtils.TDirectory.GetFiles(Path, Filter, TSearchOption.soTopDirectoryOnly);
 
-  Result := TStringList.Create;
+  Result := TDictionary<string, TFileInfo>.Create;
   for FilePath in Files do
-    Result.Add(FilePath);
+  begin
+    FileInfo.Path := Trim(FilePath);
+    if FileExists(FilePath) then
+      FileInfo.LastAccess := IOUtils.TFile.GetLastWriteTime(FilePath)
+    else
+      FileInfo.LastAccess := 0;
+
+    Result.Add(FileInfo.Path, FileInfo);
+  end;
 end;
 
-function GetAllDcuFilesFromPath(const Path: string): TStringList;
+function GetAllDcuFilesFromPath(const Path: string): TDictionary<string, TFileInfo>;
 begin
   Result := GetAllFilesFromPath(Path, '*.dcu');
 end;
 
-function GetAllPasFilesFromPath(const Path: string): TStringList;
+function GetAllPasFilesFromPath(const Path: string): TDictionary<string, TFileInfo>;
 begin
   Result := GetAllFilesFromPath(Path, '*.pas');
 end;

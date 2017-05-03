@@ -62,7 +62,6 @@ object frmFindUnit: TfrmFindUnit
       Width = 54
       Height = 22
       Caption = 'Re&fresh'
-      Visible = False
       OnClick = btnRefreshLibraryPathClick
     end
     object btnProcessDCUs: TSpeedButton
@@ -136,8 +135,8 @@ object frmFindUnit: TfrmFindUnit
       object lblMessage: TLabel
         Left = 1
         Top = 1
-        Width = 541
-        Height = 26
+        Width = 574
+        Height = 45
         Align = alClient
         Caption = 
           '  Remember that you can create incremental searches like: "strin' +
