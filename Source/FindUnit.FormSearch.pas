@@ -76,6 +76,8 @@ type
 
     procedure LoadCurrentFile;
     procedure GetSelectedItem(out UnitName, ClassName: string);
+    procedure SaveFormSettings;
+    procedure ConfigureForm;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -110,6 +112,45 @@ const
 var
   CONFIG_SearchOnProjectUnits: Boolean;
   CONFIG_SearchOnLibraryPath: Boolean;
+
+
+procedure TfrmFindUnit.SaveFormSettings;
+var
+  Settings: TSettings;
+begin
+  Settings := TSettings.Create;
+  try
+    Settings.SettingFormWidth := Self.Width;
+    Settings.SettingFormHeight := Self.Height;
+    Settings.SettingFormStartPosX := Self.Left;
+    Settings.SettingFormStartPosY := Self.Top;
+  finally
+    Settings.Free;
+  end;
+end;
+
+procedure TfrmFindUnit.ConfigureForm;
+var
+  Settings: TSettings;
+begin
+  Settings := TSettings.Create;
+  try
+    if Settings.SettingFormWidth > 0 then
+      Self.Width := Settings.SettingFormWidth;
+
+    if Settings.SettingFormHeight > 0 then
+      Self.Height := Settings.SettingFormHeight;
+
+    if Settings.SettingFormStartPosX > 0 then
+      Self.Left := Settings.SettingFormStartPosX;
+
+    if Settings.SettingFormStartPosY > 0 then
+      Self.Top := Settings.SettingFormStartPosY;
+  finally
+    Settings.Free;
+  end;
+end;
+
 
 procedure TfrmFindUnit.ShowTextOnScreen(Text: string);
 var
@@ -386,6 +427,7 @@ end;
 
 procedure TfrmFindUnit.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  SaveFormSettings;
   SaveConfigs;
   Action := caFree;
   frmFindUnit := nil;
@@ -394,6 +436,7 @@ end;
 procedure TfrmFindUnit.FormCreate(Sender: TObject);
 begin
   Caption := 'Find Uses - Version ' + VERSION_STR;
+  ConfigureForm;
 end;
 
 procedure TfrmFindUnit.FormShow(Sender: TObject);
