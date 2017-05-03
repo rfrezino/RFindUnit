@@ -19,6 +19,10 @@ type
     OrganizeUsesAfterAddingNewUses: Boolean;
     BreakUsesLineAt: Cardinal;
     GroupNonNamespaceUnits: Boolean;
+    SettingFormWidth: Cardinal;
+    SettingFormHeight: Cardinal;
+    SettingFormStartPosX: Cardinal;
+    SettingFormStartPosY: Cardinal;
   end;
 
   TSettings = class(TObject)
@@ -60,6 +64,18 @@ type
 
     function GetGroupNonNamespaceUnits: Boolean;
     procedure SetGroupNonNamespaceUnits(const Value: Boolean);
+
+    function GetSettingFormHeight: Cardinal;
+    procedure SetSettingFormHeight(const Value: Cardinal);
+
+    function GetSettingFormStartPosX: Cardinal;
+    procedure SetSettingFormStartPosX(const Value: Cardinal);
+
+    function GetSettingFormStartPosY: Cardinal;
+    procedure SetSettingFormStartPosY(const Value: Cardinal);
+
+    function GetSettingFormWidth: Cardinal;
+    procedure SetSettingFormWidth(const Value: Cardinal);
   public
     constructor Create;
     destructor Destroy; override;
@@ -76,6 +92,10 @@ type
     property BreakUsesLineAtPosition: Cardinal read GetBreakUsesLineAtPosition write SetBreakUsesLineAtPosition;
     property OrganizeUsesAfterAddingNewUsesUnit: Boolean read GetOrganizeUsesAfterAddingNewUsesUnit write SetOrganizeUsesAfterAddingNewUsesUnit;
     property GroupNonNamespaceUnits: Boolean read GetGroupNonNamespaceUnits write SetGroupNonNamespaceUnits;
+    property SettingFormWidth: Cardinal read GetSettingFormWidth write SetSettingFormWidth;
+    property SettingFormHeight: Cardinal read GetSettingFormHeight write SetSettingFormHeight;
+    property SettingFormStartPosX: Cardinal read GetSettingFormStartPosX write SetSettingFormStartPosX;
+    property SettingFormStartPosY: Cardinal read GetSettingFormStartPosY write SetSettingFormStartPosY;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -93,6 +113,10 @@ uses
 
 const
   SETTINGS_SECTION = 'SETTINGS';
+  SEARCHFORM_SETTINGS_SECTION = 'SEARCHFORMSETTINGS';
+
+  AUTO_IMPORT_SECTION = 'MEMORIZEDUNIT';
+
   CONF_AUTOIMPORT_ENABLED = 'AUTOIMPORT_ENABLED';
   CONF_ALWAYSUSEINTERFACESECTION_ENABLED = 'ALWAYSUSEINTERFACESECTION_ENABLED';
   CONF_STORE_CHOICES_ENABLED = 'STORE_CHOICES_ENABLED';
@@ -104,6 +128,10 @@ const
   CONF_BREAK_USES_LINE_AT_POSITION = 'BREAK_USES_LINE_AT_POSITION';
   CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT = 'ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT';
   CONF_GROUP_NONNAMESPACE_UNITS = 'GROUP_NONNAMESPACE_UNITS';
+  CONF_FORM_SETTINGS_WIDTH = 'FORM_SETTINGS_WIDTH';
+  CONF_FORM_SETTINGS_HEIGHT = 'FORM_SETTINGS_HEIGHT';
+  CONF_FORM_SETTINGS_START_X = 'FORM_SETTINGS_START_X';
+  CONF_FORM_SETTINGS_START_Y = 'FORM_SETTINGS_START_Y';
 
 { TSettings }
 
@@ -124,6 +152,10 @@ begin
     Result.BreakUsesLineAt := Settings.BreakUsesLineAtPosition;
     Result.OrganizeUsesAfterAddingNewUses := Settings.OrganizeUsesAfterAddingNewUsesUnit;
     Result.GroupNonNamespaceUnits := Settings.GroupNonNamespaceUnits;
+    Result.SettingFormWidth := Settings.SettingFormWidth;
+    Result.SettingFormHeight := Settings.SettingFormHeight;
+    Result.SettingFormStartPosX := Settings.SettingFormStartPosX;
+    Result.SettingFormStartPosY := Settings.SettingFormStartPosY;
   finally
     Settings.Free;
   end;
@@ -184,6 +216,26 @@ end;
 function TSettings.GetBreakUsesLineAtPosition: Cardinal;
 begin
   Result := FIni.ReadInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, 120);
+end;
+
+function TSettings.GetSettingFormHeight: Cardinal;
+begin
+  Result := FIni.ReadInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_HEIGHT, 0);
+end;
+
+function TSettings.GetSettingFormStartPosX: Cardinal;
+begin
+  Result := FIni.ReadInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_START_X, 0);
+end;
+
+function TSettings.GetSettingFormStartPosY: Cardinal;
+begin
+  Result := FIni.ReadInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_START_Y, 0);
+end;
+
+function TSettings.GetSettingFormWidth: Cardinal;
+begin
+  Result := FIni.ReadInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_WIDTH, 0);
 end;
 
 function TSettings.GetSortUsesAfterAdding: Boolean;
@@ -250,6 +302,30 @@ end;
 procedure TSettings.SetOrganizeUsesAfterAddingNewUsesUnit(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetSettingFormHeight(const Value: Cardinal);
+begin
+  FIni.WriteInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_HEIGHT, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetSettingFormStartPosX(const Value: Cardinal);
+begin
+  FIni.WriteInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_START_X, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetSettingFormStartPosY(const Value: Cardinal);
+begin
+  FIni.WriteInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_START_Y, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetSettingFormWidth(const Value: Cardinal);
+begin
+  FIni.WriteInteger(SEARCHFORM_SETTINGS_SECTION, CONF_FORM_SETTINGS_WIDTH, Value);
   FIni.UpdateFile;
 end;
 

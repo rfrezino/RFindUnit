@@ -74,6 +74,7 @@ type
     procedure InsertAutoImportInDataSet;
     procedure InsertDataSetInAutoImport;
     procedure CreateIniFile;
+
     procedure SaveSettings;
 
     procedure ConfigureAutoImportPage;

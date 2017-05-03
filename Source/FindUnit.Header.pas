@@ -24,7 +24,6 @@ var
 const
    MAX_RETURN_ITEMS = 200;
    AUTO_IMPORT_FILE = 'memoryconfig.ini';
-   AUTO_IMPORT_SECTION = 'MEMORIZEDUNIT';
 
 implementation
 
