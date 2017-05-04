@@ -38,10 +38,7 @@ type
     tsAutoImport: TTabSheet;
     chkAutoEnabled: TCheckBox;
     grdAutoImport: TDBGrid;
-    cdsAutoImport: TClientDataSet;
     dtsAutoImport: TDataSource;
-    cdsAutoImportIDENTIFIER: TStringField;
-    cdsAutoImportUNIT: TStringField;
     grpAutoSettings: TGroupBox;
     nvgAutoImport: TDBNavigator;
     tsGeneral: TTabSheet;
@@ -61,6 +58,9 @@ type
     medtBreakUsesLineAtPosition: TMaskEdit;
     lblBreakLineAt: TLabel;
     chbGroupNonNameSpaceUnits: TCheckBox;
+    cdsAutoImport: TClientDataSet;
+    cdsAutoImportIDENTIFIER: TStringField;
+    cdsAutoImportUNIT: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -68,8 +68,10 @@ type
     procedure chkBreaklineClick(Sender: TObject);
     procedure chkSortAfterAddingClick(Sender: TObject);
     procedure lblLinkClick(Sender: TObject);
+    procedure pgcMainChange(Sender: TObject);
   private
     FSettings: TSettings;
+    FMemorizedOpened: Boolean;
 
     procedure InsertAutoImportInDataSet;
     procedure InsertDataSetInAutoImport;
@@ -129,8 +131,6 @@ end;
 
 procedure TfrmSettings.ConfigureAutoImportPage;
 begin
-  InsertAutoImportInDataSet;
-
   chkAutoEnabled.Checked := FSettings.AutoImportEnabled;
   chkAlwaysImportToInterfaceSection.Checked := FSettings.AlwaysUseInterfaceSection;
   chkMemorize.Checked := FSettings.StoreChoices;
@@ -183,9 +183,15 @@ var
   Values: TStrings;
   I: Integer;
 begin
+  FMemorizedOpened := True;
   Values := FSettings.AutoImportValue;
   try
-    cdsAutoImport.CreateDataSet;
+    if Values = nil then
+      Exit;
+
+    if not cdsAutoImport.Active then
+      cdsAutoImport.CreateDataSet;
+
     for I := 0 to Values.Count -1 do
     begin
       cdsAutoImport.Append;
@@ -210,6 +216,9 @@ procedure TfrmSettings.InsertDataSetInAutoImport;
 var
   Values: TStrings;
 begin
+  if not FMemorizedOpened then
+    Exit;
+
   Values := TStringList.Create;
   cdsAutoImport.DisableControls;
   try
@@ -231,6 +240,12 @@ var
 begin
   Link := 'https://github.com/rfrezino/RFindUnit';
   ShellExecute(Application.Handle, PChar('open'), PChar(Link), nil, nil, SW_SHOW);
+end;
+
+procedure TfrmSettings.pgcMainChange(Sender: TObject);
+begin
+  if not FMemorizedOpened then
+    InsertAutoImportInDataSet;
 end;
 
 end.

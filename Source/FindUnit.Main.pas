@@ -10,9 +10,10 @@ uses
   ToolsAPI,
   Windows,
 
-  FindUnit.CompilerInterceptor,
+  FindUnit.Header,
+  FindUnit.Utils,
   FindUnit.EnvironmentController,
-  FindUnit.Header;
+  FindUnit.CompilerInterceptor, FindUnit.FormMessage;
 
 {$R RFindUnitSplash.res}
 type
@@ -49,8 +50,7 @@ uses
 
   FindUnit.FormSearch,
   FindUnit.OTAUtils,
-  FindUnit.Settings,
-  FindUnit.Utils;
+  FindUnit.Settings;
 
 var
   vKbIndex: Integer;
@@ -151,17 +151,17 @@ end;
 
 procedure TRFindUnitMain.ForceRegisterKeys(Sender: TObject);
 begin
+  vBindingServices.AddKeyBinding([ShortCut(Ord('U'), [ssCtrl, ssShift])], OrganizeUses, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
-  vBindingServices.AddKeyBinding([ShortCut(Ord('O'), [ssCtrl, ssShift])], OrganizeUses, nil);
 end;
 
 procedure TRFindUnitMain.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
 begin
   vBindingServices := BindingServices;
+  BindingServices.AddKeyBinding([ShortCut(Ord('U'), [ssCtrl, ssShift])], OrganizeUses, nil);
   BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   BindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
-  BindingServices.AddKeyBinding([ShortCut(Ord('O'), [ssCtrl, ssShift])], OrganizeUses, nil);
   CreateMenus;
 end;
 
@@ -242,6 +242,7 @@ begin
 
   BindingResult := krHandled;
   FEnvControl.OrganizeUses;
+  TfrmMessage.ShowInfoToUser('Uses organized. If the uses contains comments or IFDEF it wont be organized');
 end;
 
 procedure Clear;

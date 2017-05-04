@@ -26,6 +26,7 @@ object frmSettings: TfrmSettings
     ActivePage = tsGeneral
     Align = alClient
     TabOrder = 0
+    OnChange = pgcMainChange
     object tsGeneral: TTabSheet
       Caption = 'General'
       ImageIndex = 1
@@ -85,7 +86,7 @@ object frmSettings: TfrmSettings
             Top = 46
             Width = 194
             Height = 17
-            Caption = 'Organize uses (Ctrl + Shift + O)'
+            Caption = 'Organize uses (Ctrl + Shift + U)'
             TabOrder = 1
           end
         end
@@ -178,6 +179,10 @@ object frmSettings: TfrmSettings
     end
     object tsAutoImport: TTabSheet
       Caption = 'Auto Import'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdAutoImport: TDBGrid
         Left = 0
         Top = 48
@@ -244,6 +249,11 @@ object frmSettings: TfrmSettings
       end
     end
   end
+  object dtsAutoImport: TDataSource
+    DataSet = cdsAutoImport
+    Left = 582
+    Top = 96
+  end
   object cdsAutoImport: TClientDataSet
     Aggregates = <>
     Params = <>
@@ -257,10 +267,5 @@ object frmSettings: TfrmSettings
       FieldName = 'UNIT'
       Size = 200
     end
-  end
-  object dtsAutoImport: TDataSource
-    DataSet = cdsAutoImport
-    Left = 582
-    Top = 96
   end
 end

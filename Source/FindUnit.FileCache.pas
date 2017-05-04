@@ -6,7 +6,10 @@ uses
   FindUnit.PasParser,
 
   System.Classes,
-  System.Generics.Collections, Winapi.Windows, System.SyncObjs;
+  System.Generics.Collections,
+  System.SyncObjs,
+
+  Winapi.Windows;
 
 type
   TUnitsController = class(TObject)
