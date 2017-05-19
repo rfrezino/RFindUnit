@@ -68,7 +68,11 @@ contains
   FindUnit.StringPositionList in '..\..\Source\FindUnit.StringPositionList.pas',
   RegExpr in '..\..\Thirdy\Andrey\RegExpr.pas',
   FindUnit.ResultsImportanceCalculator in '..\..\Source\FindUnit.ResultsImportanceCalculator.pas',
-  FindUnit.Settings in '..\..\Source\FindUnit.Settings.pas';
+  FindUnit.Settings in '..\..\Source\FindUnit.Settings.pas',
+  FindUnit.UnusedUses in '..\..\Source\FindUnit.UnusedUses.pas',
+  FindUnit.DelphiReservedWords in '..\..\Source\FindUnit.DelphiReservedWords.pas',
+  Interf.EnvironmentController in '..\..\Interfaces\Interf.EnvironmentController.pas',
+  FindUnit.PaintUnusedUses in '..\..\Source\FindUnit.PaintUnusedUses.pas';
 
 end.
 

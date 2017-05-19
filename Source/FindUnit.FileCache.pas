@@ -9,7 +9,7 @@ uses
   System.Generics.Collections,
   System.SyncObjs,
 
-  Winapi.Windows;
+  Winapi.UI.Xaml;
 
 type
   TUnitsController = class(TObject)
@@ -29,6 +29,8 @@ type
     destructor Destroy; override;
 
     function GetFindInfo(const SearchString: string): TStringList;
+    function GetFindInfoFullMatch(const SearchString: string): TStringList;
+
     function GetPasFile(FilePath: string): TPasFile;
     function ExtractPasFile(FilePath: string): TPasFile;
 
@@ -91,6 +93,18 @@ begin
   try
     Result := Search.GetMatch(SearchString);
     AddToHistory(SearchString, Result.Text);
+  finally
+    Search.Free;
+  end;
+end;
+
+function TUnitsController.GetFindInfoFullMatch(const SearchString: string): TStringList;
+var
+  Search: TSearchString;
+begin
+  Search := TSearchString.Create(FUnits);
+  try
+    Result := Search.GetFullMatch(SearchString);
   finally
     Search.Free;
   end;

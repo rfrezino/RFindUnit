@@ -19,10 +19,11 @@ uses
 
   Winapi.Windows,
 
-  Xml.XMLIntf;
+  Xml.XMLIntf,
+  Interf.EnvironmentController;
 
 type
-  TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier)
+  TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier, IRFUEnvironmentController)
   private
     FProcessingDCU: Boolean;
     FAutoImport: TAutoImport;
@@ -58,6 +59,8 @@ type
 
     function GetProjectUnits(const SearchString: string): TStringList;
     function GetLibraryPathUnits(const SearchString: string): TStringList;
+
+    function GetFullMatch(const SearchString: string): TStringList;
 
     function IsProjectsUnitReady: Boolean;
     function IsLibraryPathsUnitReady: Boolean;
@@ -186,6 +189,35 @@ procedure TEnvironmentController.ForceLoadProjectPath;
 begin
   if FProjectUnits = nil then
     LoadProjectPath;
+end;
+
+function TEnvironmentController.GetFullMatch(const SearchString: string): TStringList;
+var
+  ProjectUnits: TStringList;
+  LibraryUnits: TStringList;
+begin
+  ProjectUnits := nil;
+  LibraryUnits := nil;
+  Result := TStringList.Create;
+  Result.Sorted := True;
+  Result.Duplicates := dupIgnore;
+
+  try
+    if IsProjectsUnitReady then
+    begin
+      ProjectUnits := FProjectUnits.GetFindInfoFullMatch(SearchString);
+      Result.AddStrings(ProjectUnits);
+    end;
+
+    if IsLibraryPathsUnitReady then
+    begin
+      LibraryUnits := FLibraryPath.GetFindInfoFullMatch(SearchString);
+      Result.AddStrings(LibraryUnits);
+    end;
+  finally
+    LibraryUnits.Free;
+    ProjectUnits.Free;
+  end;
 end;
 
 function TEnvironmentController.GetLibraryPathStatus: string;

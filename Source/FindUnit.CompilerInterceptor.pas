@@ -3,10 +3,10 @@ unit FindUnit.CompilerInterceptor;
 interface
 
 uses
-  SysUtils,
   ToolsAPI,
 
-  FindUnit.EnvironmentController;
+  FindUnit.EnvironmentController,
+  System.SysUtils;
 
 type
   TCompilerInterceptor = class(TNotifierObject, IOTANotifier, IOTAIDENotifier, IOTAIDENotifier50)

@@ -387,8 +387,6 @@ begin
     NewUsesPosition.EndPos := UnitContent.Length;
 
     SetUsesPosition(NewUsesPosition);
-
-    ShowMessage(IntToStr(Line));
   end
   else
   begin

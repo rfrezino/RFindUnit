@@ -3,7 +3,7 @@
         <ProjectGuid>{379C8D81-7AE3-4121-8DF9-778BC4CCF9E7}</ProjectGuid>
         <MainSource>RFindUnit.dpk</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">RAISEMAD</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -95,6 +95,8 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+        <DCC_DcuOutput>C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Packages\DelphiSeattle\Dcu\</DCC_DcuOutput>
+        <DCC_MapFile>3</DCC_MapFile>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_Define>RAISEMAD;$(DCC_Define)</DCC_Define>
@@ -148,6 +150,10 @@
         <DCCReference Include="..\..\Thirdy\Andrey\RegExpr.pas"/>
         <DCCReference Include="..\..\Source\FindUnit.ResultsImportanceCalculator.pas"/>
         <DCCReference Include="..\..\Source\FindUnit.Settings.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.UnusedUses.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.DelphiReservedWords.pas"/>
+        <DCCReference Include="..\..\Interfaces\Interf.EnvironmentController.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.PaintUnusedUses.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -173,6 +179,7 @@
                     <Source Name="MainSource">RFindUnit.dpk</Source>
                 </Source>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\17.0\Bpl\CoolblueDesignTime2007.bpl">Coolblue design time package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k230.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\17.0\Bpl\ModelFramework.bpl">(untitled)</Excluded_Packages>
                 </Excluded_Packages>
@@ -183,6 +190,12 @@
             </Platforms>
             <Deployment Version="2">
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\17.0\Bpl\RFindUnit.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>RFindUnit.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\17.0\Bpl\RFindUnit.bpl" Configuration="RAISEMAD" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>RFindUnit.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -520,6 +533,9 @@
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
             </Deployment>
+            <UnitTesting>
+                <TestProjectName>C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Packages\DelphiSeattle\Test\RFindUnitTests.dproj</TestProjectName>
+            </UnitTesting>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

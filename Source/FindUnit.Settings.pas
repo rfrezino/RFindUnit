@@ -23,6 +23,7 @@ type
     SettingFormHeight: Cardinal;
     SettingFormStartPosX: Cardinal;
     SettingFormStartPosY: Cardinal;
+    IgnoreUsesUnused: string;
   end;
 
   TSettings = class(TObject)
@@ -76,6 +77,9 @@ type
 
     function GetSettingFormWidth: Cardinal;
     procedure SetSettingFormWidth(const Value: Cardinal);
+
+    function GetIgnoreUsesUnused: string;
+    procedure SetUsesUnused(const Value: string);
   public
     constructor Create;
     destructor Destroy; override;
@@ -96,6 +100,7 @@ type
     property SettingFormHeight: Cardinal read GetSettingFormHeight write SetSettingFormHeight;
     property SettingFormStartPosX: Cardinal read GetSettingFormStartPosX write SetSettingFormStartPosX;
     property SettingFormStartPosY: Cardinal read GetSettingFormStartPosY write SetSettingFormStartPosY;
+    property IgnoreUsesUnused: string read GetIgnoreUsesUnused write SetUsesUnused;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -132,6 +137,7 @@ const
   CONF_FORM_SETTINGS_HEIGHT = 'FORM_SETTINGS_HEIGHT';
   CONF_FORM_SETTINGS_START_X = 'FORM_SETTINGS_START_X';
   CONF_FORM_SETTINGS_START_Y = 'FORM_SETTINGS_START_Y';
+  CONF_IGNORED_USES = 'IGNORED_USES';
 
 { TSettings }
 
@@ -156,6 +162,7 @@ begin
     Result.SettingFormHeight := Settings.SettingFormHeight;
     Result.SettingFormStartPosX := Settings.SettingFormStartPosX;
     Result.SettingFormStartPosY := Settings.SettingFormStartPosY;
+    Result.IgnoreUsesUnused := Settings.IgnoreUsesUnused;
   finally
     Settings.Free;
   end;
@@ -164,6 +171,17 @@ end;
 function TSettings.GetGroupNonNamespaceUnits: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_GROUP_NONNAMESPACE_UNITS, True);
+end;
+
+function TSettings.GetIgnoreUsesUnused: string;
+var
+  DefaultUnits: string;
+begin
+  DefaultUnits := 'Windows,Messages,SysUtils,Variants,Classes,Graphics,Controls,Forms,Dialogs,Types,WinApi.Windows,Winapi.Messages,'
+          + 'System.SysUtils,System.Variants,System.Classes,System.Types,Vcl.Graphics,Vcl.Controls,Vcl.Forms,Vcl.Dialogs,FMX.Types,'
+          + 'FMX.Controls,FMX.Forms,FMX.Dialogs,QTypes,QGraphics,QControls,QForms,QDialogs,QStdCtrls,System.ImageList';
+
+  Result := FIni.ReadString(SETTINGS_SECTION, CONF_IGNORED_USES, DefaultUnits);
 end;
 
 function TSettings.GetOrganizeUses: Boolean;
@@ -349,6 +367,12 @@ end;
 procedure TSettings.SetUseDefaultSearchMatch(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_DEFAULT_SORT_MATCH, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetUsesUnused(const Value: string);
+begin
+  FIni.WriteString(SETTINGS_SECTION, CONF_IGNORED_USES, Value);
   FIni.UpdateFile;
 end;
 
