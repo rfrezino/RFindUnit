@@ -93,10 +93,13 @@ var
   ItensFound: Integer;
   SearchList: TStringList;
 begin
+  Result := TStringList.Create;
+  if SearchString.IsEmpty then
+    Exit;
+
   FRcSearch.Acquire;
   try
     ItensFound := 0;
-    Result := TStringList.Create;
 
     SearchList := TStringList.Create;
     try

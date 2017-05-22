@@ -13,12 +13,16 @@ type
     ltVariables = 4,
     ltClassFunctions = 5,
     ltClassProcedures = 6,
-    ltEnumeratores = 7);
+    ltEnumeratores = 7,
+    ltInterfaces = 8,
+    ltReferences = 9);
 
   TStringPosition = record
     Value: string;
     Line: Integer;
   end;
+
+  TFilePath = string;
 
 var
   strListTypeDescription: array[TListType] of string;
