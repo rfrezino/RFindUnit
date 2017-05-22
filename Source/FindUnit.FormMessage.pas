@@ -35,7 +35,7 @@ type
 
     procedure SetPosition;
   public
-    procedure ShowMessage(const Text: string);
+    procedure DisplayMessage(const Text: string);
 
     class procedure ShowInfoToUser(const Text: string);
   end;
@@ -91,10 +91,10 @@ var
   MsgForm: TfrmMessage;
 begin
   MsgForm := TfrmMessage.Create(nil);
-  MsgForm.ShowMessage(Text);
+  MsgForm.DisplayMessage(Text);
 end;
 
-procedure TfrmMessage.ShowMessage(const Text: string);
+procedure TfrmMessage.DisplayMessage(const Text: string);
 begin
   FTexto := Text;
   SetPosition;

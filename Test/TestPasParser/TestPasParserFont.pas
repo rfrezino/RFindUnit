@@ -6,7 +6,15 @@ const
   TEST_CONT = 'test const';
 
 type
+  TObjectConverterAv = reference to function(Data: TObject; Field: string): TObject;
+
   TestEnum = (teOne, teTwo, teThree);
+  TestSet = set of TestEnum;
+  TestSetNew = set of 1..10;
+
+  IOtherInterface = interface
+    ['{9B20D6D4-0E6C-44B6-A8D6-CF1DC3ACFE55}']
+  end;
 
   TTest1 = class(TObject)
   public
@@ -18,6 +26,13 @@ type
 
     constructor Create;
     destructor Destroy; override;
+  end;
+
+  TFowarededType = TTest1;
+
+  TDescendantClass = class(TTest1)
+  public
+    class function DescendantClassShow: Integer;
   end;
 
   procedure YesOutProcedure;
@@ -116,6 +131,13 @@ begin
 end;
 
 class function TTest2.YesShowFunction: string;
+begin
+
+end;
+
+{ TDescendantClass }
+
+class function TDescendantClass.DescendantClassShow: Integer;
 begin
 
 end;

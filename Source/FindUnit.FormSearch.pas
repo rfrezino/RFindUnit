@@ -72,7 +72,7 @@ type
     procedure SelectTheMostSelectableItem;
     procedure ProcessDCUFiles;
     function CanProcessDCUFiles: Boolean;
-    procedure ShowMessageToMuchResults(Show: Boolean);
+    procedure DisplayMessageToMuchResults(Show: Boolean);
 
     procedure LoadCurrentFile;
     procedure GetSelectedItem(out UnitName, ClassName: string);
@@ -163,7 +163,7 @@ begin
   else
     Text := 'Unit ' + Text + ' added to implementation''s uses.';
 
-  MsgForm.ShowMessage(Text);
+  MsgForm.DisplayMessage(Text);
   SetFocus;
 end;
 
@@ -362,7 +362,7 @@ begin
     Close;
 end;
 
-procedure TfrmFindUnit.ShowMessageToMuchResults(Show: Boolean);
+procedure TfrmFindUnit.DisplayMessageToMuchResults(Show: Boolean);
 begin
   pnlMsg.Visible := Show;
   lblMessage.Caption := '  There are to many results on your search, I''m not showing everything. Type a bigger search.' + #13#10 +
@@ -408,7 +408,7 @@ begin
     lstResult.Items.Text := ResultSearch.Text;
 
     SelectTheMostSelectableItem;
-    ShowMessageToMuchResults(ToMuchResults);
+    DisplayMessageToMuchResults(ToMuchResults);
     lstResult.Count
   finally
     ResultSearch.Free;
@@ -421,7 +421,8 @@ begin
   try
     FilterItem(edtSearch.Text);
   except
-    ShowMessage('FilterItemFromSearchString');
+//    Logger
+    raise
   end;
 end;
 

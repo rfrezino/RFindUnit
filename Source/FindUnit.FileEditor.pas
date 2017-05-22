@@ -100,7 +100,7 @@ type
 
     function IsLineOnImplementationSection(Line: Integer): Boolean;
 
-    procedure AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean = True);
+    procedure AddUnit(UnitInfo: TStringPosition; DisplayMessageOnAdd: Boolean = True);
   end;
 
 implementation
@@ -108,7 +108,7 @@ implementation
 
 { TSourceFileEditor }
 
-procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean);
+procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; DisplayMessageOnAdd: Boolean);
 var
   MessageText: string;
 begin
@@ -124,7 +124,7 @@ begin
       MessageText := 'Unit ' + UnitInfo.Value + ' added to interface''s uses.';
   end;
 
-  if (MessageText <> '') and ShowMessageOnAdd then
+  if (MessageText <> '') and DisplayMessageOnAdd then
     TfrmMessage.ShowInfoToUser(MessageText);
 end;
 

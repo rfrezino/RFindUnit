@@ -76,7 +76,7 @@ var
   Services: IOTAServices;
   IActionServices: IOTAActionServices;
 begin
-  Logger := TLogger.Create(FindUnitDirLogger + Format('rfindunitlog_%d_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
+  Logger := TLogger.Create(FindUnitDirLogger + Format('rfindunitlog_%s_%d.txt', [FormatDateTime('yyyy-mm-dd', Now), GetCurrentProcessId]));
 
   VFindUnit := TRFindUnitMain.Create;
   OtaKey := VFindUnit as IOTAKeyboardBinding;
@@ -241,11 +241,9 @@ begin
 
   BindingResult := krHandled;
 
-  ShowMessage(CurEditor.FileName);
   UnusedUses := TUnsedUsesProcessor.Create(CurEditor.FileName);
   UnusedUses.SetEnvControl(FEnvControl);
   UnusedUses.Process;
-  ShowMessage(UnusedUses.GetUnusedUsesAsString);
   UnusedUses.Free;
 end;
 

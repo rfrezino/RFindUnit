@@ -139,8 +139,8 @@ object frmFindUnit: TfrmFindUnit
       object lblMessage: TLabel
         Left = 1
         Top = 1
-        Width = 574
-        Height = 45
+        Width = 541
+        Height = 26
         Align = alClient
         Caption = 
           '  Remember that you can create incremental searches like: "strin' +

@@ -5,7 +5,8 @@ interface
 uses
   Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, Generics.Collections,
   Log4Pascal, SimpleParser.Lexer.Types, SysUtils, Windows, FindUnit.DcuDecompiler,
-  FindUnit.Utils, System.Threading, FindUnit.FileCache, DateUtils;
+  FindUnit.Utils, System.Threading, FindUnit.FileCache, DateUtils,
+  FindUnit.Header;
 
 type
   TOnFinished = procedure(FindUnits: TDictionary<string, TPasFile>) of object;
@@ -15,7 +16,7 @@ type
     FDirectoriesPath: TStringList;
     FOnFinished: TOnFinished;
     FPasFiles: TDictionary<string, TFileInfo>;
-    FFindUnits: TDictionary<string, TPasFile>;
+    FFindUnits: TDictionary<TFilePath, TPasFile>;
     FIncluder: IIncludeHandler;
     FParsedItems: Integer;
     FCacheFiles: TDictionary<string, TPasFile>;
@@ -364,7 +365,6 @@ begin
     Logger.Debug('TParserWorker.ParseFiles: Put results together.');
     for PasValue in ResultList.LockList do
     begin
-      Logger.Debug('TParserWorker.ParseFiles[Adding new file]: ' + PasValue.FilePath);
       FFindUnits.AddOrSetValue(PasValue.FilePath, PasValue);
     end;
 
