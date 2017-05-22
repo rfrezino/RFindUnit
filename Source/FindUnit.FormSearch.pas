@@ -449,24 +449,6 @@ end;
 procedure TfrmFindUnit.GetSelectedItem(out UnitName, ClassName: string);
 var
   I: Integer;
-
-  function CorrectUses(Item: string): string;
-  var
-    IsSetEnumItem: Boolean;
-  begin
-    IsSetEnumItem := Item.EndsWith(' item');
-
-    Result := Item;
-    Result := Trim(Fetch(Result, '-'));
-    Result := ReverseString(Result);
-    ClassName := Fetch(Result,'.');
-
-    if IsSetEnumItem then
-      ClassName := Fetch(Result,'.');
-
-    ClassName := ReverseString(ClassName);
-    Result := ReverseString(Result);
-  end;
 begin
   UnitName := '';
   if lstResult.Count = 0 then
@@ -476,12 +458,12 @@ begin
   begin
     if lstResult.Selected[i] then
     begin
-      UnitName := CorrectUses(lstResult.Items[i]);
+      GetUnitFromSearchSelection(lstResult.Items[i], UnitName, ClassName);
       Exit;
     end;
   end;
 
-  UnitName := CorrectUses(lstResult.Items[0])
+  GetUnitFromSearchSelection(lstResult.Items[0], UnitName, ClassName);
 end;
 
 procedure TfrmFindUnit.LoadConfigs;

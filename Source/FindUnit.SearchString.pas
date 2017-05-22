@@ -8,11 +8,15 @@ uses
   FindUnit.Header,
   FindUnit.PasParser,
 
-  Generics.Collections;
+  Generics.Collections,
+
+  System.SyncObjs,
+  Log4Pascal;
 
 type
   TSearchString = class(TObject)
   protected
+    FRcSearch: TCriticalSection;
     FCandidates: TDictionary<string, TPasFile>;
 
     function FoundAllEntries(Entries: TStringList; const Text: string): Boolean;
@@ -24,6 +28,7 @@ type
     destructor Destroy; override;
 
     function GetMatch(const SearchString: string): TStringList;
+    function GetFullMatch(const SearchString: string): TStringList;
   end;
 
 implementation
@@ -36,10 +41,12 @@ uses
 constructor TSearchString.Create(Candidates: TDictionary<string, TPasFile>);
 begin
   FCandidates := Candidates;
+  FRcSearch := TCriticalSection.Create;
 end;
 
 destructor TSearchString.Destroy;
 begin
+  FRcSearch.Destroy;
   inherited;
 end;
 
@@ -58,6 +65,27 @@ begin
   end;
 end;
 
+function TSearchString.GetFullMatch(const SearchString: string): TStringList;
+var
+  I: Integer;
+  Line: string;
+  UpSS: string;
+begin
+  UpSS := SearchString.ToUpper;
+  Result := GetMatch(SearchString);
+  for I := Result.Count - 1 downto 0 do
+  begin
+    Line := Result[I].ToUpper;
+
+    if Line.StartsWith(UpSS + '.')
+      or Line.Contains('.' + UpSS + '.')
+      or Line.Contains('.' + UpSS + ' -') then
+      Continue;
+
+    Result.Delete(I);
+  end;
+end;
+
 function TSearchString.GetMatch(const SearchString: string): TStringList;
 var
   I: Integer;
@@ -65,28 +93,33 @@ var
   ItensFound: Integer;
   SearchList: TStringList;
 begin
-  ItensFound := 0;
-  Result := TStringList.Create;
-
-  SearchList := TStringList.Create;
+  FRcSearch.Acquire;
   try
-    SearchList.Delimiter := ' ';
-    SearchList.DelimitedText := UpperCase(SearchString);
+    ItensFound := 0;
+    Result := TStringList.Create;
 
-    for Item in FCandidates.Values do
-    begin
-      if FoundAllEntries(SearchList, UpperCase(Item.OriginUnitName) + '.') then
+    SearchList := TStringList.Create;
+    try
+      SearchList.Delimiter := ' ';
+      SearchList.DelimitedText := UpperCase(SearchString);
+
+      for Item in FCandidates.Values do
       begin
-        Result.Text := Result.Text + Item.OriginUnitName + '.* - Unit';
-        Inc(ItensFound);
-      end;
+        if FoundAllEntries(SearchList, UpperCase(Item.OriginUnitName) + '.') then
+        begin
+          Result.Text := Result.Text + Item.OriginUnitName + '.* - Unit';
+          Inc(ItensFound);
+        end;
 
-      Result.Text := Result.Text + GetMatchesOnItem(Item, SearchList, ItensFound);
-      if ItensFound >= MAX_RETURN_ITEMS then
-        Exit;
+        Result.Text := Result.Text + GetMatchesOnItem(Item, SearchList, ItensFound);
+        if ItensFound >= MAX_RETURN_ITEMS then
+          Exit;
+      end;
+    finally
+      SearchList.Free;
     end;
   finally
-    SearchList.Free;
+    FRcSearch.Release;
   end;
 end;
 

@@ -5,7 +5,6 @@ interface
 uses
   Classes,
   ComCtrls,
-  CommonOptionStrs,
   SysUtils,
 
   DelphiAST.Classes,
@@ -20,11 +19,11 @@ uses
   SimpleParser.Lexer.Types;
 
 type
-
   TPasFile = class(TObject)
   private
     FLastModification: TDateTime;
     FOriginUnitName: string;
+    FFilePath: string;
 
     FLists: TObjectList<TStringList>;
 
@@ -33,7 +32,9 @@ type
     FFunctions: TStringList;
     FConstants: TStringList;
     FVariables: TStringList;
-    FFilePath: string;
+    FClassFunctions: TStringList;
+    FClassProcedure: TStringList;
+    FEnumerators: TStringList;
 
     procedure PrepareList(List: TStringList; const Description: string);
   public
@@ -49,6 +50,9 @@ type
     property Constants: TStringList read FConstants;
     property Variables: TStringList read FVariables;
     property FilePath: string read FFilePath write FFilePath;
+    property ClassFunctions: TStringList read FClassFunctions write FClassFunctions;
+    property ClassProcedure: TStringList read FClassProcedure write FClassProcedure;
+    property Enumerators: TStringList read FEnumerators write FEnumerators;
 
     function GetListFromType(ListType: TListType): TStringList;
   end;
@@ -69,6 +73,7 @@ type
     procedure GetMethods;
     procedure GetVariables;
     procedure GetConstants;
+    procedure GetEnumerators;
 
     function HaveInterfaceNode: Boolean;
   public
@@ -107,6 +112,8 @@ begin
   CreateAndAdd(FFunctions);
   CreateAndAdd(FConstants);
   CreateAndAdd(FVariables);
+  CreateAndAdd(FClassFunctions);
+  CreateAndAdd(FClassProcedure);
 end;
 
 destructor TPasFile.Destroy;
@@ -123,6 +130,8 @@ begin
     ltFunctions: Result := FFunctions;
     ltContants: Result := FConstants;
     ltVariables: Result := FVariables;
+    ltClassFunctions: Result := FClassFunctions;
+    ltClassProcedures: Result := FClassProcedure;
   end;
 end;
 
@@ -173,6 +182,7 @@ var
   EnumType: TSyntaxNode;
   IdenType: TSyntaxNode;
   AttrName: string;
+  TypeType: string;
 begin
   SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
 
@@ -182,46 +192,23 @@ begin
     while TypeNode <> nil do
     begin
       try
-        Description := '.* - Class';
         ItemClassName := TypeNode.GetAttribute(anName);
 
         TypeDesc := TypeNode.FindNode(ntType);
-        EnumType := nil;
+        TypeType := TypeDesc.GetAttribute(anType);
 
-        if TypeDesc <> nil then
+        if not TypeType.Equals('class') then
         begin
-          Description := TypeDesc.GetAttribute(anType);
-
-          if Description = '' then
-            Description := 'Enum';
-
-          Description[1] := UpCase(Description[1]);
-          Description := ' - ' + Description;
-
-          FResultItem.FClasses.Add(ItemClassName + Description);
-
-          AttrName := TypeDesc.GetAttribute(anType);
-
-          if AttrName = 'set' then
-            EnumType := TypeDesc.FindNode(ntType)
-          else if AttrName = 'enum' then
-            EnumType := TypeDesc
-          else
-            EnumType := nil;
+          SectionTypesNode.DeleteChild(TypeNode);
+          TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
+          Continue;
         end;
 
-        if EnumType <> nil then
-        begin
-          IdenType := EnumType.FindNode(ntIdentifier);
-          while IdenType <> nil do
-          begin
-            FResultItem.FClasses.Add(ItemClassName + '.' + IdenType.GetAttribute(anName) + Description + ' item');
+        Description := '.* - Class';
+        Description[1] := UpCase(Description[1]);
+        Description := ' - ' + Description;
 
-            EnumType.DeleteChild(IdenType);
-            IdenType := EnumType.FindNode(ntIdentifier);
-          end;
-        end;
-
+        FResultItem.FClasses.Add(ItemClassName + Description);
       except
         on e: exception do
         begin
@@ -265,6 +252,92 @@ begin
   end;
 end;
 
+procedure TPasFileParser.GetEnumerators;
+var
+  SectionTypesNode: TSyntaxNode;
+  TypeNode: TSyntaxNode;
+  TypeDesc: TSyntaxNode;
+  Description: string[50];
+  ItemClassName: string;
+  EnumType: TSyntaxNode;
+  IdenType: TSyntaxNode;
+  AttrName: string;
+  IsEnum: Boolean;
+begin
+  SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
+
+  while SectionTypesNode <> nil do
+  begin
+    TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
+    while TypeNode <> nil do
+    begin
+      try
+        Description := '.* - Class';
+        ItemClassName := TypeNode.GetAttribute(anName);
+
+        TypeDesc := TypeNode.FindNode(ntType);
+        EnumType := nil;
+        IsEnum := False;
+
+        if TypeDesc <> nil then
+        begin
+          Description := TypeDesc.GetAttribute(anType);
+
+          if Description = '' then
+          begin
+            Description := 'Enum';
+            IsEnum := True;
+          end;
+
+          Description[1] := UpCase(Description[1]);
+          Description := ' - ' + Description;
+
+          FResultItem.FClasses.Add(ItemClassName + Description);
+
+          AttrName := TypeDesc.GetAttribute(anType);
+
+          if AttrName = 'set' then
+            EnumType := TypeDesc.FindNode(ntType)
+          else if (AttrName = 'enum') or IsEnum then
+            EnumType := TypeDesc
+          else
+            EnumType := nil;
+        end;
+
+        if EnumType <> nil then
+        begin
+          IdenType := EnumType.FindNode(ntIdentifier);
+          while IdenType <> nil do
+          begin
+            FResultItem.FClasses.Add(ItemClassName + '.' + IdenType.GetAttribute(anName) + Description + ' item');
+
+            EnumType.DeleteChild(IdenType);
+            IdenType := EnumType.FindNode(ntIdentifier);
+          end;
+        end
+        else
+        begin
+
+        end;
+
+      except
+        on e: exception do
+        begin
+          Logger.Error('TFindUnitParser.GetClasses: %s', [e.Message]);
+          {$IFDEF RAISEMAD}
+          raise;
+          {$ENDIF}
+        end;
+      end;
+      SectionTypesNode.DeleteChild(TypeNode);
+      TypeNode := SectionTypesNode.FindNode(ntTypeDecl);
+    end;
+
+    FInterfaceNode.DeleteChild(SectionTypesNode);
+    SectionTypesNode := FInterfaceNode.FindNode(ntTypeSection);
+  end;
+end;
+
 procedure TPasFileParser.GetFileLastModification;
 begin
   try
@@ -276,14 +349,30 @@ end;
 procedure TPasFileParser.GetMethods;
 var
   MethodNode: TSyntaxNode;
+  IsClassMethod: Boolean;
+  MethodType: string;
+  MethodNameDesc: string;
 begin
   MethodNode := FInterfaceNode.FindNode(ntMethod);
   while MethodNode <> nil do
   begin
-    if MethodNode.GetAttribute(anKind) = 'procedure' then
-        FResultItem.FProcedures.Add(MethodNode.GetAttribute(anName))
+    MethodNameDesc := MethodNode.GetAttribute(anName);
+    IsClassMethod := MethodNode.HasAttribute(anClass) and MethodNode.GetAttribute(anClass).Equals('true');
+    MethodType := MethodNode.GetAttribute(anKind);
+    if MethodType  = 'procedure' then
+    begin
+      if IsClassMethod then
+        FResultItem.FClassProcedure.Add(MethodNameDesc)
+      else
+        FResultItem.FProcedures.Add(MethodNameDesc);
+    end
     else
-      FResultItem.FFunctions.Add(MethodNode.GetAttribute(anName));
+    begin
+      if IsClassMethod then
+        FResultItem.FClassFunctions.Add(MethodNameDesc)
+      else
+        FResultItem.FFunctions.Add(MethodNameDesc);
+    end;
 
     FInterfaceNode.DeleteChild(MethodNode);
     MethodNode := FInterfaceNode.FindNode(ntMethod);
@@ -359,6 +448,7 @@ begin
 
     FResultItem := TPasFile.Create;
     Result := FResultItem;
+    Result.FilePath := FFilePath;
 
     Step := 'GetUnitName';
     GetUnitName;

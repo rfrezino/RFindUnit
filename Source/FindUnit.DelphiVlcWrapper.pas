@@ -3,7 +3,7 @@ unit FindUnit.DelphiVlcWrapper;
 interface
 
 uses
-	Windows;
+	Windows, Winapi.UI.Xaml;
 
 type
   TDelphiVLCWrapper = class(TObject)

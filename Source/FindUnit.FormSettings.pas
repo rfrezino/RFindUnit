@@ -30,7 +30,7 @@ uses
   Vcl.Mask,
   Vcl.StdCtrls,
 
-  Winapi.ShellAPI;
+  Winapi.ShellAPI, FindUnit.OTAUtils, ToolsAPI;
 
 type
   TfrmSettings = class(TForm)
@@ -61,6 +61,7 @@ type
     cdsAutoImport: TClientDataSet;
     cdsAutoImportIDENTIFIER: TStringField;
     cdsAutoImportUNIT: TStringField;
+    btnCreateProjectConfiguration: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -69,6 +70,7 @@ type
     procedure chkSortAfterAddingClick(Sender: TObject);
     procedure lblLinkClick(Sender: TObject);
     procedure pgcMainChange(Sender: TObject);
+    procedure btnCreateProjectConfigurationClick(Sender: TObject);
   private
     FSettings: TSettings;
     FMemorizedOpened: Boolean;
@@ -82,6 +84,8 @@ type
     procedure ConfigureAutoImportPage;
     procedure ConfigurePages;
     procedure ToggleEnableItems;
+
+    function IsThereProjectOpen: Boolean;
   end;
 
 implementation
@@ -111,6 +115,11 @@ end;
 procedure TfrmSettings.btn1Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, PChar(TSettings.SettingsFilePath), nil, nil, SW_SHOWNORMAL)
+end;
+
+procedure TfrmSettings.btnCreateProjectConfigurationClick(Sender: TObject);
+begin
+  ShowMessage(GetCurrentProject.FileName);
 end;
 
 procedure TfrmSettings.chkBreaklineClick(Sender: TObject);
@@ -232,6 +241,11 @@ begin
   finally
     Values.Free;
   end;
+end;
+
+function TfrmSettings.IsThereProjectOpen: Boolean;
+begin
+  Result := GetCurrentProject <> nil;
 end;
 
 procedure TfrmSettings.lblLinkClick(Sender: TObject);

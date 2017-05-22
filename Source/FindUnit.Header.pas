@@ -10,7 +10,10 @@ type
     ltProcedures = 1,
     ltFunctions = 2,
     ltContants = 3,
-    ltVariables = 4);
+    ltVariables = 4,
+    ltClassFunctions = 5,
+    ltClassProcedures = 6,
+    ltEnumeratores = 7);
 
   TStringPosition = record
     Value: string;
@@ -37,6 +40,8 @@ begin
   strListTypeDescription[ltFunctions] := ' - Function';
   strListTypeDescription[ltContants] := ' - Constant';
   strListTypeDescription[ltVariables] := ' - Variable';
+  strListTypeDescription[ltClassFunctions] := ' - Class Function';
+  strListTypeDescription[ltClassProcedures] := ' - Class Procedure';
 
   VERSION_STR := Format('%d.%d.%d', [VERSION[0], VERSION[1], VERSION[2]]);
 end;

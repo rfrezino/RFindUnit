@@ -175,14 +175,19 @@ object frmSettings: TfrmSettings
             TabOrder = 5
           end
         end
+        object btnCreateProjectConfiguration: TButton
+          Left = 440
+          Top = 280
+          Width = 192
+          Height = 25
+          Caption = 'Create configuration for this project'
+          TabOrder = 3
+          OnClick = btnCreateProjectConfigurationClick
+        end
       end
     end
     object tsAutoImport: TTabSheet
       Caption = 'Auto Import'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grdAutoImport: TDBGrid
         Left = 0
         Top = 48

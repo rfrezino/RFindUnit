@@ -13,7 +13,9 @@ uses
   FindUnit.Header,
   FindUnit.Utils,
   FindUnit.EnvironmentController,
-  FindUnit.CompilerInterceptor, FindUnit.FormMessage;
+  FindUnit.CompilerInterceptor, FindUnit.FormMessage,
+  FindUnit.UnusedUses,
+  FindUnit.PaintUnusedUses;
 
 {$R RFindUnitSplash.res}
 type
@@ -29,6 +31,7 @@ type
 
     procedure CreateMenus;
     procedure ForceRegisterKeys(Sender: TObject);
+    procedure GetUnusedUses(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
   public
     constructor Create;
     destructor Destroy; override;
@@ -54,6 +57,7 @@ uses
 
 var
   vKbIndex: Integer;
+  vNotifierIndex: Integer;
   VFindUnit: IInterface;
   AboutBoxServices : IOTAAboutBoxServices = nil;
   AboutBoxIndex : Integer = 0;
@@ -69,6 +73,8 @@ resourcestring
 procedure Register;
 var
   OtaKey: IOTAKeyboardBinding;
+  Services: IOTAServices;
+  IActionServices: IOTAActionServices;
 begin
   Logger := TLogger.Create(FindUnitDirLogger + Format('rfindunitlog_%d_%s.txt', [GetCurrentProcessId, FormatDateTime('yyyy-mm-dd', Now)]));
 
@@ -76,6 +82,10 @@ begin
   OtaKey := VFindUnit as IOTAKeyboardBinding;
   with (BorlandIDEServices as IOTAKeyboardServices) do
     vKbIndex := AddKeyboardBinding(OtaKey);
+
+//  if Supports(BorlandIDEServices, IOTAServices, Services) then
+//      Services.QueryInterface(IOTAACtionServices, IActionServices);
+//    vNotifierIndex := Services.AddNotifier(TRfPaintUnsuedUses.Create);
 end;
 
 procedure RegisterSplashScreen;
@@ -154,14 +164,16 @@ begin
   vBindingServices.AddKeyBinding([ShortCut(Ord('U'), [ssCtrl, ssShift])], OrganizeUses, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
   vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('L'), [ssCtrl, ssShift])], GetUnusedUses, nil);
 end;
 
 procedure TRFindUnitMain.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
 begin
   vBindingServices := BindingServices;
-  BindingServices.AddKeyBinding([ShortCut(Ord('U'), [ssCtrl, ssShift])], OrganizeUses, nil);
-  BindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
-  BindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('U'), [ssCtrl, ssShift])], OrganizeUses, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('A'), [ssCtrl, ssShift])], OpenForm, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('I'), [ssCtrl, ssShift])], AutoImport, nil);
+  vBindingServices.AddKeyBinding([ShortCut(Ord('L'), [ssCtrl, ssShift])], GetUnusedUses, nil);
   CreateMenus;
 end;
 
@@ -212,6 +224,29 @@ begin
   BindingResult := krHandled;
   FEnvControl.ImportMissingUnits;
   FEnvControl.ForceLoadProjectPath;
+end;
+
+procedure TRFindUnitMain.GetUnusedUses(const Context: IOTAKeyContext; KeyCode: TShortCut;
+  var BindingResult: TKeyBindingResult);
+var
+  UnusedUses: TUnsedUsesProcessor;
+  CurEditor: IOTASourceEditor;
+begin
+  if FEnvControl = nil then
+    Exit;
+
+  CurEditor := OtaGetCurrentSourceEditor;
+  if CurEditor = nil then
+    Exit;
+
+  BindingResult := krHandled;
+
+  ShowMessage(CurEditor.FileName);
+  UnusedUses := TUnsedUsesProcessor.Create(CurEditor.FileName);
+  UnusedUses.SetEnvControl(FEnvControl);
+  UnusedUses.Process;
+  ShowMessage(UnusedUses.GetUnusedUsesAsString);
+  UnusedUses.Free;
 end;
 
 procedure TRFindUnitMain.OpenForm(const Context: IOTAKeyContext; KeyCode: TShortCut;
