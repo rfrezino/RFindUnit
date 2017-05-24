@@ -100,9 +100,7 @@ begin
 
   for SearchType in FUsedTypes.Values do
   begin
-    Logger.Debug('Search for:' + SearchType);
     Matches := FEnvControl.GetFullMatch(SearchType);
-    Logger.Debug('Found : ' + Matches.CommaText);
     for NewItem in Matches do
       Result.AddOrSetValue(NewItem.ToUpper, NewItem);
     Matches.Free;
@@ -148,7 +146,6 @@ begin
   for Matches in FMatches.Values do
   begin
     FindUnit.Utils.GetUnitFromSearchSelection(Matches, UnitNameEx, ClassNameEx);
-    Logger.Debug('Remove used unit ' + UnitNameEx);
     Result.Remove(UnitNameEx.ToUpper);
   end;
 end;

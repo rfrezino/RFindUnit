@@ -80,7 +80,10 @@ begin
   IsSetEnumItem := SearchSelection.EndsWith(' item');
 
   UnitName := SearchSelection;
-  UnitName := Trim(Fetch(UnitName, '-'));
+  if Pos('.*', UnitName) > 0 then
+    UnitName := Trim(Fetch(UnitName, '.*'))
+  else
+    UnitName := Trim(Fetch(UnitName, '-'));
   UnitName := ReverseString(UnitName);
   ClassName := Fetch(UnitName,'.');
 

@@ -1,0 +1,1041 @@
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for: 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TUnitsController 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TPasFile 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TStringList 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TCriticalSection 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TObject 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Search for:TDictionary 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit EClasses 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit System.Classes 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit System 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-16 17:25:19] [TID 7868] DEBUG| GetUnusedUses: 
+[2017-05-16 17:26:24] [TID 11432] DEBUG| Search for: 
+[2017-05-16 17:26:28] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TUnitsController 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TPasFile 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TStringList 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TCriticalSection 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TObject 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Search for:TDictionary 
+[2017-05-16 17:26:59] [TID 11432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:27:25] [TID 11432] DEBUG| Remove used unit EClasses 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit System.Classes 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit System 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-16 17:27:30] [TID 11432] DEBUG| GetUnusedUses: 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for: 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TUnitsController 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TPasFile 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TStringList 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TCriticalSection 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TObject 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Search for:TDictionary 
+[2017-05-16 17:28:50] [TID 6912] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit EClasses 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit System.Classes 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit System 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-16 17:28:52] [TID 6912] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-16 17:28:53] [TID 6912] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for: 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TUnitsController 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TPasFile 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TStringList 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TCriticalSection 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TObject 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Search for:TDictionary 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit EClasses 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit System.Classes 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit System 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-16 17:30:14] [TID 16756] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for: 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TUnitsController 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TPasFile 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TStringList 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TCriticalSection 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TObject 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Search for:TDictionary 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit EClasses 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit System.Classes 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit System 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-16 17:37:29] [TID 6440] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for: 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TPasFile 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TStringList 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TObject 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Search for:TDictionary 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit System 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:14:43] [TID 20360] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for: 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TPasFile 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TStringList 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TObject 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Search for:TDictionary 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit System 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:15:22] [TID 21352] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for: 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TPasFile 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TStringList 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TObject 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Search for:TDictionary 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit System 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:22:11] [TID 11436] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for: 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TPasFile 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TStringList 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TObject 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Search for:TDictionary 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit System 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:22:20] [TID 11436] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for: 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TPasFile 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TStringList 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TObject 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Search for:TDictionary 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit System 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:25:48] [TID 4304] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for: 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TPasFile 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TStringList 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TObject 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Search for:TDictionary 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit System 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:26:54] [TID 6432] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for: 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TPasFile 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TStringList 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TObject 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Search for:TDictionary 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit System 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:27:05] [TID 6432] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for: 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TPasFile 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TStringList 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TObject 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Search for:TDictionary 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit System 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:27:42] [TID 6824] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for: 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TPasFile 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TStringList 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TObject 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Search for:TDictionary 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit System 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:28:38] [TID 14320] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for: 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TPasFile 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TStringList 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TObject 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Search for:TDictionary 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit System 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:29:11] [TID 7244] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for: 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TPasFile 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TStringList 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TObject 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Search for:TDictionary 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit System 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:30:24] [TID 7380] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for: 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TPasFile 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TStringList 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TObject 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Search for:TDictionary 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit System 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:32:22] [TID 18072] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for: 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TPasFile 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TStringList 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TObject 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Search for:TDictionary 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit System 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:32:47] [TID 20080] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for: 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TPasFile 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TStringList 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TObject 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Search for:TDictionary 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit System 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:35:09] [TID 5016] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for: 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TPasFile 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TStringList 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TObject 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Search for:TDictionary 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit System 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:35:51] [TID 1244] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for: 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TUnitsController 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TPasFile 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TStringList 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TCriticalSection 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TObject 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Search for:TDictionary 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit EClasses 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit System.Classes 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit System 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-17 17:40:30] [TID 7416] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for: 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TPasFile 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TStringList 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TObject 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Search for:TDictionary 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit System 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:00:20] [TID 1284] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for: 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TPasFile 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TStringList 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TObject 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Search for:TDictionary 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit System 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:43:25] [TID 9680] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for: 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TPasFile 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TStringList 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TObject 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Search for:TDictionary 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit System 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:56:30] [TID 13984] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for: 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TPasFile 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TStringList 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TObject 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Search for:TDictionary 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit System 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:58:25] [TID 21628] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:25] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for: 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TPasFile 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TStringList 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TObject 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Search for:TDictionary 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit System 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:58:58] [TID 21628] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:58:58] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:58:58] [TID 21628] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668B91 in module 'RFindUnitTests.exe'. Read of address 00000000 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for: 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TUnitsController 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TPasFile 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TStringList 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TCriticalSection 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TObject 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Search for:TDictionary 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit EClasses 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit System.Classes 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit System 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 15:59:48] [TID 8320] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 15:59:50] [TID 8320] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668BC5 in module 'RFindUnitTests.exe'. Write of address 00000000 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for: 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TUnitsController 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TPasFile 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TStringList 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TCriticalSection 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TObject 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Search for:TDictionary 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit EClasses 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit System.Classes 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit System 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 16:00:02] [TID 19740] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 16:00:07] [TID 19740] ERROR| TFindUnitParser.GetClasses: Access violation at address 00668BC5 in module 'RFindUnitTests.exe'. Write of address 00000000 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for: 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TUnitsController 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TPasFile 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TStringList 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TCriticalSection 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TObject 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Search for:TDictionary 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit EClasses 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit System.Classes 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit System 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 16:00:28] [TID 19156] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for: 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TUnitsController 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TPasFile 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TStringList 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TCriticalSection 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TObject 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Search for:TDictionary 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit EClasses 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit System.Classes 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit System 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 16:01:08] [TID 20452] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 16:34:28] [TID 9852] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 16:34:45] [TID 8408] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 16:44:43] [TID 19696] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:44:56] [TID 19696] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 16:45:41] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:45:55] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 16:46:14] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:46:26] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:46:30] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:48:13] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:48:23] [TID 22252] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:49:58] [TID 15136] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:50:32] [TID 5152] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:52:02] [TID 17912] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:53:36] [TID 17456] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:53:48] [TID 17456] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:54:20] [TID 20628] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:54:35] [TID 20628] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:55:55] [TID 22012] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:56:01] [TID 22012] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:56:25] [TID 22012] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:56:32] [TID 3592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:56:39] [TID 11820] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:58:11] [TID 5404] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 16:59:44] [TID 9108] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:00:32] [TID 12336] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:00:35] [TID 12336] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:00:45] [TID 15188] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:01:13] [TID 20880] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:01:18] [TID 20880] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:01:34] [TID 13332] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:33] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:41] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:43] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for: 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TUnitsController 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TPasFile 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TStringList 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TCriticalSection 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TObject 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Search for:TDictionary 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit EClasses 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit System.Classes 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit System 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:02:51] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for: 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TUnitsController 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TPasFile 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TStringList 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TCriticalSection 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TObject 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Search for:TDictionary 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit EClasses 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit System.Classes 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit System 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 17:03:16] [TID 20592] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for: 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TUnitsController 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TPasFile 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TStringList 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TCriticalSection 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TObject 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Search for:TDictionary 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit EClasses 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit System.Classes 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit System 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case1.pas 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-19 17:03:27] [TID 2376] DEBUG| Parsing C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for: 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TUnitsController 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TPasFile 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TStringList 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TCriticalSection 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TObject 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Search for:TDictionary 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit EClasses 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit System.Classes 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit System 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 13:14:22] [TID 11948] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:22] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:20:25] [TID 13040] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\AV_Case2.pas 
+[2017-05-22 13:22:26] [TID 21868] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-22 13:23:05] [TID 928] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-22 13:23:05] [TID 928] ERROR| TFindUnitParser.Process: Trying to parse C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas. Msg: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 | Step: GetTypeInformation 
+[2017-05-22 13:33:11] [TID 1020] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-22 13:33:11] [TID 1020] ERROR| TFindUnitParser.Process: Trying to parse C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas. Msg: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 | Step: GetTypeInformation 
+[2017-05-22 13:33:23] [TID 1020] ERROR| TFindUnitParser.GetClasses: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 - C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas 
+[2017-05-22 13:33:23] [TID 1020] ERROR| TFindUnitParser.Process: Trying to parse C:\DEV\Delphi\SeattleComponents\personalComponents\RFindUnit\Test\TestPasParser\TestPasParserFont.pas. Msg: Access violation at address 0063BC62 in module 'RFindUnitTests.exe'. Read of address 00000010 | Step: GetTypeInformation 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for: 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TUnitsController 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TPasFile 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TStringList 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TCriticalSection 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TObject 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Search for:TDictionary 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit EClasses 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit System.Classes 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit System 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 15:47:02] [TID 8220] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for: 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TUnitsController 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TPasFile 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TStringList 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TCriticalSection 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TObject 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Search for:TDictionary 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit EClasses 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit System.Classes 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit System 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 15:48:19] [TID 15992] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for: 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TUnitsController 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TPasFile 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TStringList 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TCriticalSection 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TObject 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Search for:TDictionary 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit EClasses 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit System.Classes 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit System 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 15:49:00] [TID 15992] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for: 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TUnitsController 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TPasFile 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TStringList 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TCriticalSection 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TObject 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Search for:TDictionary 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit EClasses 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit System.Classes 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit System 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 15:49:21] [TID 8396] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for: 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TUnitsController 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TPasFile 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TStringList 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TCriticalSection 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TObject 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Search for:TDictionary 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit EClasses 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit System.Classes 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit System 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 16:02:40] [TID 23536] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for: 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TUnitsController 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TPasFile 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TStringList 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TCriticalSection 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TObject 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Search for:TDictionary 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit EClasses 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit System.Classes 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit System 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-22 16:06:39] [TID 19040] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for: 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TUnitsController 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TPasFile 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TStringList 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TCriticalSection 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TObject 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Search for:TDictionary 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Found : "FindUnit.FileCache.TUnitsController - Class","FindUnit.PasParser.TPasFile - Class","System.Classes.TStringList - Class","System.SyncObjs.TCriticalSection - Class","System.TObject - Class","EClasses.TDictionary - Class","Spring.Collections.Dictionaries.TDictionary - Class","System.Generics.Collections.TDictionary - Class" 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit EClasses 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit FindUnit.PasParser 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit Spring.Collections.Dictionaries 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit System.SyncObjs 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit System.Classes 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit System 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit System.Generics.Collections 
+[2017-05-24 09:54:10] [TID 20584] DEBUG| Remove used unit FindUnit.FileCache 
+[2017-05-24 09:54:11] [TID 20584] DEBUG| GetUnusedUses:Winapi.UI.Xaml, 

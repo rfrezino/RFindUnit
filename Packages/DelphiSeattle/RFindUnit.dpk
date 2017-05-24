@@ -23,7 +23,6 @@
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE RAISEMAD}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
@@ -72,7 +71,7 @@ contains
   FindUnit.UnusedUses in '..\..\Source\FindUnit.UnusedUses.pas',
   FindUnit.DelphiReservedWords in '..\..\Source\FindUnit.DelphiReservedWords.pas',
   Interf.EnvironmentController in '..\..\Interfaces\Interf.EnvironmentController.pas',
-  FindUnit.PaintUnusedUses in '..\..\Source\FindUnit.PaintUnusedUses.pas';
+  FindUnit.PaintUnusedUses in '..\..\ideInteraction\implementations\FindUnit.PaintUnusedUses.pas';
 
 end.
 

@@ -14,7 +14,8 @@ uses
   FindUnit.SearchString in '..\Source\FindUnit.SearchString.pas',
   AV_Case1 in 'TestPasParser\AV_Case1.pas',
   Log4Pascal in '..\Thirdy\Log4pascal\Log4Pascal.pas',
-  AV_Case2 in 'TestPasParser\AV_Case2.pas';
+  AV_Case2 in 'TestPasParser\AV_Case2.pas',
+  TestFindUnitUtils in 'TestFindUnitUtils.pas';
 
 {$R *.RES}
 

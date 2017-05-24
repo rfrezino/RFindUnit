@@ -62,6 +62,7 @@ var
   AboutBoxServices : IOTAAboutBoxServices = nil;
   AboutBoxIndex : Integer = 0;
   vBindingServices: IOTAKeyBindingServices;
+  vIDENotifierIndex: Integer;
 
 resourcestring
   resPackageName = 'RfUtils - Import Usages';
@@ -83,9 +84,8 @@ begin
   with (BorlandIDEServices as IOTAKeyboardServices) do
     vKbIndex := AddKeyboardBinding(OtaKey);
 
-//  if Supports(BorlandIDEServices, IOTAServices, Services) then
-//      Services.QueryInterface(IOTAACtionServices, IActionServices);
-//    vNotifierIndex := Services.AddNotifier(TRfPaintUnsuedUses.Create);
+  vIDENotifierIndex := (BorlandIDEServices as IOTAServices).AddNotifier(TRfIDENotifier.Create);
+  Logger.Debug('Registering ide notifier ' + IntToStr(vIDENotifierIndex));
 end;
 
 procedure RegisterSplashScreen;
@@ -109,6 +109,9 @@ end;
 
 procedure UnregisterAboutBox;
 begin
+  if vIDENotifierIndex >= 0 then
+    (BorlandIDEServices as IOTAServices).RemoveNotifier(vIDENotifierIndex);
+
   if (AboutBoxIndex = 0) and Assigned(AboutBoxServices) then
   begin
     AboutBoxServices.RemovePluginInfo(AboutBoxIndex);
@@ -185,6 +188,7 @@ begin
   ProjectFileStorageService := BorlandIDEServices.GetService(IOTAProjectFileStorage) as IOTAProjectFileStorage;
   FEnvControl := TEnvironmentController.Create;
   FProjectServiceIndex := ProjectFileStorageService.AddNotifier(FEnvControl);
+  TRfPaintUnsuedUses.EnvControl := FEnvControl;
 
   CompilerInterceptor.SetEnvControl(FEnvControl);
 
@@ -232,15 +236,18 @@ var
   UnusedUses: TUnsedUsesProcessor;
   CurEditor: IOTASourceEditor;
 begin
+  Logger.Debug('TRFindUnitMain.GetUnusedUses: Fase 1');
   if FEnvControl = nil then
     Exit;
 
+  Logger.Debug('TRFindUnitMain.GetUnusedUses: Fase 2');
   CurEditor := OtaGetCurrentSourceEditor;
   if CurEditor = nil then
     Exit;
 
   BindingResult := krHandled;
 
+  Logger.Debug('TRFindUnitMain.GetUnusedUses: Fase 3');
   UnusedUses := TUnsedUsesProcessor.Create(CurEditor.FileName);
   UnusedUses.SetEnvControl(FEnvControl);
   UnusedUses.Process;
