@@ -359,7 +359,7 @@ var
   Description: string;
 begin
   Description := Types.GetAttribute(anName);
-  Description := Description + '. - Function Reference';
+  Description := Description + '.* - Function Reference';
 
   FResultItem.FReferences.Add(Description);
 end;
@@ -412,7 +412,7 @@ var
   Description: string;
 begin
   Description := Types.GetAttribute(anName);
-  Description := Description + '. - Procedure Reference';
+  Description := Description + '.* - Procedure Reference';
 
   FResultItem.FReferences.Add(Description);
 end;

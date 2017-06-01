@@ -166,9 +166,9 @@ begin
 
   Assert((PasResult.References.Count = 4)
     and (CompareListWithText(PasResult.References,
-    ['TFunctionTestEvent. - Function Reference',
+    ['TFunctionTestEvent.* - Function Reference',
      'TObjectConverterAv.* - Reference',
-     'TProcedureTestEvent. - Procedure Reference',
+     'TProcedureTestEvent.* - Procedure Reference',
      'TTestShortCut.* - Sub Range'])),
     'Wrong reference list');
 end;
