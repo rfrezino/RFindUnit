@@ -65,6 +65,7 @@ type
     tsUnusedUses: TTabSheet;
     mmoIgnoreUses: TMemo;
     Label1: TLabel;
+    chbFeatureUnusedUses: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -113,6 +114,7 @@ begin
   FSettings.GroupNonNamespaceUnits := chbGroupNonNameSpaceUnits.Checked;
 
   FSettings.IgnoreUsesUnused := mmoIgnoreUses.Lines.CommaText;
+  FSettings.EnableExperimentalFindUnusedUses := chbFeatureUnusedUses.Checked;
 
   InsertDataSetInAutoImport;
 end;
@@ -156,6 +158,7 @@ begin
   chbOrganizeUsesAfterInsertingNewUsesUnit.Checked := FSettings.OrganizeUsesAfterAddingNewUsesUnit;
   chbGroupNonNameSpaceUnits.Checked := FSettings.GroupNonNamespaceUnits;
   mmoIgnoreUses.Lines.CommaText := FSettings.IgnoreUsesUnused;
+  chbFeatureUnusedUses.Checked := FSettings.EnableExperimentalFindUnusedUses;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0

@@ -25,6 +25,7 @@ type
     SettingFormStartPosX: Cardinal;
     SettingFormStartPosY: Cardinal;
     IgnoreUsesUnused: string;
+    EnableExperimentalFindUnusedUses: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -81,6 +82,9 @@ type
 
     function GetIgnoreUsesUnused: string;
     procedure SetUsesUnused(const Value: string);
+
+    function GetEnableExperimentalFindUnusedUses: Boolean;
+    procedure SetEnableExperimentalFindUnusedUses(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -102,6 +106,7 @@ type
     property SettingFormStartPosX: Cardinal read GetSettingFormStartPosX write SetSettingFormStartPosX;
     property SettingFormStartPosY: Cardinal read GetSettingFormStartPosY write SetSettingFormStartPosY;
     property IgnoreUsesUnused: string read GetIgnoreUsesUnused write SetUsesUnused;
+    property EnableExperimentalFindUnusedUses: Boolean read GetEnableExperimentalFindUnusedUses write SetEnableExperimentalFindUnusedUses;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -139,6 +144,7 @@ const
   CONF_FORM_SETTINGS_START_X = 'FORM_SETTINGS_START_X';
   CONF_FORM_SETTINGS_START_Y = 'FORM_SETTINGS_START_Y';
   CONF_IGNORED_USES = 'IGNORED_USES';
+  CONF_EXPRIMENTAL_UNUSED_USES = 'EXPRIMENTAL_UNUSED_USES';
 
 { TSettings }
 
@@ -164,9 +170,15 @@ begin
     Result.SettingFormStartPosX := Settings.SettingFormStartPosX;
     Result.SettingFormStartPosY := Settings.SettingFormStartPosY;
     Result.IgnoreUsesUnused := Settings.IgnoreUsesUnused;
+    Result.EnableExperimentalFindUnusedUses := Settings.EnableExperimentalFindUnusedUses;
   finally
     Settings.Free;
   end;
+end;
+
+function TSettings.GetEnableExperimentalFindUnusedUses: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_EXPRIMENTAL_UNUSED_USES, False);
 end;
 
 function TSettings.GetGroupNonNamespaceUnits: Boolean;
@@ -380,6 +392,12 @@ end;
 procedure TSettings.SetBreakUsesLineAtPosition(const Value: Cardinal);
 begin
   FIni.WriteInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetEnableExperimentalFindUnusedUses(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_EXPRIMENTAL_UNUSED_USES, Value);
   FIni.UpdateFile;
 end;
 

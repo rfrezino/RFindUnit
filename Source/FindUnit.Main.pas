@@ -288,9 +288,7 @@ end;
 procedure Clear;
 begin
   with (BorlandIDEServices as IOTAKeyboardServices) do
-  begin
     RemoveKeyboardBinding(vKbIndex);
-  end;
 end;
 
 initialization

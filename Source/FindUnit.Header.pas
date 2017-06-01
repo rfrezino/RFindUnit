@@ -28,6 +28,7 @@ type
 var
   strListTypeDescription: array[TListType] of string;
   VERSION_STR: string;
+  vSystemRunning: Boolean;
 
 const
    MAX_RETURN_ITEMS = 200;
@@ -53,5 +54,10 @@ end;
 
 initialization
   LoadConts;
+  vSystemRunning := True;
+
+finalization
+  vSystemRunning := False;
+
 
 end.

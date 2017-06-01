@@ -338,6 +338,9 @@ begin
         begin
           Parser := nil;
           try
+            if not vSystemRunning then
+              Exit;
+
             Step := 'InterlockedIncrement(FParsedItems);';
             InterlockedIncrement(FParsedItems);
             Step := 'Create';

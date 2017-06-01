@@ -69,6 +69,9 @@ type
 
 implementation
 
+uses
+  FindUnit.Header;
+
 { TUnsedUsesProcessor }
 
 constructor TUnsedUsesProcessor.Create(AFilePath: string);
@@ -151,6 +154,9 @@ begin
 
   for Matches in FMatches.Values do
   begin
+    if not vSystemRunning then
+      Exit;
+
     FindUnit.Utils.GetUnitFromSearchSelection(Matches, UnitNameEx, ClassNameEx);
 
     UpMatchs := UnitNameEx.ToUpper;

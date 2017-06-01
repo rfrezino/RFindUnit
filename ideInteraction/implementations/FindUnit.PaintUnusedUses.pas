@@ -23,7 +23,8 @@ uses
 
   Graphics,
   Vcl.Imaging.pngimage,
-  System.IOUtils;
+  System.IOUtils,
+  FindUnit.Settings;
 
 type
   TRfUnusedProcessStatus = (uspRunning, uspPending, uspComplete);
@@ -120,6 +121,9 @@ end;
 
 procedure TRfPaintUnsuedUses.BeginPaint(const View: IOTAEditView; var FullRepaint: Boolean);
 begin
+  if not GlobalSettings.EnableExperimentalFindUnusedUses then
+    Exit;
+
   if FNeedRepaint then
   begin
     FNeedRepaint := False;
@@ -211,6 +215,9 @@ var
   end;
 
 begin
+  if not GlobalSettings.EnableExperimentalFindUnusedUses then
+    Exit;
+
   if (FUsesStartLine = LineNumber) or ((FUsesStartLine = -1) and (LineNumber = 1)) then
   begin
     if ((FProcessed in [uspRunning, uspPending]) or (not Assigned(FUnusedUses))) then

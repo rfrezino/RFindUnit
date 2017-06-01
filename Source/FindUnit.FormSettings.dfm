@@ -177,12 +177,21 @@ object frmSettings: TfrmSettings
         end
         object btnCreateProjectConfiguration: TButton
           Left = 440
-          Top = 280
+          Top = 328
           Width = 192
           Height = 25
           Caption = 'Create configuration for this project'
-          TabOrder = 3
+          TabOrder = 4
+          Visible = False
           OnClick = btnCreateProjectConfigurationClick
+        end
+        object chbFeatureUnusedUses: TCheckBox
+          Left = 335
+          Top = 129
+          Width = 297
+          Height = 17
+          Caption = 'Enable experimental feature: Find unused uses'
+          TabOrder = 3
         end
       end
     end
