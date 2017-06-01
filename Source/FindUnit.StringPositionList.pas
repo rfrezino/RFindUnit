@@ -7,7 +7,8 @@ uses
 
   FindUnit.Header,
 
-  Generics.Collections;
+  Generics.Collections,
+  System.SysUtils;
 
 type
   TStringPositionList = class(TList<TStringPosition>)
@@ -22,9 +23,6 @@ type
   end;
 
 implementation
-
-uses
-  SysUtils;
 
 { TStringPositionList }
 

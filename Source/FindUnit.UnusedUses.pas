@@ -7,7 +7,6 @@ uses
   Log4Pascal,
 
   DelphiAST.Classes,
-  DelphiAST.Consts,
   DelphiAST.Writer,
 
   FindUnit.DelphiReservedWords,
@@ -43,12 +42,16 @@ type
     FMatches: TDictionary<string, string>;
     FUnusedUses: TDictionary<string, TUsesUnit>;
 
+    FOptionalUsesPrefix: TStringList;
+    FUsesStartLine: Integer;
+
     function GetUsedTypes: TDictionary<string, string>;
-    function GetUses: TDictionary<string, TUsesUnit>;
+    function GetUnitSpecifiedOnUses: TDictionary<string, TUsesUnit>;
     function GetFullMatchsForUses: TDictionary<string, string>;
     function GetIgnoredTypes: TDictionary<string, string>;
     function GetIgnoredUses: TDictionary<string, string>;
     function GetUnusedUses: TDictionary<string, TUsesUnit>;
+    function GetOptionalUsesPrefix: TStringList;
   public
     constructor Create(AFilePath: string);
     destructor Destroy; override;
@@ -61,12 +64,10 @@ type
     function GetUnusedUsesAsString: string;
 
     property UnusedUses: TDictionary<string, TUsesUnit> read FUnusedUses;
+    property UsesStartLine: Integer read FUsesStartLine write FUsesStartLine;
   end;
 
 implementation
-
-uses
-  Vcl.Dialogs;
 
 { TUnsedUsesProcessor }
 
@@ -74,6 +75,7 @@ constructor TUnsedUsesProcessor.Create(AFilePath: string);
 begin
   FUnusedUses := TDictionary<string, TUsesUnit>.Create;
   FFilePath := AFilePath;
+  FUsesStartLine := -1;
 end;
 
 destructor TUnsedUsesProcessor.Destroy;
@@ -84,6 +86,7 @@ begin
   FIgnoredUses.Free;
   FMatches.Free;
   FUnusedUses.Free;
+  FOptionalUsesPrefix.Free;
   inherited;
 end;
 
@@ -138,16 +141,36 @@ var
   UseFound: TPair<string, TUsesUnit>;
   UnitNameEx: string;
   ClassNameEx: string;
+  OptionalUses: string;
+  AllPossibleMatches: TDictionary<string, string>;
+  UpMatchs: string;
+  PrefixVariation: string;
 begin
   Result := TDictionary<string, TUsesUnit>.Create;
-  for UseFound in FUses do
-    Result.Add(UseFound.Key, UseFound.Value);
+  AllPossibleMatches := TDictionary<string, string>.Create;
 
   for Matches in FMatches.Values do
   begin
     FindUnit.Utils.GetUnitFromSearchSelection(Matches, UnitNameEx, ClassNameEx);
-    Result.Remove(UnitNameEx.ToUpper);
+
+    UpMatchs := UnitNameEx.ToUpper;
+    AllPossibleMatches.AddOrSetValue(UpMatchs, UnitNameEx);
+
+    for OptionalUses in FOptionalUsesPrefix do
+    begin
+      AllPossibleMatches.AddOrSetValue(OptionalUses + UpMatchs, Matches);
+
+      PrefixVariation := UpMatchs.Replace(OptionalUses, '');
+      AllPossibleMatches.AddOrSetValue(PrefixVariation, UnitNameEx);
+    end;
   end;
+
+  for UseFound in FUses do
+    if not AllPossibleMatches.ContainsKey(UseFound.Key) then
+      if not FIgnoredUses.ContainsKey(UseFound.Key) then
+        Result.Add(UseFound.Key, UseFound.Value);
+
+  AllPossibleMatches.Free;
 end;
 
 function TUnsedUsesProcessor.GetUnusedUsesAsString: string;
@@ -182,21 +205,27 @@ begin
   begin
     Line := XmlFile[I];
 
-    if (Pos('<TYPE', Line) = 0) and (Pos('<NAME', Line) = 0) then
+    if (Pos('<TYPE', Line) = 0)
+      and (Pos('<NAME', Line) = 0)
+      and (Pos('<IDENTIFIER', Line) = 0) then
       Continue;
 
     FetchType := Fetch(Line, 'name="');
     FetchType := Fetch(Line, '"');
 
+    if FetchType.Length <= 2 then
+      Continue;
+
     if FIgnoredTypes.ContainsKey(FetchType.ToUpper) then
       Continue;
 
-    Result.AddOrSetValue(FetchType.ToUpper, FetchType);
+    if not FetchType.IsEmpty then
+      Result.AddOrSetValue(FetchType.ToUpper, FetchType);
   end;
   XmlFile.Free;
 end;
 
-function TUnsedUsesProcessor.GetUses: TDictionary<string, TUsesUnit>;
+function TUnsedUsesProcessor.GetUnitSpecifiedOnUses: TDictionary<string, TUsesUnit>;
 var
   XmlFile: TStringList;
   Line: string;
@@ -206,7 +235,9 @@ var
   Column: string;
   UsesLine: string;
   UsesName: string;
+  IsHeader: Boolean;
 begin
+  IsHeader := True;
   Result := TDictionary<string, TUsesUnit>.Create;
 
   if FUnitNode = nil then
@@ -219,8 +250,22 @@ begin
   begin
     Line := XmlFile[I];
 
+    if (FUsesStartLine = -1) and Line.Contains('<USES') then
+    begin
+      Fetch(Line,'begin_line="');
+      UsesLine := Fetch(Line, '"');
+      FUsesStartLine := StrToInt(UsesLine);
+      Continue;
+    end;
+
     if Pos('<UNIT', Line) = 0 then
       Continue;
+
+    if IsHeader then
+    begin
+      IsHeader := False;
+      Continue;
+    end;
 
     UsesLine := Line;
     Column := Line;
@@ -244,10 +289,55 @@ begin
   XmlFile.Free;
 end;
 
+function TUnsedUsesProcessor.GetOptionalUsesPrefix: TStringList;
+begin
+  Result := TStringList.Create;
+  Result.Add('WINDOWS.');
+  Result.Add('MESSAGES.');
+  Result.Add('SYSUTILS.');
+  Result.Add('VARIANTS.');
+  Result.Add('CLASSES.');
+  Result.Add('GRAPHICS.');
+  Result.Add('CONTROLS.');
+  Result.Add('FORMS.');
+  Result.Add('DIALOGS.');
+  Result.Add('TYPES.');
+  Result.Add('WINAPI.');
+  Result.Add('WINAPI.WINDOWS.');
+  Result.Add('WINAPI.MESSAGES.');
+  Result.Add('SYSTEM.');
+  Result.Add('SYSTEM.SYSUTILS.');
+  Result.Add('SYSTEM.VARIANTS.');
+  Result.Add('SYSTEM.CLASSES.');
+  Result.Add('SYSTEM.TYPES.');
+  Result.Add('VCL.');
+  Result.Add('VCL.GRAPHICS.');
+  Result.Add('VCL.CONTROLS.');
+  Result.Add('VCL.FORMS.');
+  Result.Add('VCL.DIALOGS.');
+  Result.Add('FMX.');
+  Result.Add('FMX.TYPES.');
+  Result.Add('FMX.CONTROLS.');
+  Result.Add('FMX.FORMS.');
+  Result.Add('FMX.DIALOGS.');
+  Result.Add('QTYPES.');
+  Result.Add('QGRAPHICS.');
+  Result.Add('QCONTROLS.');
+  Result.Add('QFORMS.');
+  Result.Add('QDIALOGS.');
+  Result.Add('QSTDCTRLS.');
+end;
+
 procedure TUnsedUsesProcessor.Process;
 var
   Step: string;
 begin
+  if not FEnvControl.AreDependenciasReady then
+  begin
+    FEnvControl.ForceRunDependencies;
+    Exit;
+  end;
+
   FUnitNode := nil;
   if not FileExists(FFilePath) then
   begin
@@ -257,7 +347,7 @@ begin
 
   try
     try
-      FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, True, nil);
+      FUnitNode := TPasSyntaxTreeBuilder.Run(FFilePath, False, nil);
     except
       on E: ESyntaxTreeException do
       begin
@@ -273,9 +363,10 @@ begin
 
     FIgnoredTypes := GetIgnoredTypes;
     FIgnoredUses := GetIgnoredUses;
-    FUses := GetUses;
+    FUses := GetUnitSpecifiedOnUses;
     FUsedTypes := GetUsedTypes;
     FMatches := GetFullMatchsForUses;
+    FOptionalUsesPrefix := GetOptionalUsesPrefix;
 
     FUnusedUses.Free;
     FUnusedUses := GetUnusedUses;

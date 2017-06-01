@@ -4,15 +4,11 @@ interface
 
 uses
   Classes,
-  ComCtrls,
   SysUtils,
 
   DelphiAST.Classes,
 
-  FindUnit.DcuDecompiler,
   FindUnit.Header,
-  FindUnit.IncluderHandlerInc,
-  FindUnit.Utils,
 
   Generics.Collections,
 
@@ -37,6 +33,7 @@ type
     FEnumerators: TStringList;
     FInterfaces: TStringList;
     FReferences: TStringList;
+    FRecords: TStringList;
   public
     constructor Create;
     destructor Destroy; override;
@@ -55,6 +52,7 @@ type
     property Enumerators: TStringList read FEnumerators write FEnumerators;
     property Interfaces: TStringList read FInterfaces write FInterfaces;
     property References: TStringList read FReferences write FReferences;
+    property Records: TStringList read FRecords write FRecords;
 
     function GetListFromType(ListType: TListType): TStringList;
   end;
@@ -77,11 +75,15 @@ type
     procedure GetVariables;
     procedure GetConstants;
     //sub rotines
+    procedure GetRecords(Types: TSyntaxNode);
     procedure GetInterfaceDescription(Types: TSyntaxNode);
     procedure GetClassDescription(Types: TSyntaxNode);
     procedure GetEnumerationDescription(Types: TSyntaxNode);
     procedure GetClassMethodsFromClassNode(AClassName: string; ClassNode: TSyntaxNode);
+    procedure GetProcedureReferenceDescription(Types: TSyntaxNode);
+    procedure GetFunctionReferenceDescription(Types: TSyntaxNode);
     procedure GetReference(Types: TSyntaxNode);
+    procedure GetSubRangeDesc(Types: TSyntaxNode);
 
     function HaveInterfaceNode: Boolean;
   public
@@ -125,6 +127,7 @@ begin
   CreateAndAdd(FEnumerators);
   CreateAndAdd(FInterfaces);
   CreateAndAdd(FReferences);
+  CreateAndAdd(FRecords);
 end;
 
 destructor TPasFile.Destroy;
@@ -147,6 +150,7 @@ begin
     ltEnumeratores: Result := FEnumerators;
     ltReferences: Result := FReferences;
     ltInterfaces: Result := FInterfaces;
+    ltRecords: Result := FRecords;
   end;
 end;
 
@@ -194,11 +198,19 @@ begin
               TypeType := TypeDesc.GetAttribute(anName);
 
             if TypeType.Equals('interface') then
-              GetInterfaceDescription(TypeNode);
-            if TypeType.Equals('class') then
+              GetInterfaceDescription(TypeNode)
+            else if TypeType.Equals('class') then
               GetClassDescription(TypeNode)
             else if TypeType.Equals('enum') or TypeType.Equals('set') then
-              GetEnumerationDescription(TypeNode);
+              GetEnumerationDescription(TypeNode)
+            else if TypeType.Equals('record') then
+              GetRecords(TypeNode)
+            else if TypeType.Equals('procedure') then
+              GetProcedureReferenceDescription(TypeNode)
+            else if TypeType.Equals('function') then
+              GetFunctionReferenceDescription(TypeNode)
+            else if  TypeType.Equals('subrange') then
+              GetSubRangeDesc(TypeNode);
           end;
         end;
       except
@@ -254,9 +266,9 @@ begin
       MethodNameDesc := AClassName + '.' + MethodNode.GetAttribute(anName);
       MethodType := MethodNode.GetAttribute(anKind);
       if MethodType  = 'procedure' then
-        FResultItem.FClassProcedure.Add(MethodNameDesc + ' - Class produre')
+        FResultItem.FClassProcedure.Add(MethodNameDesc + strListTypeDescription[ltClassProcedures])
       else
-        FResultItem.FClassFunctions.Add(MethodNameDesc + ' - Class function');
+        FResultItem.FClassFunctions.Add(MethodNameDesc + strListTypeDescription[ltClassFunctions]);
     end;
 
     PublicNode.DeleteChild(MethodNode);
@@ -342,6 +354,16 @@ begin
   end;
 end;
 
+procedure TPasFileParser.GetFunctionReferenceDescription(Types: TSyntaxNode);
+var
+  Description: string;
+begin
+  Description := Types.GetAttribute(anName);
+  Description := Description + '. - Function Reference';
+
+  FResultItem.FReferences.Add(Description);
+end;
+
 procedure TPasFileParser.GetInterfaceDescription(Types: TSyntaxNode);
 var
   Description: string;
@@ -385,9 +407,29 @@ begin
   end;
 end;
 
+procedure TPasFileParser.GetProcedureReferenceDescription(Types: TSyntaxNode);
+var
+  Description: string;
+begin
+  Description := Types.GetAttribute(anName);
+  Description := Description + '. - Procedure Reference';
+
+  FResultItem.FReferences.Add(Description);
+end;
+
+procedure TPasFileParser.GetRecords(Types: TSyntaxNode);
+begin
+  FResultItem.FRecords.Add(Types.GetAttribute(anName) + '.* - Record');
+end;
+
 procedure TPasFileParser.GetReference(Types: TSyntaxNode);
 begin
-  FResultItem.FReferences.Add(Types.GetAttribute(anName) + ' - Reference');
+  FResultItem.FReferences.Add(Types.GetAttribute(anName) + '.* - Reference');
+end;
+
+procedure TPasFileParser.GetSubRangeDesc(Types: TSyntaxNode);
+begin
+  FResultItem.FReferences.Add(Types.GetAttribute(anName) + '.* - Sub Range');
 end;
 
 procedure TPasFileParser.GetUnitName;

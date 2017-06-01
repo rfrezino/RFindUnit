@@ -4,6 +4,7 @@ interface
 
 uses
   System.Classes,
+
   System.IniFiles;
 
 type

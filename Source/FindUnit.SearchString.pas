@@ -11,13 +11,18 @@ uses
   Generics.Collections,
 
   System.SyncObjs,
-  Log4Pascal;
+
+  Log4Pascal,
+  System.Generics.Collections,
+  Interf.SearchStringCache;
 
 type
   TSearchString = class(TObject)
-  protected
+  private
     FRcSearch: TCriticalSection;
     FCandidates: TDictionary<string, TPasFile>;
+    FSearchStringCache: ISearchStringCache;
+    FMatchCache: ISearchStringCache;
 
     function FoundAllEntries(Entries: TStringList; const Text: string): Boolean;
 
@@ -29,6 +34,9 @@ type
 
     function GetMatch(const SearchString: string): TStringList;
     function GetFullMatch(const SearchString: string): TStringList;
+
+    property FullMatchCache: ISearchStringCache read FSearchStringCache write FSearchStringCache;
+    property MatchCache: ISearchStringCache read FMatchCache write FMatchCache;
   end;
 
 implementation
@@ -70,9 +78,22 @@ var
   I: Integer;
   Line: string;
   UpSS: string;
+  Local: TStringList;
 begin
+  if SearchString.IsEmpty then
+  begin
+    Result := TStringList.Create;
+    Exit;
+  end;
+
+  if Assigned(FSearchStringCache) and FSearchStringCache.GetMatch(SearchString, Result) then
+    Exit;
+
   UpSS := SearchString.ToUpper;
-  Result := GetMatch(SearchString);
+  Result := GetMatch('.' + SearchString + '.');
+  if Result.Count = 0 then
+    Result := GetMatch(SearchString);
+
   for I := Result.Count - 1 downto 0 do
   begin
     Line := Result[I].ToUpper;
@@ -84,17 +105,28 @@ begin
 
     Result.Delete(I);
   end;
+
+  if FSearchStringCache <> nil then
+  begin
+    Local := TStringList.Create;
+    Local.Text := Result.Text;
+    FSearchStringCache.AddItemOnCache(SearchString, Local);
+  end;
 end;
 
 function TSearchString.GetMatch(const SearchString: string): TStringList;
 var
-  I: Integer;
   Item: TPasFile;
   ItensFound: Integer;
   SearchList: TStringList;
+  SearchKey: string;
 begin
   Result := TStringList.Create;
   if SearchString.IsEmpty then
+    Exit;
+
+  SearchKey := UpperCase(SearchString);
+  if Assigned(FMatchCache) and (FMatchCache.GetMatch(SearchKey, Result)) then
     Exit;
 
   FRcSearch.Acquire;

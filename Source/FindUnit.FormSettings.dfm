@@ -253,6 +253,28 @@ object frmSettings: TfrmSettings
         TabOrder = 2
       end
     end
+    object tsUnusedUses: TTabSheet
+      Caption = 'Unused uses'
+      ImageIndex = 2
+      object Label1: TLabel
+        Left = 5
+        Top = 6
+        Width = 57
+        Height = 13
+        Caption = 'Ignore uses'
+      end
+      object mmoIgnoreUses: TMemo
+        Left = 0
+        Top = 24
+        Width = 646
+        Height = 385
+        Align = alBottom
+        Lines.Strings = (
+          'mmoIgnoreUses')
+        ScrollBars = ssHorizontal
+        TabOrder = 0
+      end
+    end
   end
   object dtsAutoImport: TDataSource
     DataSet = cdsAutoImport

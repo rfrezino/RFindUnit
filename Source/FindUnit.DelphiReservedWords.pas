@@ -145,6 +145,7 @@ begin
   Result.Add('repeat');
   Result.Add('requires');
   Result.Add('resident');
+  Result.Add('result');
   Result.Add('resourcestring');
   Result.Add('safecall');
   Result.Add('Self');
@@ -185,6 +186,11 @@ begin
   Result.Add('write');
   Result.Add('writeonly');
   Result.Add('xor');
+  Result.Add('Free');
+  Result.Add('Assigned');
+  Result.Add('enum');
+  Result.Add('Exit');
+  Result.Add('Clear');
 end;
 
 end.

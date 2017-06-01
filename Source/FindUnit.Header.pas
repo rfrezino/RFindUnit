@@ -15,7 +15,8 @@ type
     ltClassProcedures = 6,
     ltEnumeratores = 7,
     ltInterfaces = 8,
-    ltReferences = 9);
+    ltReferences = 9,
+    ltRecords = 10);
 
   TStringPosition = record
     Value: string;

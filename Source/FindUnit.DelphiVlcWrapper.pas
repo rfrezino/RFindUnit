@@ -3,7 +3,7 @@ unit FindUnit.DelphiVlcWrapper;
 interface
 
 uses
-	Windows, Winapi.UI.Xaml;
+	Windows;
 
 type
   TDelphiVLCWrapper = class(TObject)
@@ -16,7 +16,7 @@ type
 implementation
 
 uses
-	Classes, Messages;
+  Messages;
 
 var
   FFound: Boolean;

@@ -7,7 +7,8 @@ uses
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
   FindUnit.EnvironmentController, StrUtils, AppEvnts,
   Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
-  FindUnit.FormSettings, FindUnit.Settings, System.ImageList;
+  FindUnit.FormSettings, FindUnit.Settings, System.ImageList,
+  Vcl.Clipbrd;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -53,6 +54,7 @@ type
     procedure btnProcessDCUsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnConfigClick(Sender: TObject);
+    procedure lstResultClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
     FFileEditor: TSourceFileEditor;
@@ -480,6 +482,13 @@ begin
   CurEditor := OtaGetCurrentSourceEditor;
   FFileEditor := TSourceFileEditor.Create(CurEditor);
   FFileEditor.Prepare;
+end;
+
+procedure TfrmFindUnit.lstResultClick(Sender: TObject);
+begin
+  {$IFDEF DEBUG}
+  Clipboard.AsText := lstResult.Items.Text;
+  {$ENDIF}
 end;
 
 procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);

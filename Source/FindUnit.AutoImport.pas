@@ -4,7 +4,6 @@ interface
 
 uses
   Classes,
-  Contnrs,
   IniFiles,
   Log4Pascal,
   SysUtils,
@@ -13,10 +12,7 @@ uses
   FindUnit.Header,
   FindUnit.OTAUtils,
   FindUnit.StringPositionList,
-  FindUnit.Utils,
-
-  Generics.Collections,
-  Generics.Defaults;
+  FindUnit.Utils;
 
 type
   TAutoImport = class(TObject)

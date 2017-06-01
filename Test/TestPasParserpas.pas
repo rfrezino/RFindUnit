@@ -3,9 +3,16 @@ unit TestPasParserpas;
 interface
 
 uses
-  TestFramework, SimpleParser.Lexer.Types, FindUnit.DcuDecompiler,
-  FindUnit.PasParser, Generics.Collections, FindUnit.IncluderHandlerInc, Classes,
-  SysUtils, ComCtrls, FindUnit.Header, FindUnit.Utils, DelphiAST.Classes;
+  Classes,
+  SysUtils,
+  TestFramework,
+
+  DelphiAST.Classes,
+
+  FindUnit.Header,
+  FindUnit.PasParser, FindUnit.Utils,
+
+  Generics.Collections;
 
 type
   TestTPasFileParser = class(TTestCase)
@@ -19,7 +26,7 @@ type
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure TestProcess;
+    procedure TestParse;
 
     procedure TestAvCase1;
     procedure TestAvCase2;
@@ -96,7 +103,7 @@ begin
   end;
 end;
 
-procedure TestTPasFileParser.TestProcess;
+procedure TestTPasFileParser.TestParse;
 var
   PasResult: TPasFile;
 begin
@@ -104,14 +111,66 @@ begin
 
   Assert(PasResult.FilePath = FFilePath, 'Wrong file path');
   Assert(PasResult.OriginUnitName = TEST_FILE_NAME, 'Wrong file path');
-  Assert((PasResult.Procedures.Count = 1) and (CompareListWithText(PasResult.Procedures, ['YesOutProcedure'])), 'Wrong procedure list');
-  Assert((PasResult.Functions.Count = 1) and (CompareListWithText(PasResult.Functions, ['YesOutFunction'])), 'Wrong function list');
-  Assert((PasResult.Constants.Count = 2) and (CompareListWithText(PasResult.Constants, ['TEST_CONT', 'TEST_CONT_BREAK'])), 'Wrong const list');
-  Assert((PasResult.Classes.Count = 3) and CompareListWithText(PasResult.Classes, ['TDescendantClass.* - Class', 'TTest1.* - Class','TTest2.* - Class']) , 'Wrong class list');
-  Assert((PasResult.ClassFunctions.Count = 3) and (CompareListWithText(PasResult.ClassFunctions, ['TDescendantClass.DescendantClassShow - Class function','TTest1.YesShowFunction - Class function','TTest2.YesShowFunction - Class function'])), 'Wrong class function list');
-  Assert((PasResult.ClassProcedure.Count = 2) and (CompareListWithText(PasResult.ClassProcedure, ['TTest1.YesShow - Class produre','TTest2.YesShow - Class produre'])), 'Wrong class procedure list');
-  Assert((PasResult.Enumerators.Count = 10) and CompareListWithText(PasResult.Enumerators, ['TestEnum - Enum','TestEnum.teOne - Enum item','TestEnum.teThree - Enum item','TestEnum.teTwo - Enum item','TestEnumValue - Enum','TestEnumValue.tevOne - Enum item','TestEnumValue.tevThree - Enum item','TestEnumValue.tevTwo - Enum item','TestSet - Set','TestSetNew - Set']), 'Wrong list of enums');
-  Assert((PasResult.Interfaces.Count = 1) and (CompareListWithText(PasResult.Interfaces, ['IOtherInterface.* - Interface'])), 'Wrong interfaes list');
+
+  Assert((PasResult.Procedures.Count = 1)
+    and (CompareListWithText(PasResult.Procedures, ['YesOutProcedure'])),
+    'Wrong procedure list');
+
+  Assert((PasResult.Functions.Count = 1)
+    and (CompareListWithText(PasResult.Functions, ['YesOutFunction'])),
+    'Wrong function list');
+
+  Assert((PasResult.Constants.Count = 2)
+    and (CompareListWithText(PasResult.Constants, ['TEST_CONT', 'TEST_CONT_BREAK'])),
+    'Wrong const list');
+
+  Assert((PasResult.Classes.Count = 3)
+    and CompareListWithText(PasResult.Classes,
+      ['TDescendantClass.* - Class', 'TTest1.* - Class','TTest2.* - Class']) ,
+      'Wrong class list');
+
+  Assert((PasResult.ClassFunctions.Count = 3)
+    and (CompareListWithText(PasResult.ClassFunctions,
+    ['TDescendantClass.DescendantClassShow - Class Function',
+      'TTest1.YesShowFunction - Class Function',
+      'TTest2.YesShowFunction - Class Function'])),
+    'Wrong class function list');
+
+  Assert((PasResult.ClassProcedure.Count = 2)
+    and (CompareListWithText(PasResult.ClassProcedure,
+      ['TTest1.YesShow - Class Procedure',
+      'TTest2.YesShow - Class Procedure'])),
+    'Wrong class procedure list');
+
+  Assert((PasResult.Enumerators.Count = 10)
+    and CompareListWithText(PasResult.Enumerators,
+      ['TestEnum - Enum','TestEnum.teOne - Enum item',
+      'TestEnum.teThree - Enum item',
+      'TestEnum.teTwo - Enum item',
+      'TestEnumValue - Enum',
+      'TestEnumValue.tevOne - Enum item',
+      'TestEnumValue.tevThree - Enum item',
+      'TestEnumValue.tevTwo - Enum item',
+      'TestSet - Set','TestSetNew - Set']),
+    'Wrong list of enums');
+
+  Assert((PasResult.Interfaces.Count = 1)
+    and (CompareListWithText(PasResult.Interfaces,
+      ['IOtherInterface.* - Interface'])),
+    'Wrong interfaes list');
+
+  Assert(((PasResult.Records.Count = 1)
+    and (CompareListWithText(PasResult.Records,
+    ['TRecordWin.* - Record']))),
+    'Records list is not correct');
+
+  Assert((PasResult.References.Count = 4)
+    and (CompareListWithText(PasResult.References,
+    ['TFunctionTestEvent. - Function Reference',
+     'TObjectConverterAv.* - Reference',
+     'TProcedureTestEvent. - Procedure Reference',
+     'TTestShortCut.* - Sub Range'])),
+    'Wrong reference list');
 end;
 
 initialization

@@ -10,8 +10,9 @@ uses
   FindUnit.FileCache,
   FindUnit.Header,
   FindUnit.PasParser,
-  FindUnit.Settings,
   FindUnit.Worker,
+
+  Interf.EnvironmentController,
 
   System.Classes,
   System.Generics.Collections,
@@ -19,8 +20,7 @@ uses
 
   Winapi.Windows,
 
-  Xml.XMLIntf,
-  Interf.EnvironmentController;
+  Xml.XMLIntf;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier, IRFUEnvironmentController)
@@ -53,6 +53,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure ForceRunDependencies;
+
     procedure LoadLibraryPath;
     procedure LoadProjectPath;
     procedure ForceLoadProjectPath;
@@ -75,13 +77,19 @@ type
 
     procedure ImportMissingUnits(ShowNoImport: Boolean = true);
     procedure OrganizeUses;
+
+    function AreDependenciasReady: Boolean;
   end;
 
 implementation
 
 uses
-  FindUnit.FileEditor, FindUnit.FormMessage, FindUnit.OTAUtils,
-  FindUnit.StringPositionList, FindUnit.Utils, System.Threading;
+  FindUnit.FileEditor,
+  FindUnit.FormMessage,
+  FindUnit.OTAUtils,
+  FindUnit.StringPositionList,
+  FindUnit.Utils;
+
 
 { TEnvUpdateControl }
 
@@ -189,6 +197,12 @@ procedure TEnvironmentController.ForceLoadProjectPath;
 begin
   if FProjectUnits = nil then
     LoadProjectPath;
+end;
+
+procedure TEnvironmentController.ForceRunDependencies;
+begin
+  LoadLibraryPath;
+  LoadProjectPath;
 end;
 
 function TEnvironmentController.GetFullMatch(const SearchString: string): TStringList;
@@ -412,6 +426,11 @@ begin
     );
   LocalThread.FreeOnTerminate := True;
   LocalThread.Start;
+end;
+
+function TEnvironmentController.AreDependenciasReady: Boolean;
+begin
+  Result := IsProjectsUnitReady and IsLibraryPathsUnitReady;
 end;
 
 procedure TEnvironmentController.CallProcessDcuFiles;

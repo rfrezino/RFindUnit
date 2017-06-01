@@ -7,7 +7,8 @@ uses
   IOUtils,
   TlHelp32,
   Windows,
-  SimpleParser.Lexer.Types, System.Generics.Collections,
+  SimpleParser.Lexer.Types,
+  System.Generics.Collections,
   System.StrUtils;
 
 type

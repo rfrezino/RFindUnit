@@ -157,6 +157,9 @@
         <DCCReference Include="..\..\Source\FindUnit.DelphiReservedWords.pas"/>
         <DCCReference Include="..\..\Interfaces\Interf.EnvironmentController.pas"/>
         <DCCReference Include="..\..\ideInteraction\implementations\FindUnit.PaintUnusedUses.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.ImageRepository.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.SearchStringCache.pas"/>
+        <DCCReference Include="..\..\Interfaces\Interf.SearchStringCache.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

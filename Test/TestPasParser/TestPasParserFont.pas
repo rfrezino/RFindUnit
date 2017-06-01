@@ -6,7 +6,13 @@ const
   TEST_CONT = 'test const';
 
 type
+  TTestShortCut = Low(Word)..High(Word);
+
   TObjectConverterAv = reference to function(Data: TObject; Field: string): TObject;
+
+  TProcedureTestEvent = procedure(Sender: TObject; FunctionResult: String; var Feedback: String) of object;
+  TFunctionTestEvent = function(Sender: TObject; FunctionResult: String; var Feedback: String): string of object;
+
 
   TestEnum = (teOne, teTwo, teThree);
   TestSet = set of TestEnum;
@@ -14,6 +20,10 @@ type
 
   IOtherInterface = interface
     ['{9B20D6D4-0E6C-44B6-A8D6-CF1DC3ACFE55}']
+  end;
+
+  TRecordWin = record
+    TestValue: string;
   end;
 
   TTest1 = class(TObject)

@@ -3,11 +3,21 @@ unit TestSearchString;
 interface
 
 uses
-  TestFramework, Log4Pascal, FindUnit.SearchString, System.SyncObjs,
-  Generics.Collections, Classes, FindUnit.Header, FindUnit.PasParser,
+  Classes,
+  TestFramework,
+
+  FindUnit.Header,
+  FindUnit.PasParser,
+  FindUnit.SearchString,
+  FindUnit.SearchStringCache,
   FindUnit.Utils,
-  System.SysUtils,
-  System.Generics.Collections;
+
+  Generics.Collections,
+
+  Interf.SearchStringCache,
+
+  System.Generics.Collections,
+  System.SysUtils;
 
 type
   TestTSearchString = class(TTestCase)
@@ -23,6 +33,7 @@ type
     procedure TestGetMatch;
     procedure TestGetMatchEmpty;
     procedure TestGetFullMatch;
+    procedure TestGetFullMatchCache;
   end;
 
 implementation
@@ -58,7 +69,7 @@ var
 begin
   SearchString := 'Test';
   ReturnValue := FSearchString.GetMatch(SearchString);
-  Assert(ReturnValue.Count = 25);
+  Assert(ReturnValue.Count = 29);
   ReturnValue.Free;
 end;
 
@@ -78,9 +89,29 @@ var
   ReturnValue: TStringList;
   SearchString: string;
 begin
-  // TODO: Setup method call parameters
+  SearchString := 'TList';
   ReturnValue := FSearchString.GetFullMatch(SearchString);
-  // TODO: Validate method results
+
+  Assert(ReturnValue.Count = 0);
+  ReturnValue.Free;
+end;
+
+procedure TestTSearchString.TestGetFullMatchCache;
+var
+  ReturnValue: TStringList;
+  SearchString: string;
+  Cache: ISearchStringCache;
+begin
+  SearchString := 'TList';
+  Cache := TSearchStringCache.Create;
+
+  FSearchString.FullMatchCache := Cache;
+  ReturnValue := FSearchString.GetFullMatch(SearchString);
+  ReturnValue := FSearchString.GetFullMatch(SearchString);
+  FSearchString.FullMatchCache := nil;
+
+  Assert(ReturnValue.Count = 0);
+  ReturnValue.Free;
 end;
 
 initialization

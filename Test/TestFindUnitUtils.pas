@@ -12,8 +12,9 @@ unit TestFindUnitUtils;
 interface
 
 uses
-  TestFramework, System.Generics.Collections, Windows, SimpleParser.Lexer.Types,
-  TlHelp32, IOUtils, Classes, System.StrUtils, FindUnit.Utils;
+  TestFramework,
+
+  FindUnit.Utils;
 
 type
   // Test methods for class TPathConverter

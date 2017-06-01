@@ -126,6 +126,7 @@ object frmFindUnit: TfrmFindUnit
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
+      OnClick = lstResultClick
       OnDblClick = lstResultDblClick
     end
     object pnlMsg: TPanel
@@ -139,8 +140,8 @@ object frmFindUnit: TfrmFindUnit
       object lblMessage: TLabel
         Left = 1
         Top = 1
-        Width = 541
-        Height = 26
+        Width = 574
+        Height = 45
         Align = alClient
         Caption = 
           '  Remember that you can create incremental searches like: "strin' +

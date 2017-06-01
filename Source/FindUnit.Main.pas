@@ -4,18 +4,18 @@ interface
 
 uses
   Classes,
-  Dialogs,
-  Graphics,
   Menus,
   ToolsAPI,
   Windows,
 
-  FindUnit.Header,
-  FindUnit.Utils,
+  FindUnit.CompilerInterceptor,
   FindUnit.EnvironmentController,
-  FindUnit.CompilerInterceptor, FindUnit.FormMessage,
+  FindUnit.FormMessage,
+  FindUnit.Header,
+  FindUnit.PaintUnusedUses,
   FindUnit.UnusedUses,
-  FindUnit.PaintUnusedUses;
+  FindUnit.Utils,
+  Vcl.Graphics;
 
 {$R RFindUnitSplash.res}
 type
@@ -90,9 +90,9 @@ end;
 
 procedure RegisterSplashScreen;
 var
-  LBmp: Graphics.TBitmap;
+  LBmp: Vcl.Graphics.TBitmap;
 begin
-  LBmp := Graphics.TBitmap.Create;
+  LBmp := Vcl.Graphics.TBitmap.Create;
   LBmp.LoadFromResourceName(HInstance, 'SPLASH');
   SplashScreenServices.AddPluginBitmap(resPackageName, LBmp.Handle, False, resLicense, '');
   LBmp.Free;

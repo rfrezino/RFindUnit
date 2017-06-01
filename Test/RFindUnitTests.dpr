@@ -15,7 +15,10 @@ uses
   AV_Case1 in 'TestPasParser\AV_Case1.pas',
   Log4Pascal in '..\Thirdy\Log4pascal\Log4Pascal.pas',
   AV_Case2 in 'TestPasParser\AV_Case2.pas',
-  TestFindUnitUtils in 'TestFindUnitUtils.pas';
+  TestFindUnitUtils in 'TestFindUnitUtils.pas',
+  BaseUnusedUnitsSetAllUnuse in 'TestUnusedUses\BaseUnusedUnitsSetAllUnuse.pas',
+  BaseUnusedUnitsSetAllUse in 'TestUnusedUses\BaseUnusedUnitsSetAllUse.pas',
+  FindUnit.FileCache in 'TestUnusedUses\FindUnit.FileCache.pas';
 
 {$R *.RES}
 

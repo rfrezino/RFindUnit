@@ -62,6 +62,9 @@ type
     cdsAutoImportIDENTIFIER: TStringField;
     cdsAutoImportUNIT: TStringField;
     btnCreateProjectConfiguration: TButton;
+    tsUnusedUses: TTabSheet;
+    mmoIgnoreUses: TMemo;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -109,6 +112,8 @@ begin
   FSettings.BreakUsesLineAtPosition := StrToInt(Trim(medtBreakUsesLineAtPosition.Text));
   FSettings.GroupNonNamespaceUnits := chbGroupNonNameSpaceUnits.Checked;
 
+  FSettings.IgnoreUsesUnused := mmoIgnoreUses.Lines.CommaText;
+
   InsertDataSetInAutoImport;
 end;
 
@@ -150,6 +155,7 @@ begin
   medtBreakUsesLineAtPosition.Text := IntToStr(FSettings.BreakUsesLineAtPosition);
   chbOrganizeUsesAfterInsertingNewUsesUnit.Checked := FSettings.OrganizeUsesAfterAddingNewUsesUnit;
   chbGroupNonNameSpaceUnits.Checked := FSettings.GroupNonNamespaceUnits;
+  mmoIgnoreUses.Lines.CommaText := FSettings.IgnoreUsesUnused;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0

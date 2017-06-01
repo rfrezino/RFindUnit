@@ -4,24 +4,15 @@ interface
 
 uses
   Classes,
-  DesignEditors,
-  Graphics,
-  Log4Pascal,
   RegExpr,
   SysUtils,
   ToolsApi,
-
-  DelphiAST.Classes,
 
   FindUnit.FormMessage,
   FindUnit.Header,
   FindUnit.OtaUtils,
   FindUnit.Settings,
-  FindUnit.Utils,
-
-  SimpleParser.Lexer.Types,
-
-  Vcl.Dialogs;
+  FindUnit.Utils;
 
 type
   TCharPosition = record

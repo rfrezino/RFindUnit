@@ -9,19 +9,18 @@ uses
   System.Generics.Collections,
   System.SyncObjs,
 
-  Winapi.UI.Xaml;
+  Interf.SearchStringCache,
+  FindUnit.SearchStringCache;
 
 type
   TUnitsController = class(TObject)
   private
-    FSearchHistory: TDictionary<string,string>;
+    FFullMatchSearchCache: ISearchStringCache;
+    FMatchSearchCache: ISearchStringCache;
 
     FUnits: TDictionary<string, TPasFile>;
     FReady: Boolean;
     FRc: TCriticalSection;
-
-    function SearchOnHistory(const SearchString: string): TStringList;
-    procedure AddToHistory(const SearchString, Content: string);
 
     procedure SetUnits(const Value: TDictionary<string, TPasFile>);
   public
@@ -41,21 +40,12 @@ type
 implementation
 
 uses
-  SysUtils,
-
   FindUnit.SearchString;
 
 { TUnitUpdateController }
-
-procedure TUnitsController.AddToHistory(const SearchString, Content: string);
-begin
-  if FSearchHistory = nil then
-    Exit;
-  FSearchHistory.AddOrSetValue(UpperCase(SearchString), Content);
-end;
-
 constructor TUnitsController.Create;
 begin
+  FFullMatchSearchCache := TSearchStringCache.Create;
   FRc := TCriticalSection.Create;
   inherited;
 end;
@@ -63,7 +53,6 @@ end;
 destructor TUnitsController.Destroy;
 begin
   FRc.Free;
-  FSearchHistory.Free;
   FUnits.Free;
   inherited;
 end;
@@ -85,14 +74,10 @@ function TUnitsController.GetFindInfo(const SearchString: string): TStringList;
 var
   Search: TSearchString;
 begin
-  Result := SearchOnHistory(SearchString);
-  if Result <> nil then
-    Exit;
-
   Search := TSearchString.Create(FUnits);
   try
+    Search.MatchCache := FMatchSearchCache;
     Result := Search.GetMatch(SearchString);
-    AddToHistory(SearchString, Result.Text);
   finally
     Search.Free;
   end;
@@ -104,6 +89,7 @@ var
 begin
   Search := TSearchString.Create(FUnits);
   try
+    Search.FullMatchCache := FFullMatchSearchCache;
     Result := Search.GetFullMatch(SearchString);
   finally
     Search.Free;
@@ -120,29 +106,11 @@ begin
   end;
 end;
 
-function TUnitsController.SearchOnHistory(const SearchString: string): TStringList;
-var
-  Local: string;
-  Content: string;
-begin
-  Result := nil;
-  if FSearchHistory = nil then
-    Exit;
-
-  Local := UpperCase(SearchString);
-  if FSearchHistory.TryGetValue(Local, Content) then
-  begin
-    Result := TStringList.Create;
-    Result.Text := Content;
-  end;
-end;
-
 procedure TUnitsController.SetUnits(const Value: TDictionary<string, TPasFile>);
 begin
   FUnits := Value;
-  FSearchHistory.Free;
-
-  FSearchHistory := TDictionary<string,string>.Create;
+  FMatchSearchCache := TSearchStringCache.Create;
+  FFullMatchSearchCache := TSearchStringCache.Create;
 end;
 
 end.
