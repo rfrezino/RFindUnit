@@ -16,7 +16,7 @@ type
 implementation
 
 uses
-	Classes, Messages;
+  Messages;
 
 var
   FFound: Boolean;

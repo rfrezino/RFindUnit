@@ -4,24 +4,15 @@ interface
 
 uses
   Classes,
-  DesignEditors,
-  Graphics,
-  Log4Pascal,
   RegExpr,
   SysUtils,
   ToolsApi,
-
-  DelphiAST.Classes,
 
   FindUnit.FormMessage,
   FindUnit.Header,
   FindUnit.OtaUtils,
   FindUnit.Settings,
-  FindUnit.Utils,
-
-  SimpleParser.Lexer.Types,
-
-  Vcl.Dialogs;
+  FindUnit.Utils;
 
 type
   TCharPosition = record
@@ -100,7 +91,7 @@ type
 
     function IsLineOnImplementationSection(Line: Integer): Boolean;
 
-    procedure AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean = True);
+    procedure AddUnit(UnitInfo: TStringPosition; DisplayMessageOnAdd: Boolean = True);
   end;
 
 implementation
@@ -108,7 +99,7 @@ implementation
 
 { TSourceFileEditor }
 
-procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; ShowMessageOnAdd: Boolean);
+procedure TSourceFileEditor.AddUnit(UnitInfo: TStringPosition; DisplayMessageOnAdd: Boolean);
 var
   MessageText: string;
 begin
@@ -124,7 +115,7 @@ begin
       MessageText := 'Unit ' + UnitInfo.Value + ' added to interface''s uses.';
   end;
 
-  if (MessageText <> '') and ShowMessageOnAdd then
+  if (MessageText <> '') and DisplayMessageOnAdd then
     TfrmMessage.ShowInfoToUser(MessageText);
 end;
 
@@ -387,8 +378,6 @@ begin
     NewUsesPosition.EndPos := UnitContent.Length;
 
     SetUsesPosition(NewUsesPosition);
-
-    ShowMessage(IntToStr(Line));
   end
   else
   begin
@@ -452,6 +441,7 @@ begin
   CharCount := 0;
   for UseCur in UseUnit do
   begin
+    HasNamespace := Pos('.', UseCur) > 0;
     if (UseCur.Trim.ToUpper = 'USES')
       or (UseCur.Trim.IsEmpty) then
       Continue;
@@ -465,12 +455,12 @@ begin
       LastDomain := UseCur;
       LastDomain := Fetch(LastDomain, '.', False);
     end
-    else if GlobalSettings.BreakLine then
+    else if ((not HasNamespace) and GlobalSettings.BreakLineForNonDomainUses and GlobalSettings.BreakLine)
+        or (HasNamespace and GlobalSettings.BreakLine) then
     begin
 
       if GlobalSettings.BlankLineBtwNamespaces then
       begin
-        HasNamespace := Pos('.', UseCur) > 0;
         CurDomain := UseCur;
         CurDomain := Fetch(CurDomain, '.', False);
 

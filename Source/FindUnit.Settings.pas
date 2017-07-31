@@ -4,6 +4,7 @@ interface
 
 uses
   System.Classes,
+
   System.IniFiles;
 
 type
@@ -23,6 +24,9 @@ type
     SettingFormHeight: Cardinal;
     SettingFormStartPosX: Cardinal;
     SettingFormStartPosY: Cardinal;
+    IgnoreUsesUnused: string;
+    EnableExperimentalFindUnusedUses: Boolean;
+    BreakLineForNonDomainUses: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -76,6 +80,14 @@ type
 
     function GetSettingFormWidth: Cardinal;
     procedure SetSettingFormWidth(const Value: Cardinal);
+
+    function GetIgnoreUsesUnused: string;
+    procedure SetUsesUnused(const Value: string);
+
+    function GetEnableExperimentalFindUnusedUses: Boolean;
+    procedure SetEnableExperimentalFindUnusedUses(const Value: Boolean);
+    function GetBreakLineForNonDomainUses: Boolean;
+    procedure SetBreakLineForNonDomainUses(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -96,6 +108,9 @@ type
     property SettingFormHeight: Cardinal read GetSettingFormHeight write SetSettingFormHeight;
     property SettingFormStartPosX: Cardinal read GetSettingFormStartPosX write SetSettingFormStartPosX;
     property SettingFormStartPosY: Cardinal read GetSettingFormStartPosY write SetSettingFormStartPosY;
+    property IgnoreUsesUnused: string read GetIgnoreUsesUnused write SetUsesUnused;
+    property EnableExperimentalFindUnusedUses: Boolean read GetEnableExperimentalFindUnusedUses write SetEnableExperimentalFindUnusedUses;
+    property BreakLineForNonDomainUses: Boolean read GetBreakLineForNonDomainUses write SetBreakLineForNonDomainUses;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -132,6 +147,9 @@ const
   CONF_FORM_SETTINGS_HEIGHT = 'FORM_SETTINGS_HEIGHT';
   CONF_FORM_SETTINGS_START_X = 'FORM_SETTINGS_START_X';
   CONF_FORM_SETTINGS_START_Y = 'FORM_SETTINGS_START_Y';
+  CONF_IGNORED_USES = 'IGNORED_USES';
+  CONF_EXPRIMENTAL_UNUSED_USES = 'EXPRIMENTAL_UNUSED_USES';
+  CONF_BREAK_LINE_NON_DOMAIN_USES = 'BREAK_LINE_NON_DOMAIN_USES';
 
 { TSettings }
 
@@ -156,14 +174,33 @@ begin
     Result.SettingFormHeight := Settings.SettingFormHeight;
     Result.SettingFormStartPosX := Settings.SettingFormStartPosX;
     Result.SettingFormStartPosY := Settings.SettingFormStartPosY;
+    Result.IgnoreUsesUnused := Settings.IgnoreUsesUnused;
+    Result.EnableExperimentalFindUnusedUses := Settings.EnableExperimentalFindUnusedUses;
+    Result.BreakLineForNonDomainUses := Settings.BreakLineForNonDomainUses;
   finally
     Settings.Free;
   end;
 end;
 
+function TSettings.GetEnableExperimentalFindUnusedUses: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_EXPRIMENTAL_UNUSED_USES, False);
+end;
+
 function TSettings.GetGroupNonNamespaceUnits: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_GROUP_NONNAMESPACE_UNITS, True);
+end;
+
+function TSettings.GetIgnoreUsesUnused: string;
+var
+  DefaultUnits: string;
+begin
+  DefaultUnits := 'Windows,Messages,SysUtils,Variants,Classes,Graphics,Controls,Forms,Dialogs,Types,WinApi.Windows,Winapi.Messages,'
+          + 'System.SysUtils,System.Variants,System.Classes,System.Types,Vcl.Graphics,Vcl.Controls,Vcl.Forms,Vcl.Dialogs,FMX.Types,'
+          + 'FMX.Controls,FMX.Forms,FMX.Dialogs,QTypes,QGraphics,QControls,QForms,QDialogs,QStdCtrls,System.ImageList';
+
+  Result := FIni.ReadString(SETTINGS_SECTION, CONF_IGNORED_USES, DefaultUnits);
 end;
 
 function TSettings.GetOrganizeUses: Boolean;
@@ -211,6 +248,11 @@ end;
 function TSettings.GetBreakLine: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BREAK_LINE, False);
+end;
+
+function TSettings.GetBreakLineForNonDomainUses: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BREAK_LINE_NON_DOMAIN_USES, True);
 end;
 
 function TSettings.GetBreakUsesLineAtPosition: Cardinal;
@@ -293,6 +335,12 @@ begin
   FIni.UpdateFile;
 end;
 
+procedure TSettings.SetBreakLineForNonDomainUses(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_BREAK_LINE_NON_DOMAIN_USES, Value);
+  FIni.UpdateFile;
+end;
+
 procedure TSettings.SetOrganizeUses(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_ORGANIZE_USES, Value);
@@ -352,9 +400,21 @@ begin
   FIni.UpdateFile;
 end;
 
+procedure TSettings.SetUsesUnused(const Value: string);
+begin
+  FIni.WriteString(SETTINGS_SECTION, CONF_IGNORED_USES, Value);
+  FIni.UpdateFile;
+end;
+
 procedure TSettings.SetBreakUsesLineAtPosition(const Value: Cardinal);
 begin
   FIni.WriteInteger(SETTINGS_SECTION, CONF_BREAK_USES_LINE_AT_POSITION, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetEnableExperimentalFindUnusedUses(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_EXPRIMENTAL_UNUSED_USES, Value);
   FIni.UpdateFile;
 end;
 

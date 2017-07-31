@@ -4,10 +4,10 @@ interface
 
 uses
   Classes,
-  ShellAPI,
   Windows,
 
-  FindUnit.Utils;
+  FindUnit.Utils,
+  Winapi.ShellAPI;
 
 const
   DCU32INT_EXECUTABLE = 'dcu32int.exe';

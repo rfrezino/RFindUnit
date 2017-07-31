@@ -62,7 +62,8 @@ const
     'RAD Studio XE 7',
     'RAD Studio XE 8',
     'RAD Studio 10 Seattle',
-    'RAD Studio 10.1 Berlin'
+    'RAD Studio 10.1 Berlin',
+    'RAD Studio 10.2 Tokyo',
     );
 
   TDelphiRegPaths: array [TDelphiVersions] of string = (
@@ -85,7 +86,8 @@ const
     '\Software\Embarcadero\BDS\15.0',
     '\Software\Embarcadero\BDS\16.0',
     '\Software\Embarcadero\BDS\17.0',
-    '\Software\Embarcadero\BDS\18.0'
+    '\Software\Embarcadero\BDS\18.0',
+    '\Software\Embarcadero\BDS\19.0'
     );
 
 function RegKeyExists(const RegPath: string; const RootKey: HKEY): Boolean;

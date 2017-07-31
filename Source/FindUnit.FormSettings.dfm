@@ -94,12 +94,12 @@ object frmSettings: TfrmSettings
           Left = 15
           Top = 108
           Width = 297
-          Height = 197
+          Height = 221
           Caption = 'Uses Organization'
           TabOrder = 2
           object lblBreakLineAt: TLabel
             Left = 15
-            Top = 160
+            Top = 184
             Width = 124
             Height = 13
             Caption = 'Break uses line at position'
@@ -153,12 +153,12 @@ object frmSettings: TfrmSettings
           end
           object medtBreakUsesLineAtPosition: TMaskEdit
             Left = 147
-            Top = 157
+            Top = 181
             Width = 34
             Height = 21
             EditMask = '!9!9!9;1; '
             MaxLength = 3
-            TabOrder = 6
+            TabOrder = 7
             Text = '120'
           end
           object chbGroupNonNameSpaceUnits: TCheckBox
@@ -174,15 +174,42 @@ object frmSettings: TfrmSettings
             ShowHint = True
             TabOrder = 5
           end
+          object chbDontBreakLineForNonNameSpaceUnits: TCheckBox
+            Left = 32
+            Top = 153
+            Width = 249
+            Height = 17
+            Hint = 
+              'Sort and Break line should be checked in order to use this optio' +
+              'n'
+            Caption = 'Don'#39't break line for non-namepace units'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 6
+          end
+        end
+        object btnCreateProjectConfiguration: TButton
+          Left = 440
+          Top = 328
+          Width = 192
+          Height = 25
+          Caption = 'Create configuration for this project'
+          TabOrder = 4
+          Visible = False
+          OnClick = btnCreateProjectConfigurationClick
+        end
+        object chbFeatureUnusedUses: TCheckBox
+          Left = 335
+          Top = 129
+          Width = 297
+          Height = 17
+          Caption = 'Enable experimental feature: Find unused uses'
+          TabOrder = 3
         end
       end
     end
     object tsAutoImport: TTabSheet
       Caption = 'Auto Import'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grdAutoImport: TDBGrid
         Left = 0
         Top = 48
@@ -246,6 +273,28 @@ object frmSettings: TfrmSettings
         Align = alBottom
         ConfirmDelete = False
         TabOrder = 2
+      end
+    end
+    object tsUnusedUses: TTabSheet
+      Caption = 'Unused uses'
+      ImageIndex = 2
+      object Label1: TLabel
+        Left = 5
+        Top = 6
+        Width = 57
+        Height = 13
+        Caption = 'Ignore uses'
+      end
+      object mmoIgnoreUses: TMemo
+        Left = 0
+        Top = 24
+        Width = 646
+        Height = 385
+        Align = alBottom
+        Lines.Strings = (
+          'mmoIgnoreUses')
+        ScrollBars = ssHorizontal
+        TabOrder = 0
       end
     end
   end

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DD533F40-051B-4D34-8B0E-423842CAF6CC}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="RFindUnit.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Test\RFindUnitTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="RFindUnit">
+        <MSBuild Projects="RFindUnit.dproj"/>
+    </Target>
+    <Target Name="RFindUnit:Clean">
+        <MSBuild Projects="RFindUnit.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RFindUnit:Make">
+        <MSBuild Projects="RFindUnit.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RFindUnitTests">
+        <MSBuild Projects="..\..\Test\RFindUnitTests.dproj"/>
+    </Target>
+    <Target Name="RFindUnitTests:Clean">
+        <MSBuild Projects="..\..\Test\RFindUnitTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RFindUnitTests:Make">
+        <MSBuild Projects="..\..\Test\RFindUnitTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="RFindUnit;RFindUnitTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="RFindUnit:Clean;RFindUnitTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="RFindUnit:Make;RFindUnitTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

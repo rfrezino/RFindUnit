@@ -20,7 +20,7 @@ After:
 ![RFindUnit Screen](https://github.com/rfrezino/RFindUnit/blob/master/Resources/RFindUnitImage.png)
 
 ### Auto organize uses feature
-It's possible to auto organize uses (Ctrl + Shift + O). It's possible to sort then by alphabetical order and split it by line and namespae, as you can see: 
+It's possible to auto organize uses (Ctrl + Shift + U). It's possible to sort then by alphabetical order and split it by line and namespae, as you can see: 
 
 Before:
 

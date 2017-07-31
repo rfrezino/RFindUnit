@@ -23,7 +23,6 @@
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE RAISEMAD}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
@@ -68,7 +67,14 @@ contains
   FindUnit.StringPositionList in '..\..\Source\FindUnit.StringPositionList.pas',
   RegExpr in '..\..\Thirdy\Andrey\RegExpr.pas',
   FindUnit.ResultsImportanceCalculator in '..\..\Source\FindUnit.ResultsImportanceCalculator.pas',
-  FindUnit.Settings in '..\..\Source\FindUnit.Settings.pas';
+  FindUnit.Settings in '..\..\Source\FindUnit.Settings.pas',
+  FindUnit.UnusedUses in '..\..\Source\FindUnit.UnusedUses.pas',
+  FindUnit.DelphiReservedWords in '..\..\Source\FindUnit.DelphiReservedWords.pas',
+  Interf.EnvironmentController in '..\..\Interfaces\Interf.EnvironmentController.pas',
+  FindUnit.PaintUnusedUses in '..\..\ideInteraction\implementations\FindUnit.PaintUnusedUses.pas',
+  FindUnit.ImageRepository in '..\..\Source\FindUnit.ImageRepository.pas',
+  FindUnit.SearchStringCache in '..\..\Source\FindUnit.SearchStringCache.pas',
+  Interf.SearchStringCache in '..\..\Interfaces\Interf.SearchStringCache.pas';
 
 end.
 

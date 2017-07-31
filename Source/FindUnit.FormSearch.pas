@@ -7,7 +7,8 @@ uses
   Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
   FindUnit.EnvironmentController, StrUtils, AppEvnts,
   Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
-  FindUnit.FormSettings, FindUnit.Settings, System.ImageList;
+  FindUnit.FormSettings, FindUnit.Settings, System.ImageList,
+  Vcl.Clipbrd;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -53,6 +54,7 @@ type
     procedure btnProcessDCUsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnConfigClick(Sender: TObject);
+    procedure lstResultClick(Sender: TObject);
   private
     FEnvControl: TEnvironmentController;
     FFileEditor: TSourceFileEditor;
@@ -72,7 +74,7 @@ type
     procedure SelectTheMostSelectableItem;
     procedure ProcessDCUFiles;
     function CanProcessDCUFiles: Boolean;
-    procedure ShowMessageToMuchResults(Show: Boolean);
+    procedure DisplayMessageToMuchResults(Show: Boolean);
 
     procedure LoadCurrentFile;
     procedure GetSelectedItem(out UnitName, ClassName: string);
@@ -163,7 +165,7 @@ begin
   else
     Text := 'Unit ' + Text + ' added to implementation''s uses.';
 
-  MsgForm.ShowMessage(Text);
+  MsgForm.DisplayMessage(Text);
   SetFocus;
 end;
 
@@ -362,7 +364,7 @@ begin
     Close;
 end;
 
-procedure TfrmFindUnit.ShowMessageToMuchResults(Show: Boolean);
+procedure TfrmFindUnit.DisplayMessageToMuchResults(Show: Boolean);
 begin
   pnlMsg.Visible := Show;
   lblMessage.Caption := '  There are to many results on your search, I''m not showing everything. Type a bigger search.' + #13#10 +
@@ -408,7 +410,7 @@ begin
     lstResult.Items.Text := ResultSearch.Text;
 
     SelectTheMostSelectableItem;
-    ShowMessageToMuchResults(ToMuchResults);
+    DisplayMessageToMuchResults(ToMuchResults);
     lstResult.Count
   finally
     ResultSearch.Free;
@@ -421,7 +423,8 @@ begin
   try
     FilterItem(edtSearch.Text);
   except
-    ShowMessage('FilterItemFromSearchString');
+//    Logger
+    raise
   end;
 end;
 
@@ -449,24 +452,6 @@ end;
 procedure TfrmFindUnit.GetSelectedItem(out UnitName, ClassName: string);
 var
   I: Integer;
-
-  function CorrectUses(Item: string): string;
-  var
-    IsSetEnumItem: Boolean;
-  begin
-    IsSetEnumItem := Item.EndsWith(' item');
-
-    Result := Item;
-    Result := Trim(Fetch(Result, '-'));
-    Result := ReverseString(Result);
-    ClassName := Fetch(Result,'.');
-
-    if IsSetEnumItem then
-      ClassName := Fetch(Result,'.');
-
-    ClassName := ReverseString(ClassName);
-    Result := ReverseString(Result);
-  end;
 begin
   UnitName := '';
   if lstResult.Count = 0 then
@@ -476,12 +461,12 @@ begin
   begin
     if lstResult.Selected[i] then
     begin
-      UnitName := CorrectUses(lstResult.Items[i]);
+      GetUnitFromSearchSelection(lstResult.Items[i], UnitName, ClassName);
       Exit;
     end;
   end;
 
-  UnitName := CorrectUses(lstResult.Items[0])
+  GetUnitFromSearchSelection(lstResult.Items[0], UnitName, ClassName);
 end;
 
 procedure TfrmFindUnit.LoadConfigs;
@@ -497,6 +482,13 @@ begin
   CurEditor := OtaGetCurrentSourceEditor;
   FFileEditor := TSourceFileEditor.Create(CurEditor);
   FFileEditor.Prepare;
+end;
+
+procedure TfrmFindUnit.lstResultClick(Sender: TObject);
+begin
+  {$IFDEF DEBUG}
+  Clipboard.AsText := lstResult.Items.Text;
+  {$ENDIF}
 end;
 
 procedure TfrmFindUnit.lstResultDblClick(Sender: TObject);

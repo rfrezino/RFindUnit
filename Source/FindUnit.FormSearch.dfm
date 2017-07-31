@@ -126,6 +126,7 @@ object frmFindUnit: TfrmFindUnit
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
+      OnClick = lstResultClick
       OnDblClick = lstResultDblClick
     end
     object pnlMsg: TPanel

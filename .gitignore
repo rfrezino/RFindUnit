@@ -8,3 +8,10 @@ Installer/Installer.~dsk
 *.identcache
 *.~dsk
 *.~*~
+*.local
+*.log
+*.stat
+*.cbk
+Installer-deprecated/Installer.exe
+*.tvsconfig
+*.mes

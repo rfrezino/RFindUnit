@@ -7,7 +7,9 @@ uses
   IOUtils,
   TlHelp32,
   Windows,
-  SimpleParser.Lexer.Types, System.Generics.Collections;
+  SimpleParser.Lexer.Types,
+  System.Generics.Collections,
+  System.StrUtils;
 
 type
   TFileInfo = record
@@ -42,6 +44,10 @@ function IsProcessRunning(const AExeFileName: string): Boolean;
 function GetHashCodeFromStr(Str: PChar): Integer;
 function TextExists(SubStr, Str: string; CaseSensitive: Boolean = true): Boolean; inline;
 
+procedure GetUnitFromSearchSelection(SearchSelection: string; out UnitName, ClassName: string);
+
+function DictionaryToString(Dir: TDictionary<string, string>): string;
+
 var
   FindUnitDir: string;
   FindUnitDirLogger: string;
@@ -54,6 +60,40 @@ uses
   Log4PAscal,
   SysUtils,
   Types;
+
+function DictionaryToString(Dir: TDictionary<string, string>): string;
+var
+  Value: string;
+begin
+  Result := '';
+
+  if Dir = nil then
+    Exit;
+
+  for Value in Dir.Values do
+    Result := Result + Value + ',';
+end;
+
+procedure GetUnitFromSearchSelection(SearchSelection: string; out UnitName, ClassName: string);
+var
+  IsSetEnumItem: Boolean;
+begin
+  IsSetEnumItem := SearchSelection.EndsWith(' item');
+
+  UnitName := SearchSelection;
+  if Pos('.*', UnitName) > 0 then
+    UnitName := Trim(Fetch(UnitName, '.*'))
+  else
+    UnitName := Trim(Fetch(UnitName, '-'));
+  UnitName := ReverseString(UnitName);
+  ClassName := Fetch(UnitName,'.');
+
+  if IsSetEnumItem then
+    ClassName := Fetch(UnitName,'.');
+
+  ClassName := ReverseString(ClassName);
+  UnitName := ReverseString(UnitName);
+end;
 
 function TextExists(SubStr, Str: string; CaseSensitive: Boolean): Boolean;
 begin
