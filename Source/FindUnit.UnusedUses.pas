@@ -332,6 +332,8 @@ begin
   Result.Add('QFORMS.');
   Result.Add('QDIALOGS.');
   Result.Add('QSTDCTRLS.');
+  Result.Add('DATASNAP.');
+  Result.Add('DATA.WIN.');
 end;
 
 procedure TUnsedUsesProcessor.Process;

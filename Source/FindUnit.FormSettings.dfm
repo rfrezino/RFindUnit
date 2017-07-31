@@ -94,12 +94,12 @@ object frmSettings: TfrmSettings
           Left = 15
           Top = 108
           Width = 297
-          Height = 197
+          Height = 221
           Caption = 'Uses Organization'
           TabOrder = 2
           object lblBreakLineAt: TLabel
             Left = 15
-            Top = 160
+            Top = 184
             Width = 124
             Height = 13
             Caption = 'Break uses line at position'
@@ -153,12 +153,12 @@ object frmSettings: TfrmSettings
           end
           object medtBreakUsesLineAtPosition: TMaskEdit
             Left = 147
-            Top = 157
+            Top = 181
             Width = 34
             Height = 21
             EditMask = '!9!9!9;1; '
             MaxLength = 3
-            TabOrder = 6
+            TabOrder = 7
             Text = '120'
           end
           object chbGroupNonNameSpaceUnits: TCheckBox
@@ -173,6 +173,19 @@ object frmSettings: TfrmSettings
             ParentShowHint = False
             ShowHint = True
             TabOrder = 5
+          end
+          object chbDontBreakLineForNonNameSpaceUnits: TCheckBox
+            Left = 32
+            Top = 153
+            Width = 249
+            Height = 17
+            Hint = 
+              'Sort and Break line should be checked in order to use this optio' +
+              'n'
+            Caption = 'Don'#39't break line for non-namepace units'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 6
           end
         end
         object btnCreateProjectConfiguration: TButton

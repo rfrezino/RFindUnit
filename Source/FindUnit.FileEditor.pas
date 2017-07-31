@@ -441,6 +441,7 @@ begin
   CharCount := 0;
   for UseCur in UseUnit do
   begin
+    HasNamespace := Pos('.', UseCur) > 0;
     if (UseCur.Trim.ToUpper = 'USES')
       or (UseCur.Trim.IsEmpty) then
       Continue;
@@ -454,12 +455,12 @@ begin
       LastDomain := UseCur;
       LastDomain := Fetch(LastDomain, '.', False);
     end
-    else if GlobalSettings.BreakLine then
+    else if ((not HasNamespace) and GlobalSettings.BreakLineForNonDomainUses and GlobalSettings.BreakLine)
+        or (HasNamespace and GlobalSettings.BreakLine) then
     begin
 
       if GlobalSettings.BlankLineBtwNamespaces then
       begin
-        HasNamespace := Pos('.', UseCur) > 0;
         CurDomain := UseCur;
         CurDomain := Fetch(CurDomain, '.', False);
 

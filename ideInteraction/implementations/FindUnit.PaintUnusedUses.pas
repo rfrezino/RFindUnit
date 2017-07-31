@@ -24,6 +24,7 @@ uses
   Graphics,
   Vcl.Imaging.pngimage,
   System.IOUtils,
+  System.RegularExpressions,
   FindUnit.Settings;
 
 type
@@ -131,7 +132,14 @@ begin
   end;
 
   if FProcessed <> uspRunning then
-    ProcessFileInformation;
+  begin
+    try
+      ProcessFileInformation;
+    except
+      on E: exception do
+        Logger.Error('TRfPaintUnsuedUses.BeginPaint: ' + E.Message);
+    end;
+  end;
 end;
 
 constructor TRfPaintUnsuedUses.Create(FileName: string; AEditView: IOTAEditView);
@@ -191,15 +199,17 @@ var
   FBackgroundColor: TColor;
   x,y: Integer;
   Line: string;
+  RegReturn: TMatchCollection;
+  Match: TMatch;
 
-  procedure DrawColor(Value: string; Color: TColor; Item: TUsesUnit);
+  procedure DrawColor(Value: string; Color: TColor; Item: TUsesUnit; Match: TMatch);
   var
     StartPoint: Integer;
     LeftText: string;
     OutValue: TSize;
     OutRect: TRect;
   begin
-    LeftText := Fetch(Line, Value, False);
+    LeftText := Copy(Line, 1, Match.Index -1);
     StartPoint := Canvas.TextExtent(LeftText).Width + TextRect.Left;
 
     OutValue := Canvas.TextExtent(Value);
@@ -249,8 +259,10 @@ begin
     Line := AnsiString(LineText);
     for I := 0 to FUnusedUses.Count -1 do
     begin
-      if Pos(FUnusedUses[I].Name, Line) > 0 then
-        DrawColor(FUnusedUses[I].Name, clRed, FUnusedUses[I]);
+      RegReturn := TRegEx.Matches(Line, '\b' + FUnusedUses[I].Name + '\b');
+      if RegReturn.Count > 0 then
+        for Match in RegReturn do
+          DrawColor(FUnusedUses[I].Name, clRed, FUnusedUses[I], Match);
     end;
   finally
     FRcDir.Release;
@@ -303,9 +315,11 @@ begin
         UnusedUnit := TUnsedUsesProcessor.Create(FFileName);
         UnusedUnit.SetEnvControl(EnvControl);
         UnusedUnit.Process;
-        Logger.Debug('unused setting the value');
+        Logger.Debug('unused setting the value 1');
         PaintSelf.SetUnsuedUses(UnusedUnit.UnusedUses);
+        Logger.Debug('unused setting the value 2');
         PaintSelf.SetUsesStartLine(UnusedUnit.UsesStartLine);
+        Logger.Debug('unused setting the value 3');
         UnusedUnit.Free;
         FProcessed := uspComplete;
         TimeSpent.Stop;
@@ -339,8 +353,7 @@ begin
     FNeedRepaint := True;
     Logger.Debug('Unsed log set');
 
-    if Assigned(FUnusedUses) then
-      FUnusedUses.Clear;
+    FUnusedUses.Clear;
 
     FLowestLine := -1;
     if List = nil then
@@ -384,6 +397,7 @@ var
   i, j: Integer;
   Module: IOTAModule;
   Editor: IOTASourceEditor;
+  Ext: string;
 begin
   inherited;
   FEditorNotifiers := TList<IOTAEditorNotifier>.Create;
@@ -398,8 +412,9 @@ begin
     for j := 0 to Module.ModuleFileCount-1 do
       if Supports(Module.ModuleFileEditors[j], IOTASourceEditor, Editor) then
       begin
-        Logger.Debug('Unsued: TRfIDENotifier.Create: ' + Editor.FileName);
-        FEditorNotifiers.Add(TRfEditorNotifier.Create(Editor));
+        Ext := ExtractFileExt(Editor.FileName).ToUpper;
+        if Ext.Equals('.PAS') then
+          FEditorNotifiers.Add(TRfEditorNotifier.Create(Editor));
       end;
   end;
 end;
@@ -420,15 +435,19 @@ var
   Module: IOTAModule;
   i: Integer;
   Editor: IOTASourceEditor;
+  Ext: string;
 begin
-  Logger.Debug('TRfIDENotifier.FileNotification');
   if NotifyCode = ofnFileOpened then
   begin
     Module := (BorlandIDEServices as IOTAModuleServices).FindModule(FileName);
     if not Assigned(Module) then Exit;
-    for i := 0 to Module.ModuleFileCount-1 do
+    for i := 0 to Module.ModuleFileCount -1 do
       if Supports(Module.ModuleFileEditors[i], IOTASourceEditor, Editor) then
-        FEditorNotifiers.Add(TRfEditorNotifier.Create(Editor));
+      begin
+        Ext := ExtractFileExt(Editor.FileName).ToUpper;
+        if Ext.Equals('.PAS') then
+          FEditorNotifiers.Add(TRfEditorNotifier.Create(Editor));
+      end;
   end;
 end;
 

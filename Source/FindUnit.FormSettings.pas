@@ -66,6 +66,7 @@ type
     mmoIgnoreUses: TMemo;
     Label1: TLabel;
     chbFeatureUnusedUses: TCheckBox;
+    chbDontBreakLineForNonNameSpaceUnits: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -115,6 +116,7 @@ begin
 
   FSettings.IgnoreUsesUnused := mmoIgnoreUses.Lines.CommaText;
   FSettings.EnableExperimentalFindUnusedUses := chbFeatureUnusedUses.Checked;
+  FSettings.BreakLineForNonDomainUses := not chbDontBreakLineForNonNameSpaceUnits.Checked;
 
   InsertDataSetInAutoImport;
 end;
@@ -159,6 +161,7 @@ begin
   chbGroupNonNameSpaceUnits.Checked := FSettings.GroupNonNamespaceUnits;
   mmoIgnoreUses.Lines.CommaText := FSettings.IgnoreUsesUnused;
   chbFeatureUnusedUses.Checked := FSettings.EnableExperimentalFindUnusedUses;
+  chbDontBreakLineForNonNameSpaceUnits.Checked := not FSettings.BreakLineForNonDomainUses;
 
   if FSettings.UseDefaultSearchMatch then
     grpSearchAlgorithm.ItemIndex := 0

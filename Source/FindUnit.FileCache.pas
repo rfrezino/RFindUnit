@@ -4,13 +4,13 @@ interface
 
 uses
   FindUnit.PasParser,
+  FindUnit.SearchStringCache,
+
+  Interf.SearchStringCache,
 
   System.Classes,
   System.Generics.Collections,
-  System.SyncObjs,
-
-  Interf.SearchStringCache,
-  FindUnit.SearchStringCache;
+  System.SyncObjs;
 
 type
   TUnitsController = class(TObject)

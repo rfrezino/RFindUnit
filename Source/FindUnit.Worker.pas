@@ -88,8 +88,9 @@ begin
     FDirectoriesPath.Free;
     Step := 'FOldItems';
 
-    for Files in FCacheFiles.Values do
-      Files.Free;
+    if Assigned(FCacheFiles) then
+      for Files in FCacheFiles.Values do
+        Files.Free;
 
     FCacheFiles.Free;
     Step := 'FDcuFiles';

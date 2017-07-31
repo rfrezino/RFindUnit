@@ -26,6 +26,7 @@ type
     SettingFormStartPosY: Cardinal;
     IgnoreUsesUnused: string;
     EnableExperimentalFindUnusedUses: Boolean;
+    BreakLineForNonDomainUses: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -85,6 +86,8 @@ type
 
     function GetEnableExperimentalFindUnusedUses: Boolean;
     procedure SetEnableExperimentalFindUnusedUses(const Value: Boolean);
+    function GetBreakLineForNonDomainUses: Boolean;
+    procedure SetBreakLineForNonDomainUses(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -107,6 +110,7 @@ type
     property SettingFormStartPosY: Cardinal read GetSettingFormStartPosY write SetSettingFormStartPosY;
     property IgnoreUsesUnused: string read GetIgnoreUsesUnused write SetUsesUnused;
     property EnableExperimentalFindUnusedUses: Boolean read GetEnableExperimentalFindUnusedUses write SetEnableExperimentalFindUnusedUses;
+    property BreakLineForNonDomainUses: Boolean read GetBreakLineForNonDomainUses write SetBreakLineForNonDomainUses;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -145,6 +149,7 @@ const
   CONF_FORM_SETTINGS_START_Y = 'FORM_SETTINGS_START_Y';
   CONF_IGNORED_USES = 'IGNORED_USES';
   CONF_EXPRIMENTAL_UNUSED_USES = 'EXPRIMENTAL_UNUSED_USES';
+  CONF_BREAK_LINE_NON_DOMAIN_USES = 'BREAK_LINE_NON_DOMAIN_USES';
 
 { TSettings }
 
@@ -171,6 +176,7 @@ begin
     Result.SettingFormStartPosY := Settings.SettingFormStartPosY;
     Result.IgnoreUsesUnused := Settings.IgnoreUsesUnused;
     Result.EnableExperimentalFindUnusedUses := Settings.EnableExperimentalFindUnusedUses;
+    Result.BreakLineForNonDomainUses := Settings.BreakLineForNonDomainUses;
   finally
     Settings.Free;
   end;
@@ -242,6 +248,11 @@ end;
 function TSettings.GetBreakLine: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BREAK_LINE, False);
+end;
+
+function TSettings.GetBreakLineForNonDomainUses: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, CONF_BREAK_LINE_NON_DOMAIN_USES, True);
 end;
 
 function TSettings.GetBreakUsesLineAtPosition: Cardinal;
@@ -321,6 +332,12 @@ end;
 procedure TSettings.SetBreakLine(const Value: Boolean);
 begin
   FIni.WriteBool(SETTINGS_SECTION, CONF_BREAK_LINE, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetBreakLineForNonDomainUses(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, CONF_BREAK_LINE_NON_DOMAIN_USES, Value);
   FIni.UpdateFile;
 end;
 
