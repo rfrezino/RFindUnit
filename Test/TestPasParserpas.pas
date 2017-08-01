@@ -10,7 +10,8 @@ uses
   DelphiAST.Classes,
 
   FindUnit.Header,
-  FindUnit.PasParser, FindUnit.Utils,
+  FindUnit.PasParser,
+  FindUnit.Utils,
 
   Generics.Collections;
 
