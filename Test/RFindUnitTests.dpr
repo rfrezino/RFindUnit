@@ -18,7 +18,8 @@ uses
   TestFindUnitUtils in 'TestFindUnitUtils.pas',
   BaseUnusedUnitsSetAllUnuse in 'TestUnusedUses\BaseUnusedUnitsSetAllUnuse.pas',
   BaseUnusedUnitsSetAllUse in 'TestUnusedUses\BaseUnusedUnitsSetAllUse.pas',
-  FindUnit.FileCache in 'TestUnusedUses\FindUnit.FileCache.pas';
+  FindUnit.FileCache in 'TestUnusedUses\FindUnit.FileCache.pas',
+  Interf.EnvironmentController in '..\Interfaces\Interf.EnvironmentController.pas';
 
 {$R *.RES}
 

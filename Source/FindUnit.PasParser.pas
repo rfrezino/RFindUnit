@@ -210,7 +210,16 @@ begin
             else if TypeType.Equals('function') then
               GetFunctionReferenceDescription(TypeNode)
             else if  TypeType.Equals('subrange') then
-              GetSubRangeDesc(TypeNode);
+              GetSubRangeDesc(TypeNode)
+            else
+            begin
+              try
+                GetReference(TypeNode);
+              except
+                on e: exception do
+                  Logger.Error('TFindUnitParser.GetClasses: %s - %s | %s', [e.Message, FFilePath, TypeNode.ToString]);
+              end;
+            end;
           end;
         end;
       except

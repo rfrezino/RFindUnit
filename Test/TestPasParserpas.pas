@@ -159,17 +159,21 @@ begin
       ['IOtherInterface.* - Interface'])),
     'Wrong interfaes list');
 
-  Assert(((PasResult.Records.Count = 1)
+  Assert(((PasResult.Records.Count = 2)
     and (CompareListWithText(PasResult.Records,
-    ['TRecordWin.* - Record']))),
+    ['TRecordWin.* - Record',
+     'TVATIDHelper.* - Record']))),
     'Records list is not correct');
 
-  Assert((PasResult.References.Count = 4)
+  Assert((PasResult.References.Count = 7)
     and (CompareListWithText(PasResult.References,
     ['TFunctionTestEvent.* - Function Reference',
      'TObjectConverterAv.* - Reference',
      'TProcedureTestEvent.* - Procedure Reference',
-     'TTestShortCut.* - Sub Range'])),
+     'TTestShortCut.* - Sub Range',
+     'TTESTNotIn.* - Reference',
+     'TVATID.* - Reference',
+     'TFowarededType.* - Reference'])),
     'Wrong reference list');
 end;
 

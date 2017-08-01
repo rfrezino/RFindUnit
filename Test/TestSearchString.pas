@@ -69,7 +69,7 @@ var
 begin
   SearchString := 'Test';
   ReturnValue := FSearchString.GetMatch(SearchString);
-  Assert(ReturnValue.Count = 29);
+  Assert(ReturnValue.Count = 33);
   ReturnValue.Free;
 end;
 
