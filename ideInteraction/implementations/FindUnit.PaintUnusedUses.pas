@@ -259,7 +259,7 @@ begin
     Line := AnsiString(LineText);
     for I := 0 to FUnusedUses.Count -1 do
     begin
-      RegReturn := TRegEx.Matches(Line, '\b' + FUnusedUses[I].Name + '\b');
+      RegReturn := TRegEx.Matches(Line, '\b' + FUnusedUses[I].Name + '[^<.>]');
       if RegReturn.Count > 0 then
         for Match in RegReturn do
           DrawColor(FUnusedUses[I].Name, clRed, FUnusedUses[I], Match);

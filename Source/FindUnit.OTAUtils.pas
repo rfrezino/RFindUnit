@@ -97,6 +97,12 @@ begin
   Result := TDictionary<string, TFileInfo>.Create;
 
   ModServices := BorlandIDEServices as IOTAModuleServices;
+  if ModServices = nil then
+    Exit;
+
+  if ModServices.ModuleCount = 0 then
+    Exit;
+  
   for iMod := 0 to ModServices.ModuleCount - 1 do
   begin
     Module := ModServices.Modules[iMod];
