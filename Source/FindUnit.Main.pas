@@ -57,7 +57,6 @@ uses
 
 var
   vKbIndex: Integer;
-  vNotifierIndex: Integer;
   VFindUnit: IInterface;
   AboutBoxServices : IOTAAboutBoxServices = nil;
   AboutBoxIndex : Integer = 0;
@@ -74,8 +73,6 @@ resourcestring
 procedure Register;
 var
   OtaKey: IOTAKeyboardBinding;
-  Services: IOTAServices;
-  IActionServices: IOTAActionServices;
 begin
   Logger := TLogger.Create(FindUnitDirLogger + Format('rfindunitlog_%s_%d.txt', [FormatDateTime('yyyy-mm-dd', Now), GetCurrentProcessId]));
 

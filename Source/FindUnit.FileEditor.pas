@@ -426,6 +426,7 @@ var
   FinalUseCur: string;
   HasNamespace: Boolean;
 begin
+  MustAddBlankLine := False;
   Result := True;
 
   if GlobalSettings.SortUsesAfterAdding then

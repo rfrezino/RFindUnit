@@ -187,6 +187,9 @@ end;
 
 destructor TEnvironmentController.Destroy;
 begin
+  FProjectPathWorker.RemoveCallBack;
+  FLibraryPathWorker.RemoveCallBack;
+
   FAutoImport.Free;
   FProjectUnits.Free;
   FLibraryPath.Free;
@@ -391,6 +394,11 @@ end;
 
 procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
 begin
+  if FProjectUnits = nil then
+  begin
+    Exit;
+  end;
+
   FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
 end;

@@ -235,7 +235,6 @@ function TUnsedUsesProcessor.GetUnitSpecifiedOnUses: TDictionary<string, TUsesUn
 var
   XmlFile: TStringList;
   Line: string;
-  FetchType: string;
   I: Integer;
   UsesUnit: TUsesUnit;
   Column: string;

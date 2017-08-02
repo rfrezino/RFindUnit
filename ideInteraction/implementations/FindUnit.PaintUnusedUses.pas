@@ -197,7 +197,6 @@ procedure TRfPaintUnsuedUses.PaintLine(const View: IOTAEditView; LineNumber: Int
 var
   I: Integer;
   FBackgroundColor: TColor;
-  x,y: Integer;
   Line: string;
   RegReturn: TMatchCollection;
   Match: TMatch;
