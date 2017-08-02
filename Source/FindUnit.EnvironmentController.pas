@@ -20,7 +20,12 @@ uses
 
   Winapi.Windows,
 
-  Xml.XMLIntf;
+  Xml.XMLIntf,
+  FindUnit.Utils,
+  FindUnit.OTAUtils,
+  FindUnit.FileEditor,
+  FindUnit.StringPositionList,
+  FindUnit.FormMessage;
 
 type
   TEnvironmentController = class(TInterfacedObject, IOTAProjectFileStorageNotifier, IRFUEnvironmentController)
@@ -37,7 +42,8 @@ type
     procedure CreateLibraryPathUnits(OldItems: TDictionary<string, TPasFile>);
     procedure OnFinishedLibraryPathScan(FindUnits: TDictionary<string, TPasFile>);
 
-    procedure CreateProjectPathUnits(OldFiles: TDictionary<string, TPasFile>);
+    procedure CreateProjectPathUnits(NewFiles: TDictionary<string, TFileInfo>;
+      OldFiles: TDictionary<string, TPasFile>);
     procedure OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
 
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
@@ -83,12 +89,6 @@ type
 
 implementation
 
-uses
-  FindUnit.FileEditor,
-  FindUnit.FormMessage,
-  FindUnit.OTAUtils,
-  FindUnit.StringPositionList,
-  FindUnit.Utils;
 
 
 { TEnvUpdateControl }
@@ -148,9 +148,9 @@ begin
   end;
 end;
 
-procedure TEnvironmentController.CreateProjectPathUnits(OldFiles: TDictionary<string, TPasFile>);
+procedure TEnvironmentController.CreateProjectPathUnits(NewFiles: TDictionary<string, TFileInfo>;
+ OldFiles: TDictionary<string, TPasFile>);
 var
-  Files: TDictionary<string, TFileInfo>;
   Paths: TStringList;
 begin
   if FProjectUnits <> nil then
@@ -172,11 +172,10 @@ begin
     Sleep(1000);
   end;
 
-  Files := GetAllFilesFromProjectGroup;
   Paths := nil;
 
   FProjectUnits := TUnitsController.Create;
-  FProjectPathWorker := TParserWorker.Create(Paths, Files, OldFiles);
+  FProjectPathWorker := TParserWorker.Create(Paths, NewFiles, OldFiles);
   FProjectPathWorker.Start(OnFinishedProjectPathScan);
 end;
 
@@ -358,6 +357,7 @@ procedure TEnvironmentController.LoadProjectPath;
 var
   LocalThread: TThread;
   OldFiles: TDictionary<string, TPasFile>;
+  Files: TDictionary<string, TFileInfo>;
 begin
   Logger.Debug('TEnvironmentController.LoadProjectPath');
   if (FProjectUnits <> nil) and (not FProjectUnits.Ready) then
@@ -365,6 +365,9 @@ begin
     Logger.Debug('TEnvironmentController.LoadProjectPath: no');
     Exit;
   end;
+
+  if GetCurrentProject = nil then
+    Exit;
 
   Logger.Debug('TEnvironmentController.LoadProjectPath: yes');
 
@@ -376,10 +379,12 @@ begin
     FreeAndNil(FProjectUnits);
   end;
 
+  Files := GetAllFilesFromProjectGroup;
+
   LocalThread := TThread.CreateAnonymousThread(
     procedure
     begin
-      CreateProjectPathUnits(OldFiles);
+      CreateProjectPathUnits(Files, OldFiles);
     end
     );
   LocalThread.FreeOnTerminate := True;
