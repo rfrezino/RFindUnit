@@ -242,33 +242,33 @@ var
   CurFileInfo: TFileInfo;
   MilliBtw: Int64;
 begin
-  Parser := nil;
   for CurFileInfo in FPasFiles.Values do
   begin
+    Parser := nil;
     if not MustContinue then
       Exit;
 
-    try
-      if FCacheFiles <> nil then
+    if FCacheFiles <> nil then
+    begin
+      if FCacheFiles.TryGetValue(CurFileInfo.Path, OldParsedFile) then
       begin
-        if FCacheFiles.TryGetValue(CurFileInfo.Path, OldParsedFile) then
+        MilliBtw := MilliSecondsBetween(CurFileInfo.LastAccess, OldParsedFile.LastModification);
+        if MilliBtw <= 1  then
         begin
-          MilliBtw := MilliSecondsBetween(CurFileInfo.LastAccess, OldParsedFile.LastModification);
-          if MilliBtw <= 1  then
-          begin
-            Item := FCacheFiles.ExtractPair(CurFileInfo.Path).Value;
-            FFindUnits.Add(Item.FilePath, Item);
-            Logger.Debug('TParserWorker.ParseFiles[%s]: Cached files', [CurFileInfo.Path]);
-            Continue;
-          end
-          else
-            Logger.Debug('TParserWorker.ParseFiles[%s]: %d millis btw', [CurFileInfo.Path, MilliBtw]);
+          Item := FCacheFiles.ExtractPair(CurFileInfo.Path).Value;
+          FFindUnits.Add(Item.FilePath, Item);
+          Logger.Debug('TParserWorker.ParseFiles[%s]: Cached files', [CurFileInfo.Path]);
+          Continue;
         end
         else
-          Logger.Debug('TParserWorker.ParseFiles[%s]: no fount path', [CurFileInfo.Path]);
-      end;
+          Logger.Debug('TParserWorker.ParseFiles[%s]: %d millis btw', [CurFileInfo.Path, MilliBtw]);
+      end
+      else
+        Logger.Debug('TParserWorker.ParseFiles[%s]: no fount path', [CurFileInfo.Path]);
+    end;
 
-      Parser := TPasFileParser.Create(CurFileInfo.Path);
+    Parser := TPasFileParser.Create(CurFileInfo.Path);
+    try
       try
         Step := 'Parser.SetIncluder(FIncluder)';
         Parser.SetIncluder(FIncluder);
@@ -290,7 +290,8 @@ begin
         end;
       end;
     finally
-      Parser.Free;
+      if Parser <> nil then //Thread issues
+        Parser.Free;
     end;
   end;
 end;
@@ -358,17 +359,22 @@ begin
           Step: string;
         begin
           try
-            if not vSystemRunning then
+            if (not vSystemRunning) or (not MustContinue) then
               Exit;
 
             Step := 'InterlockedIncrement(FParsedItems);';
             InterlockedIncrement(FParsedItems);
             Step := 'Create';
             Parser := TPasFileParser.Create(ItemsToParser[index].Path);
-            Step := 'Parser.SetIncluder(FIncluder)';
-            Parser.SetIncluder(FIncluder);
-            Step := 'Parser.Process';
-            Item := Parser.Process;
+            try
+              Step := 'Parser.SetIncluder(FIncluder)';
+              Parser.SetIncluder(FIncluder);
+              Step := 'Parser.Process';
+              Item := Parser.Process;
+            finally
+              Parser.Free;
+            end;
+
             if Item <> nil then
             begin
               Item.LastModification := ItemsToParser[index].LastAccess;

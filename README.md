@@ -1,4 +1,4 @@
-# RFindUnit - Version 1.0.11
+# RFindUnit - Version 1.2.0
 
 Find unit (find uses) is a very simple tool and very used (Ctrl+Shift+A), but, as you know Delphi Find Unit doesn't work very well, in general it crashes or it's very slow.
 </br>Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions (as auto import for example).
@@ -9,6 +9,11 @@ If you help, it'll be very good.
 
 
 ### [Follow our updates on the blog](https://rfrezinos.wordpress.com/)
+
+### Automatically Identify unused imports
+Process:
+Show if everything is right:
+Or if there are some unused units:
 
 ### Find unit feature
 Before: 

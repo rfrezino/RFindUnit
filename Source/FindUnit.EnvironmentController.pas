@@ -186,8 +186,10 @@ end;
 
 destructor TEnvironmentController.Destroy;
 begin
-  FProjectPathWorker.RemoveCallBack;
-  FLibraryPathWorker.RemoveCallBack;
+  if FProjectPathWorker <> nil then
+    FProjectPathWorker.RemoveCallBack;
+  if FLibraryPathWorker <> nil then
+    FLibraryPathWorker.RemoveCallBack;
 
   FAutoImport.Free;
   FProjectUnits.Free;
