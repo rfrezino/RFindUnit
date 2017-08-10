@@ -3,7 +3,7 @@ unit FindUnit.DelphiVlcWrapper;
 interface
 
 uses
-	Windows;
+	Winapi.Windows;
 
 type
   TDelphiVLCWrapper = class(TObject)
@@ -16,7 +16,7 @@ type
 implementation
 
 uses
-  Messages;
+  Winapi.Messages;
 
 var
   FFound: Boolean;
@@ -63,7 +63,7 @@ class function TDelphiVLCWrapper.GetEditorRect: TRect;
 begin
   if not FFound then
     FindEditorHandle;
-  if not Windows.GetWindowRect(FEditHandler, Result) then
+  if not Winapi.Windows.GetWindowRect(FEditHandler, Result) then
   begin
     Result.Left := 20;
     Result.Top := 20;

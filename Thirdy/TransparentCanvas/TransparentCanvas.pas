@@ -25,11 +25,7 @@ unit TransparentCanvas;
 interface
 
 uses
-  Windows, SysUtils, Classes, Controls, Graphics, Types
-  {$if CompilerVersion >= 23.0} // XE2
-    , UITypes // Let inline function TFont.GetStyle be expanded
-  {$ifend}
-  ;
+  Winapi.Windows, System.SysUtils, System.Classes, Vcl.Controls, Vcl.Graphics;
 
 type
   ETransparentCanvasException = class(Exception)
@@ -228,7 +224,7 @@ type
 implementation
 
 uses
-  Math, Themes, UxTheme, RTLConsts;
+  System.Math, Vcl.Themes, System.RTLConsts, Winapi.UxTheme;
 
 {$if CompilerVersion >= 23.0} // XE2
   function InternalStyleServices : TCustomStyleServices;
@@ -348,9 +344,9 @@ begin
     FAttachedDC := 0;
   end else begin
     if Assigned(Source) then
-      raise EConvertError.CreateResFmt(@RTLConsts.SAssignError, [Source.ClassName, ClassName])
+      raise EConvertError.CreateResFmt(@System.RTLConsts.SAssignError, [Source.ClassName, ClassName])
     else
-      raise EConvertError.CreateResFmt(@RTLConsts.SAssignError, ['nil', ClassName]);
+      raise EConvertError.CreateResFmt(@System.RTLConsts.SAssignError, ['nil', ClassName]);
   end;
 end;
 
@@ -463,7 +459,7 @@ begin
   try
     TempImage.SelectObjects(TGDIObjects.CreateWithHandles(Brush.Handle, Pen.Handle, Font.Handle));
     SetWindowOrgEx(TempImage.FDCHandle, X1 - Pen.Width div 2, Y1 - Pen.Width div 2, nil);
-    Windows.Ellipse(TempImage.FDCHandle, X1, Y1, X2, Y2);
+    Winapi.Windows.Ellipse(TempImage.FDCHandle, X1, Y1, X2, Y2);
     SetWindowOrgEx(TempImage.FDCHandle, 0, 0, nil);
     TempImage.ProcessTransparency(Alpha);
     TempImage.BlendTo(X1, Y1, FWorkingCanvas);
@@ -639,7 +635,7 @@ begin
   try
     TempImage.SelectObjects(TGDIObjects.CreateWithHandles(Brush.Handle, Pen.Handle, Font.Handle));
     SetWindowOrgEx(TempImage.FDCHandle, X1 - Pen.Width div 2, Y1 - Pen.Width div 2, nil);
-    Windows.Rectangle(TempImage.FDCHandle, X1, Y1, X2, Y2);
+    Winapi.Windows.Rectangle(TempImage.FDCHandle, X1, Y1, X2, Y2);
     SetWindowOrgEx(TempImage.FDCHandle, 0, 0, nil);
     TempImage.ProcessTransparency(Alpha);
     TempImage.BlendTo(X1, Y1, FWorkingCanvas);
@@ -667,7 +663,7 @@ begin
   try
     TempImage.SelectObjects(TGDIObjects.CreateWithHandles(Brush.Handle, Pen.Handle, Font.Handle));
     SetWindowOrgEx(TempImage.FDCHandle, X1 - Pen.Width div 2, Y1 - Pen.Width div 2, nil);
-    Windows.RoundRect(TempImage.FDCHandle, X1, Y1, X2, Y2, XRadius, YRadius);
+    Winapi.Windows.RoundRect(TempImage.FDCHandle, X1, Y1, X2, Y2, XRadius, YRadius);
     SetWindowOrgEx(TempImage.FDCHandle, 0, 0, nil);
     TempImage.ProcessTransparency(Alpha);
     TempImage.BlendTo(X1, Y1, FWorkingCanvas);

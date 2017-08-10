@@ -30,6 +30,10 @@ object frmSettings: TfrmSettings
     object tsGeneral: TTabSheet
       Caption = 'General'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grpGeneralSettings: TGroupBox
         Left = 0
         Top = 0
@@ -210,6 +214,10 @@ object frmSettings: TfrmSettings
     end
     object tsAutoImport: TTabSheet
       Caption = 'Auto Import'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdAutoImport: TDBGrid
         Left = 0
         Top = 48
@@ -278,6 +286,10 @@ object frmSettings: TfrmSettings
     object tsUnusedUses: TTabSheet
       Caption = 'Unused uses'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 5
         Top = 6

@@ -3,16 +3,14 @@ unit FindUnit.FileEditor;
 interface
 
 uses
-  Classes,
-  RegExpr,
-  SysUtils,
-  ToolsApi,
+  System.Classes,
+  System.SysUtils,
 
   FindUnit.FormMessage,
   FindUnit.Header,
   FindUnit.OtaUtils,
   FindUnit.Settings,
-  FindUnit.Utils;
+  FindUnit.Utils, ToolsAPI;
 
 type
   TCharPosition = record
@@ -95,6 +93,9 @@ type
   end;
 
 implementation
+
+uses
+  RegExpr;
 
 
 { TSourceFileEditor }

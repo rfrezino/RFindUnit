@@ -13,7 +13,7 @@ unit Log4Pascal;
 interface
 
 uses
-  SyncObjs;
+  System.SyncObjs;
 
 type
   TLogTypes = (ltTrace, ltDebug, ltInfo, ltWarning, ltError, ltFatal);
@@ -70,9 +70,7 @@ var
 implementation
 
 uses
-  Forms,
-  SysUtils,
-  Windows;
+  System.SysUtils, Vcl.Forms, Winapi.Windows;
 
 const
   FORMAT_LOG = '%s %s';
@@ -93,7 +91,7 @@ begin
   if FIsInit then
     CloseFile(FOutFile);
 
-  SysUtils.DeleteFile(FFileName);
+  System.SysUtils.DeleteFile(FFileName);
 
   FIsInit := False;
 end;

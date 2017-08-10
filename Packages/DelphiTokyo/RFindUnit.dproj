@@ -115,9 +115,6 @@
         <DCCReference Include="dsnap.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
         <DCCReference Include="vcldb.dcp"/>
-        <DCCReference Include="..\..\Source\FindUnit.FormSearch.pas">
-            <Form>frmFindUnit</Form>
-        </DCCReference>
         <DCCReference Include="..\..\Source\FindUnit.PasParser.pas"/>
         <DCCReference Include="..\..\Source\FindUnit.SearchString.pas"/>
         <DCCReference Include="..\..\Source\FindUnit.EnvironmentController.pas"/>
@@ -160,6 +157,9 @@
         <DCCReference Include="..\..\Source\FindUnit.ImageRepository.pas"/>
         <DCCReference Include="..\..\Source\FindUnit.SearchStringCache.pas"/>
         <DCCReference Include="..\..\Interfaces\Interf.SearchStringCache.pas"/>
+        <DCCReference Include="..\..\Source\FindUnit.FormSearch.pas">
+            <Form>frmFindUnit</Form>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

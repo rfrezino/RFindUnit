@@ -3,11 +3,11 @@ unit FindUnit.StringPositionList;
 interface
 
 uses
-  Classes,
+  System.Classes,
 
   FindUnit.Header,
 
-  Generics.Collections,
+  System.Generics.Collections,
   System.SysUtils;
 
 type

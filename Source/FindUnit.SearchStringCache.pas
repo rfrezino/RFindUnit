@@ -3,7 +3,7 @@ unit FindUnit.SearchStringCache;
 interface
 
 uses
-  Classes,
+  System.Classes,
 
   Interf.SearchStringCache,
 

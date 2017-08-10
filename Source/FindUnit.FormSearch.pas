@@ -3,12 +3,10 @@
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ToolsAPI, Menus, SyncObjs,
-  FindUnit.EnvironmentController, StrUtils, AppEvnts,
-  Buttons, ShellAPI, FindUnit.Header, FindUnit.FileEditor, Vcl.ImgList,
-  FindUnit.FormSettings, FindUnit.Settings, System.ImageList,
-  Vcl.Clipbrd;
+  Vcl.Forms, System.ImageList, Vcl.ImgList, Vcl.Controls, Vcl.ExtCtrls,
+  Vcl.AppEvnts, Vcl.StdCtrls, System.Classes, Vcl.Buttons, Winapi.Windows,
+  FindUnit.EnvironmentController, FindUnit.FormSettings, FindUnit.FileEditor,
+  FindUnit.Header;
 
 type
   TFuncBoolean = function: Boolean of object;
@@ -102,7 +100,8 @@ uses
   FindUnit.FormMessage,
   FindUnit.OTAUtils,
   FindUnit.ResultsImportanceCalculator,
-  FindUnit.Utils;
+  FindUnit.Utils, FindUnit.Settings, System.SysUtils, Winapi.Messages,
+  Vcl.Dialogs, Winapi.ShellAPI, ToolsAPI, Vcl.Graphics;
 
 {$R *.dfm}
 
@@ -487,7 +486,7 @@ end;
 procedure TfrmFindUnit.lstResultClick(Sender: TObject);
 begin
   {$IFDEF DEBUG}
-  Clipboard.AsText := lstResult.Items.Text;
+//  Clipboard.AsText := lstResult.Items.Text;
   {$ENDIF}
 end;
 

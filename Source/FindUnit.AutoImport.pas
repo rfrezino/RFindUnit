@@ -3,16 +3,10 @@ unit FindUnit.AutoImport;
 interface
 
 uses
-  Classes,
-  IniFiles,
-  Log4Pascal,
-  SysUtils,
-  ToolsAPI,
-
   FindUnit.Header,
   FindUnit.OTAUtils,
   FindUnit.StringPositionList,
-  FindUnit.Utils;
+  FindUnit.Utils, System.IniFiles;
 
 type
   TAutoImport = class(TObject)
@@ -37,6 +31,9 @@ type
   end;
 
 implementation
+
+uses
+  System.SysUtils, System.Classes, Log4Pascal, ToolsAPI;
 
 const
   SECTION = 'MEMORIZEDUNIT';

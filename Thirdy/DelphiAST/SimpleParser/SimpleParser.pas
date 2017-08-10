@@ -146,8 +146,8 @@ unit SimpleParser;
 interface
 
 uses
-  SysUtils,
-  Classes,
+  System.SysUtils,
+  System.Classes,
   SimpleParser.Lexer.Types,
   SimpleParser.Lexer,
   SimpleParser.Types;

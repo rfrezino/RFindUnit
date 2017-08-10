@@ -3,9 +3,9 @@ unit FindUnit.Worker;
 interface
 
 uses
-  Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, Generics.Collections,
-  Log4Pascal, SimpleParser.Lexer.Types, SysUtils, Windows, FindUnit.DcuDecompiler,
-  FindUnit.Utils, System.Threading, FindUnit.FileCache, DateUtils,
+  System.Classes, FindUnit.IncluderHandlerInc, FindUnit.PasParser, System.Generics.Collections,
+  Log4Pascal, SimpleParser.Lexer.Types, System.SysUtils, FindUnit.DcuDecompiler,
+  FindUnit.Utils, System.Threading, FindUnit.FileCache, System.DateUtils,
   FindUnit.Header;
 
 type
@@ -52,6 +52,9 @@ type
   end;
 
 implementation
+
+uses
+  Winapi.Windows;
 
 { TParserWorker }
 

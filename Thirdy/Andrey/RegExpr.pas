@@ -96,8 +96,8 @@ interface
 {$IFDEF FPC} {$DEFINE OverMeth} {$ENDIF}
 
 uses
- Classes,  // TStrings in Split method
- SysUtils; // Exception
+ System.Classes,  // TStrings in Split method
+ System.SysUtils; // Exception
 
 type
  {$IFDEF UniCode}
@@ -631,7 +631,7 @@ function RegExprSubExpressions (const ARegExpr : string;
 implementation
 
 uses
- Windows; // CharUpper/Lower
+ Winapi.Windows; // CharUpper/Lower
 
 const
  TRegExprVersionMajor : integer = 0;

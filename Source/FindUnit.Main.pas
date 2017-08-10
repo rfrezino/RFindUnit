@@ -3,10 +3,7 @@ unit FindUnit.Main;
 interface
 
 uses
-  Classes,
-  Menus,
-  ToolsAPI,
-  Windows,
+  System.Classes,
 
   FindUnit.CompilerInterceptor,
   FindUnit.EnvironmentController,
@@ -15,7 +12,7 @@ uses
   FindUnit.PaintUnusedUses,
   FindUnit.UnusedUses,
   FindUnit.Utils,
-  Vcl.Graphics;
+  Vcl.Graphics, ToolsAPI;
 
 {$R RFindUnitSplash.res}
 type
@@ -49,11 +46,11 @@ implementation
 
 uses
   Log4PAscal,
-  SysUtils,
+  System.SysUtils,
 
   FindUnit.FormSearch,
   FindUnit.OTAUtils,
-  FindUnit.Settings;
+  FindUnit.Settings, Winapi.Windows, Vcl.Menus;
 
 var
   vKbIndex: Integer;

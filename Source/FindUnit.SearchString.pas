@@ -3,17 +3,16 @@ unit FindUnit.SearchString;
 interface
 
 uses
-  Classes,
+  System.Classes,
 
   FindUnit.Header,
   FindUnit.PasParser,
 
-  Generics.Collections,
+  System.Generics.Collections,
 
   System.SyncObjs,
 
   Log4Pascal,
-  System.Generics.Collections,
   Interf.SearchStringCache;
 
 type
@@ -42,7 +41,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  System.SysUtils;
 
 { TSearchString }
 

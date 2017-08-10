@@ -3,18 +3,7 @@ unit FindUnit.FormMessage;
 interface
 
 uses
-  Classes,
-  Controls,
-  Dialogs,
-  ExtCtrls,
-  Forms,
-  Graphics,
-  Messages,
-  SysUtils,
-  TransparentCanvas,
-  Types,
-  Variants,
-  Windows;
+  Vcl.Forms, System.Classes, Vcl.ExtCtrls, Vcl.Controls, System.Types;
 
 type
   TfrmMessage = class(TForm)
@@ -45,7 +34,8 @@ implementation
 uses
   Log4Pascal,
 
-  FindUnit.DelphiVlcWrapper;
+  FindUnit.DelphiVlcWrapper, Winapi.Windows, TransparentCanvas, Vcl.Graphics,
+  System.SysUtils;
 
 const
   MARGIN_PADING = 5;

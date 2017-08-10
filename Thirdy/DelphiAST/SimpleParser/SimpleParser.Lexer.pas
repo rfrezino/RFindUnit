@@ -54,7 +54,7 @@ unit SimpleParser.Lexer;
 interface
 
 uses
-  SysUtils, Classes, Character, SimpleParser.Lexer.Types;
+  System.SysUtils, System.Classes, System.Character, SimpleParser.Lexer.Types;
 
 var
   Identifiers: array[#0..#127] of ByteBool;
@@ -397,7 +397,7 @@ type
 implementation
 
 uses
-  StrUtils;
+  System.StrUtils;
 
 type
   TmwPasLexExpressionEvaluation = (leeNone, leeAnd, leeOr);

@@ -21,11 +21,10 @@ uses
   System.Threading,
   System.Types,
 
-  Graphics,
   Vcl.Imaging.pngimage,
   System.IOUtils,
   System.RegularExpressions,
-  FindUnit.Settings;
+  FindUnit.Settings, Vcl.Graphics;
 
 type
   TRfUnusedProcessStatus = (uspRunning, uspPending, uspComplete);

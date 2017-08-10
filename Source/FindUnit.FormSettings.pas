@@ -3,16 +3,6 @@ unit FindUnit.FormSettings;
 interface
 
 uses
-  Classes,
-  ComCtrls,
-  Controls,
-  Dialogs,
-  Forms,
-  Graphics,
-  Messages,
-  Variants,
-  Windows,
-
   Data.DB,
 
   Datasnap.DBClient,
@@ -30,7 +20,8 @@ uses
   Vcl.Mask,
   Vcl.StdCtrls,
 
-  Winapi.ShellAPI, FindUnit.OTAUtils, ToolsAPI;
+  Winapi.ShellAPI, FindUnit.OTAUtils, ToolsAPI, Vcl.Controls, Vcl.ComCtrls,
+  System.Classes, Vcl.Forms;
 
 type
   TfrmSettings = class(TForm)
@@ -94,6 +85,9 @@ type
   end;
 
 implementation
+
+uses
+  Winapi.Windows, Vcl.Dialogs;
 
 {$R *.dfm}
 

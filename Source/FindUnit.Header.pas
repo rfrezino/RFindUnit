@@ -37,7 +37,7 @@ const
 implementation
 
 uses
-	SysUtils;
+  System.SysUtils;
 
 procedure LoadConts;
 begin

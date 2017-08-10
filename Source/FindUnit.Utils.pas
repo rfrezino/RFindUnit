@@ -3,10 +3,6 @@ unit FindUnit.Utils;
 interface
 
 uses
-  Classes,
-  IOUtils,
-  TlHelp32,
-  Windows,
   SimpleParser.Lexer.Types,
   System.Generics.Collections,
   System.StrUtils;
@@ -58,8 +54,11 @@ implementation
 
 uses
   Log4PAscal,
-  SysUtils,
-  Types;
+  Winapi.TlHelp32,
+  Winapi.Windows,
+  System.IOUtils,
+  System.Classes,
+  System.SysUtils, System.Types;
 
 function DictionaryToString(Dir: TDictionary<string, string>): string;
 var
@@ -221,14 +220,14 @@ var
   FilePath: string;
   FileInfo: TFileInfo;
 begin
-  Files := IOUtils.TDirectory.GetFiles(Path, Filter, TSearchOption.soTopDirectoryOnly);
+  Files := System.IOUtils.TDirectory.GetFiles(Path, Filter, TSearchOption.soTopDirectoryOnly);
 
   Result := TDictionary<string, TFileInfo>.Create;
   for FilePath in Files do
   begin
     FileInfo.Path := Trim(FilePath);
     if FileExists(FilePath) then
-      FileInfo.LastAccess := IOUtils.TFile.GetLastWriteTime(FilePath)
+      FileInfo.LastAccess := System.IOUtils.TFile.GetLastWriteTime(FilePath)
     else
       FileInfo.LastAccess := 0;
 

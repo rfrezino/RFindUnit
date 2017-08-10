@@ -3,9 +3,9 @@ unit FindUnit.IncluderHandlerInc;
 interface
 
 uses
-  Classes,
+  System.Classes,
 
-  Generics.Collections,
+  System.Generics.Collections,
 
   SimpleParser.Lexer.Types;
 
@@ -36,7 +36,7 @@ implementation
 
 uses
   Log4Pascal,
-  SysUtils,
+  System.SysUtils,
 
   FindUnit.Utils;
 

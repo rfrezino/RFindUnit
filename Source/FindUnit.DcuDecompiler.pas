@@ -3,8 +3,8 @@ unit FindUnit.DcuDecompiler;
 interface
 
 uses
-  Classes,
-  Windows,
+  System.Classes,
+  Winapi.Windows,
 
   FindUnit.Utils,
   Winapi.ShellAPI;
@@ -43,7 +43,7 @@ type
 implementation
 
 uses
-  SysUtils{$IFDEF UNICODE}, AnsiStrings{$ENDIF}, Log4Pascal;
+  System.SysUtils{$IFDEF UNICODE}, System.AnsiStrings{$ENDIF}, Log4Pascal;
 
 { TDcuDecompiler }
 

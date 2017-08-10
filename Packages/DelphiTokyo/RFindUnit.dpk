@@ -36,7 +36,6 @@ requires
   vcldb;
 
 contains
-  FindUnit.FormSearch in '..\..\Source\FindUnit.FormSearch.pas' {frmFindUnit},
   FindUnit.PasParser in '..\..\Source\FindUnit.PasParser.pas',
   FindUnit.SearchString in '..\..\Source\FindUnit.SearchString.pas',
   FindUnit.EnvironmentController in '..\..\Source\FindUnit.EnvironmentController.pas',
@@ -74,7 +73,8 @@ contains
   FindUnit.PaintUnusedUses in '..\..\ideInteraction\implementations\FindUnit.PaintUnusedUses.pas',
   FindUnit.ImageRepository in '..\..\Source\FindUnit.ImageRepository.pas',
   FindUnit.SearchStringCache in '..\..\Source\FindUnit.SearchStringCache.pas',
-  Interf.SearchStringCache in '..\..\Interfaces\Interf.SearchStringCache.pas';
+  Interf.SearchStringCache in '..\..\Interfaces\Interf.SearchStringCache.pas',
+  FindUnit.FormSearch in '..\..\Source\FindUnit.FormSearch.pas' {frmFindUnit};
 
 end.
 
