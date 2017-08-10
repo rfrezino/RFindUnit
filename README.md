@@ -12,13 +12,19 @@ If you help, it'll be very good.
 
 ### Automatically Identify unused imports
 First enable it: 
+
 ![Enable feature](https://github.com/rfrezino/RFindUnit/blob/master/Resources/ExperimentalFeature.png)
 
 Process: 
+
 ![Process the file](https://github.com/rfrezino/RFindUnit/blob/master/Resources/ProcessingUses.png)
+
 Show if everything is right:
+
 ![Show all ok](https://github.com/rfrezino/RFindUnit/blob/master/Resources/CheckedAndOK.png)
+
 Or if there are some unused units:
+
 ![Highlight unused uses](https://github.com/rfrezino/RFindUnit/blob/master/Resources/CheckedAndNotOk.png)
 
 ### Find unit feature
