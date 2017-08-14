@@ -192,7 +192,7 @@ begin
   FCurPath := ExtractFilePath(ParamStr(0)) + 'Installer\';
 
   FDelphiBplOutPut := GetEnvironmentVariable('public') + '\Documents\RAD Studio\RFindUnit\' + DelphiDesc + '\bpl\';
-  FDcu32IntPath := FCurPath + '\Thirdy\Dcu32Int\';
+  FDcu32IntPath := ExtractFilePath(ParamStr(0)) + '\Thirdy\Dcu32Int\';
   FUserAppDirFindUnit := GetEnvironmentVariable('appdata') + '\DelphiFindUnit\';
   FOutPutDir := FCurPath + 'build\' + TDelphiInstallationCheck.GetDelphiNameByVersion(FDelphiVersion) + '\';
   FPackagePath := TDirectory.GetParent(ExcludeTrailingPathDelimiter(FCurPath)) + '\Packages\';

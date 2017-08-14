@@ -27,6 +27,7 @@ type
     IgnoreUsesUnused: string;
     EnableExperimentalFindUnusedUses: Boolean;
     BreakLineForNonDomainUses: Boolean;
+    RanOnceDcuDecompiler: Boolean;
   end;
 
   TSettings = class(TObject)
@@ -86,8 +87,11 @@ type
 
     function GetEnableExperimentalFindUnusedUses: Boolean;
     procedure SetEnableExperimentalFindUnusedUses(const Value: Boolean);
+
     function GetBreakLineForNonDomainUses: Boolean;
     procedure SetBreakLineForNonDomainUses(const Value: Boolean);
+    function GetRanOnceDcuDecompiler: Boolean;
+    procedure SetRanOnceDcuDecompiler(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -111,6 +115,7 @@ type
     property IgnoreUsesUnused: string read GetIgnoreUsesUnused write SetUsesUnused;
     property EnableExperimentalFindUnusedUses: Boolean read GetEnableExperimentalFindUnusedUses write SetEnableExperimentalFindUnusedUses;
     property BreakLineForNonDomainUses: Boolean read GetBreakLineForNonDomainUses write SetBreakLineForNonDomainUses;
+    property RanOnceDcuDecompiler: Boolean read GetRanOnceDcuDecompiler write SetRanOnceDcuDecompiler;
 
     class function GetCacheSettings: TCacheSettings;
     class procedure ReloadSettings;
@@ -151,6 +156,8 @@ const
   CONF_EXPRIMENTAL_UNUSED_USES = 'EXPRIMENTAL_UNUSED_USES';
   CONF_BREAK_LINE_NON_DOMAIN_USES = 'BREAK_LINE_NON_DOMAIN_USES';
 
+  STATUS_RAN_ONCE_DCUDECOMPILER = 'RAN_ONCE_DCUDECOMPILER';
+
 { TSettings }
 
 class function TSettings.GetCacheSettings: TCacheSettings;
@@ -177,6 +184,7 @@ begin
     Result.IgnoreUsesUnused := Settings.IgnoreUsesUnused;
     Result.EnableExperimentalFindUnusedUses := Settings.EnableExperimentalFindUnusedUses;
     Result.BreakLineForNonDomainUses := Settings.BreakLineForNonDomainUses;
+    Result.RanOnceDcuDecompiler := Settings.RanOnceDcuDecompiler;
   finally
     Settings.Free;
   end;
@@ -211,6 +219,11 @@ end;
 function TSettings.GetOrganizeUsesAfterAddingNewUsesUnit: Boolean;
 begin
   Result := FIni.ReadBool(SETTINGS_SECTION, CONF_ORGANIZE_USES_AFTER_ADDING_NEW_USES_UNIT, False);
+end;
+
+function TSettings.GetRanOnceDcuDecompiler: Boolean;
+begin
+  Result := FIni.ReadBool(SETTINGS_SECTION, STATUS_RAN_ONCE_DCUDECOMPILER, False);
 end;
 
 constructor TSettings.Create;
@@ -403,6 +416,12 @@ end;
 procedure TSettings.SetUsesUnused(const Value: string);
 begin
   FIni.WriteString(SETTINGS_SECTION, CONF_IGNORED_USES, Value);
+  FIni.UpdateFile;
+end;
+
+procedure TSettings.SetRanOnceDcuDecompiler(const Value: Boolean);
+begin
+  FIni.WriteBool(SETTINGS_SECTION, STATUS_RAN_ONCE_DCUDECOMPILER, Value);
   FIni.UpdateFile;
 end;
 

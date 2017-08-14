@@ -36,6 +36,7 @@ type
     btn1: TSpeedButton;
     btnConfig: TButton;
     ilImages: TImageList;
+    lblWarnDcuDecompi: TLabel;
     procedure FormShow(Sender: TObject);
     procedure edtSearchKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAddClick(Sender: TObject);
@@ -147,11 +148,12 @@ begin
 
     if Settings.SettingFormStartPosY > 0 then
       Self.Top := Settings.SettingFormStartPosY;
+
+    lblWarnDcuDecompi.Visible := not Settings.RanOnceDcuDecompiler;
   finally
     Settings.Free;
   end;
 end;
-
 
 procedure TfrmFindUnit.ShowTextOnScreen(Text: string);
 var
@@ -224,6 +226,7 @@ const
 var
   ForMessage: string;
   MesDlg: TForm;
+  Settings: TSettings;
 begin
   Result := True;
   if Dcu32IntExecutableExists then
@@ -242,6 +245,7 @@ begin
 
     if MesDlg.ModalResult <> mrYes then
       Exit;
+
   finally
     MesDlg.Free;
   end;
@@ -255,12 +259,22 @@ const
    + ' and process it to make it available for search.'
    + ' This process will slowdown your computer and can take some minutes (~2), '
    + ' are you sure that you want to run it now ?';
+var
+  Settings: TSettings;
 begin
   if MessageDlg(MESGEM, mtWarning, [mbCancel, mbYes], 0) <> mrYes then
     Exit;
 
   btnProcessDCUs.Enabled := False;
   FEnvControl.ProcessDCUFiles;
+
+  Settings := TSettings.Create;
+  try
+    Settings.RanOnceDcuDecompiler := True;
+  finally
+    Settings.Free;
+  end;
+  ConfigureForm;
 end;
 
 procedure TfrmFindUnit.btnRefreshLibraryPathClick(Sender: TObject);
