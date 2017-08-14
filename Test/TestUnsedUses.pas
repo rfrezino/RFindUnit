@@ -18,6 +18,7 @@ type
     function GetFullMatch(const SearchString: string): TStringList;
     function AreDependenciasReady: Boolean;
     procedure ForceRunDependencies;
+    function PasExists(PasName: string): Boolean;
   end;
 
   TestTUnsedUsesProcessor = class(TTestCase)
@@ -176,6 +177,11 @@ begin
     Result.Add('Spring.Collections.Dictionaries.TDictionary - Class');
     Result.Add('System.Generics.Collections.TDictionary - Class');
   end;
+end;
+
+function TTestEnv.PasExists(PasName: string): Boolean;
+begin
+
 end;
 
 initialization

@@ -13,13 +13,14 @@ uses
   System.SyncObjs,
 
   Log4Pascal,
-  Interf.SearchStringCache;
+  Interf.SearchStringCache,
+  FindUnit.FileCache;
 
 type
   TSearchString = class(TObject)
   private
     FRcSearch: TCriticalSection;
-    FCandidates: TDictionary<string, TPasFile>;
+    FCandidates: TUnits;
     FSearchStringCache: ISearchStringCache;
     FMatchCache: ISearchStringCache;
 
@@ -28,7 +29,7 @@ type
     function GetMatcherOnItemListType(Item: TPasFile; SearchString: TStringList; List: TStringList; const Sufix: string; var ItensFound: integer): string;
     function GetMatchesOnItem(Item: TPasFile; SearchString: TStringList; var ItensFound: integer): string;
   public
-    constructor Create(Candidates: TDictionary<string, TPasFile>);
+    constructor Create(Candidates: TUnits);
     destructor Destroy; override;
 
     function GetMatch(const SearchString: string): TStringList;
@@ -45,7 +46,7 @@ uses
 
 { TSearchString }
 
-constructor TSearchString.Create(Candidates: TDictionary<string, TPasFile>);
+constructor TSearchString.Create(Candidates: TUnits);
 begin
   FCandidates := Candidates;
   FRcSearch := TCriticalSection.Create;

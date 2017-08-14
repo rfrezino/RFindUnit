@@ -9,16 +9,16 @@ uses
   FindUnit.Header;
 
 type
-  TOnFinished = procedure(FindUnits: TDictionary<string, TPasFile>) of object;
+  TOnFinished = procedure(FindUnits: TUnits) of object;
 
   TParserWorker = class(TObject)
   private
     FDirectoriesPath: TStringList;
     FPasFiles: TDictionary<string, TFileInfo>;
-    FFindUnits: TDictionary<TFilePath, TPasFile>;
+    FFindUnits: TUnits;
     FIncluder: IIncludeHandler;
     FParsedItems: Integer;
-    FCacheFiles: TDictionary<string, TPasFile>;
+    FCacheFiles: TUnits;
 
     FDcuFiles: TStringList;
     FParseDcuFile: Boolean;
@@ -37,11 +37,11 @@ type
 
     function MustContinue: Boolean;
   public
-    constructor Create(var DirectoriesPath: TStringList; var Files: TDictionary<string, TFileInfo>; Chache: TDictionary<string, TPasFile>);
+    constructor Create(var DirectoriesPath: TStringList; var Files: TDictionary<string, TFileInfo>; Chache: TUnits);
     destructor Destroy; override;
 
     procedure Start(CallBack: TOnFinished); overload;
-    function Start: TDictionary<string, TPasFile>; overload;
+    function Start: TUnits; overload;
 
     property ItemsToParse: Integer read GetItemsToParse;
     property ParsedItems: Integer read FParsedItems;
@@ -59,7 +59,7 @@ uses
 { TParserWorker }
 
 constructor TParserWorker.Create(var DirectoriesPath: TStringList; var Files: TDictionary<string, TFileInfo>;
-  Chache: TDictionary<string, TPasFile>);
+  Chache: TUnits);
 var
   InfoFiles: TFileInfo;
 begin
@@ -79,7 +79,7 @@ begin
   FDcuFiles.Sorted := True;
   FDcuFiles.Duplicates := dupIgnore;
 
-  FFindUnits := TDictionary<string, TPasFile>.Create;
+  FFindUnits := TUnits.Create;
 
   FIncluder := TIncludeHandlerInc.Create(FDirectoriesPath.Text) as IIncludeHandler;
 end;
@@ -397,7 +397,7 @@ begin
     Logger.Debug('TParserWorker.ParseFiles: Put results together.');
     for PasValue in ResultList.LockList do
     begin
-      FFindUnits.AddOrSetValue(PasValue.FilePath, PasValue);
+      FFindUnits.Add(PasValue.FilePath, PasValue);
     end;
 
     Logger.Debug('TParserWorker.ParseFiles: Finished.');
@@ -450,7 +450,7 @@ begin
   end;
 end;
 
-function TParserWorker.Start: TDictionary<string, TPasFile>;
+function TParserWorker.Start: TUnits;
 begin
   RunTasks;
   Result := FFindUnits;

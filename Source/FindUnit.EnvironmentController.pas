@@ -39,12 +39,12 @@ type
     FProjectPathWorker: TParserWorker;
     FLibraryPathWorker: TParserWorker;
 
-    procedure CreateLibraryPathUnits(OldItems: TDictionary<string, TPasFile>);
-    procedure OnFinishedLibraryPathScan(FindUnits: TDictionary<string, TPasFile>);
+    procedure CreateLibraryPathUnits(OldItems: TUnits);
+    procedure OnFinishedLibraryPathScan(FindUnits: TUnits);
 
     procedure CreateProjectPathUnits(NewFiles: TDictionary<string, TFileInfo>;
-      OldFiles: TDictionary<string, TPasFile>);
-    procedure OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
+      OldFiles: TUnits);
+    procedure OnFinishedProjectPathScan(FindUnits: TUnits);
 
     procedure CreatingProject(const ProjectOrGroup: IOTAModule);
     //Dummy
@@ -67,6 +67,8 @@ type
 
     function GetProjectUnits(const SearchString: string): TStringList;
     function GetLibraryPathUnits(const SearchString: string): TStringList;
+
+    function PasExists(PasName: string): Boolean;
 
     function GetFullMatch(const SearchString: string): TStringList;
 
@@ -100,7 +102,7 @@ begin
   LoadLibraryPath;
 end;
 
-procedure TEnvironmentController.CreateLibraryPathUnits(OldItems: TDictionary<string, TPasFile>);
+procedure TEnvironmentController.CreateLibraryPathUnits(OldItems: TUnits);
 var
   Paths: TStringList;
   Files: TDictionary<string, TFileInfo>;
@@ -149,7 +151,7 @@ begin
 end;
 
 procedure TEnvironmentController.CreateProjectPathUnits(NewFiles: TDictionary<string, TFileInfo>;
- OldFiles: TDictionary<string, TPasFile>);
+ OldFiles: TUnits);
 var
   Paths: TStringList;
 begin
@@ -327,7 +329,7 @@ end;
 procedure TEnvironmentController.LoadLibraryPath;
 var
   LocalThread: TThread;
-  OldLibraryPath: TDictionary<string, TPasFile>;
+  OldLibraryPath: TUnits;
 begin
   Logger.Debug('TEnvironmentController.LoadLibraryPath');
   if (FLibraryPath <> nil) and (not FLibraryPath.Ready) then
@@ -358,7 +360,7 @@ end;
 procedure TEnvironmentController.LoadProjectPath;
 var
   LocalThread: TThread;
-  OldFiles: TDictionary<string, TPasFile>;
+  OldFiles: TUnits;
   Files: TDictionary<string, TFileInfo>;
 begin
   Logger.Debug('TEnvironmentController.LoadProjectPath');
@@ -393,13 +395,13 @@ begin
   LocalThread.Start;
 end;
 
-procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TDictionary<string, TPasFile>);
+procedure TEnvironmentController.OnFinishedLibraryPathScan(FindUnits: TUnits);
 begin
   FLibraryPath.Units := FindUnits;
   FLibraryPath.Ready := True;
 end;
 
-procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TDictionary<string, TPasFile>);
+procedure TEnvironmentController.OnFinishedProjectPathScan(FindUnits: TUnits);
 begin
   if FProjectUnits = nil then
   begin
@@ -427,6 +429,18 @@ begin
   finally
     FileEditor.Free;
   end;
+end;
+
+function TEnvironmentController.PasExists(PasName: string): Boolean;
+begin
+  Result := False;
+  if Assigned(FProjectUnits) and (FProjectUnits.Ready) then
+    if FProjectUnits.Units.FileExists(PasName) then
+      Exit(True);
+
+  if Assigned(FLibraryPath) and (FLibraryPath.Ready) then
+    if FLibraryPath.Units.FileExists(PasName) then
+      Exit(True);
 end;
 
 procedure TEnvironmentController.ProcessDCUFiles;

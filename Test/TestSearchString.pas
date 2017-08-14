@@ -17,13 +17,13 @@ uses
   Interf.SearchStringCache,
 
   System.Generics.Collections,
-  System.SysUtils;
+  System.SysUtils, FindUnit.FileCache;
 
 type
   TestTSearchString = class(TTestCase)
   strict private
     FSearchString: TSearchString;
-    FPasFiles: TDictionary<TFilePath, TPasFile>;
+    FPasFiles: TUnits;
   private
     FFilePath: string;
   public
@@ -48,7 +48,7 @@ begin
   FFilePath := ExtractFilePath(ParamStr(0));
   FFilePath := Fetch(FFilePath, '\Test\');
   FFilePath := FFilePath + '\Test\TestPasParser\' + TEST_FILE_NAME + '.pas';
-  FPasFiles := TDictionary<string, TPasFile>.Create;
+  FPasFiles := TUnits.Create;
 
   PasParser := TPasFileParser.Create(FFilePath);
   FPasFiles.Add(FFilePath, PasParser.Process);
