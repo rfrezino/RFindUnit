@@ -58,6 +58,11 @@ type
     Label1: TLabel;
     chbFeatureUnusedUses: TCheckBox;
     chbDontBreakLineForNonNameSpaceUnits: TCheckBox;
+    shpUnused: TShape;
+    Shape2: TShape;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

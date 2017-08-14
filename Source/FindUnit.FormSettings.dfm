@@ -30,10 +30,6 @@ object frmSettings: TfrmSettings
     object tsGeneral: TTabSheet
       Caption = 'General'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grpGeneralSettings: TGroupBox
         Left = 0
         Top = 0
@@ -56,6 +52,44 @@ object frmSettings: TfrmSettings
           Font.Style = [fsItalic, fsUnderline]
           ParentFont = False
           OnClick = lblLinkClick
+        end
+        object shpUnused: TShape
+          Left = 368
+          Top = 168
+          Width = 23
+          Height = 17
+          Brush.Color = 33023
+        end
+        object Shape2: TShape
+          Left = 368
+          Top = 191
+          Width = 23
+          Height = 17
+          Brush.Color = clSilver
+        end
+        object Label2: TLabel
+          Left = 397
+          Top = 170
+          Width = 69
+          Height = 13
+          Caption = 'Unused import'
+        end
+        object Label3: TLabel
+          Left = 357
+          Top = 150
+          Width = 118
+          Height = 13
+          Caption = 'Underline color meaning:'
+        end
+        object Label4: TLabel
+          Left = 397
+          Top = 193
+          Width = 237
+          Height = 65
+          Caption = 
+            'No access to the pas, it'#39's probably a dcu file that '#13#10'was add in' +
+            ' the library path. '#13#10'To fix it, click in the button'#13#10'"Process DC' +
+            'Us files from Library Path"'#13#10'On the search screen'
         end
         object grpSearchAlgorithm: TRadioGroup
           Left = 335
@@ -214,10 +248,6 @@ object frmSettings: TfrmSettings
     end
     object tsAutoImport: TTabSheet
       Caption = 'Auto Import'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grdAutoImport: TDBGrid
         Left = 0
         Top = 48
@@ -286,10 +316,6 @@ object frmSettings: TfrmSettings
     object tsUnusedUses: TTabSheet
       Caption = 'Unused uses'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 5
         Top = 6
