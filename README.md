@@ -48,6 +48,7 @@ After:
 ![After](https://github.com/rfrezino/RFindUnit/blob/master/Resources/organizeAfter.png)
 
 ### Instalation
+Delphi Berlin or newer
 1. Download [the project](https://github.com/rfrezino/RFindUnit/archive/master.zip), or clone the project.
 1. Go to the Packages directory and choose your corresponding version
 2. Open the RFindUnit.dproj on your Delphi and right click on the project and install it.
