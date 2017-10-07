@@ -1,40 +1,65 @@
 {
-        "search_pathes": 
-    [
-        {
-            "pathes": "Core;Core\\Interfaces",
-            "platforms": "Win32;Win64;OSX32"
-        }
-    ],
-    "browsing_pathes": 
-    [
-        {
-            "pathes": "Core;Core\\Interfaces",
-            "platforms": "Win32;Win64;OSX32"
-        }
-    ],
-
-    "source_folders":
-    [
-        {
-            "folder": "source",
-            "base": "source",
-            "recursive": true,
-            "filter": "*;*.*"
-        }
-    ],
-
-    "projects":
-    [
-        {
-            "project": "RFindUnit.dpk"
-        }
-    ],
-
-    "experts":
-    [
-           {
-                   "expert": "MyExpert.dll"
-           }
-    ]
+   "browsing_pathes":[
+      {
+         "pathes":"ideInteraction\\implementations;Interfaces;Source",
+         "platforms":"Win32"
+      }
+   ],
+   "search_pathes":[
+      {
+         "pathes":"ideInteraction\\implementations;Interfaces;Source",
+         "platforms":"Win32"
+      }
+   ],
+   "source_folders":[
+      {
+         "folder":"."
+      },
+      {
+         "folder":"ideInteraction",
+         "recursive":true
+      },
+      {
+         "folder":"Installer",
+         "recursive":true
+      },
+      {
+         "folder":"Interfaces",
+         "recursive":true
+      },
+      {
+         "folder":"Packages",
+         "recursive":true
+      },
+      {
+         "folder":"Resources",
+         "recursive":true
+      },
+      {
+         "folder":"Source",
+         "recursive":true
+      },
+      {
+         "folder":"Test",
+         "recursive":true
+      },
+      {
+         "folder":"Thirdy",
+         "recursive":true
+      }
+   ],
+   "projects":[
+      {
+         "project":"Packages\\DelphiSeattle\\RFindUnit.dproj",
+         "compiler":30
+      },
+      {
+         "project":"Packages\\DelphiBerlin\\RFindUnit.dproj",
+         "compiler":31
+      },
+      {
+         "project":"Packages\\DelphiTokyo\\RFindUnit.dproj",
+         "compiler":32
+      }
+   ]
 }
