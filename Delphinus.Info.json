@@ -2,7 +2,9 @@
    "id":"{D34055DF-41EB-45AB-B89D-304BB26AEC19}",
    "name":"RFindUnit",
    "license_type":"MIT",
+   "license_file":"LICENSE",
    "platforms":"Win32",
    "package_compiler_min": 23,
    "compiler_min": 23
+   "first_version":"1.2.0"
 }

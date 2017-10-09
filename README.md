@@ -1,7 +1,8 @@
 # RFindUnit - Version 1.2.0
 
 Find unit (find uses) is a very simple tool and very used (Ctrl+Shift+A), but, as you know Delphi Find Unit doesn't work very well, in general it crashes or it's very slow.
-</br>Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions (as auto import for example).
+
+Currently it have the basics expected features, and I'm working to organize, optmize and give it new functions (as auto import for example).
 If you help, it'll be very good.
 
 ### How does it work in practice ?
@@ -59,7 +60,8 @@ You can also install [Delphinus package manager](https://github.com/Memnarch/Del
 
 #### Contact
 Rodrigo Farias Rezino
-</br> rodrigofrezino@gmail.com
+
+rodrigofrezino@gmail.com
 
 #### Referenced Projects
 * [DelphiAST](https://github.com/RomanYankovsky/DelphiAST)
