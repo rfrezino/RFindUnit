@@ -55,6 +55,8 @@ Delphi Berlin or newer
 
 ![Example](https://github.com/rfrezino/RFindUnit/blob/master/Resources/InstallationHelp.png)
 
+You can also install [Delphinus package manager](https://github.com/Memnarch/Delphinus/wiki/Installing-Delphinus) and then install RFindUnit as a package there. (Delphinus-Support)
+
 #### Contact
 Rodrigo Farias Rezino
 </br> rodrigofrezino@gmail.com
@@ -64,5 +66,3 @@ Rodrigo Farias Rezino
 * [Log4Pascal](https://github.com/martinusso/log4pascal)
 * [Dcu32Int](https://github.com/rfrezino/DCU32INT)
 
-
-Delphinus-Support
