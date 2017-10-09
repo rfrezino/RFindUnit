@@ -3,6 +3,6 @@
    "name":"RFindUnit",
    "license_type":"MIT",
    "platforms":"Win32",
-   "package_compiler_min": 30,
-   "compiler_min":30
+   "package_compiler_min": 23,
+   "compiler_min": 23
 }
