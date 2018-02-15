@@ -5,6 +5,7 @@
    "license_file":"LICENSE",
    "platforms":"Win32",
    "package_compiler_min": 23,
-   "compiler_min": 23
+   "compiler_min": 23,
+   "picture":"Resources\\DelphinusImage.png",
    "first_version":"1.2.0"
 }
