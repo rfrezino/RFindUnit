@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: RFindUnit
+  annotations:
+    github.com/project-slug: rfrezino/RFindUnit
+spec:
+  type: other
+  lifecycle: unknown
+  owner: general
