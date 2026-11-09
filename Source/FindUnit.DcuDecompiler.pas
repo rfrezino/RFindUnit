@@ -103,10 +103,8 @@ begin
   FileS.LoadFromFile(AFile);
   for I := FileS.Count -1 downto 0 do
   begin
-    DeleteLine := True;
     Line := Trim(FileS[i]);
-    if Line = '' then
-      DeleteLine := False;
+    DeleteLine := Line = '';
 
     if (DeleteLine) or (Pos(';;', Line) > 0) then
     begin
@@ -172,6 +170,7 @@ var
   I: Integer;
   FileNameOut: string;
   InputParams: string;
+  ExecInfo: TShellExecuteInfo;
 begin
   if not Dcu32IntExecutableExists then
     Exit;
@@ -191,7 +190,22 @@ begin
 
     try
       InputParams := Format('"%s" "-I" "-X%s"', [AFiles[i], FileNameOut]);
-      ShellExecute(0, 'open', PChar(FExecutablePath), PChar(InputParams), nil, SW_HIDE);
+      FillChar(ExecInfo, SizeOf(ExecInfo), 0);
+      ExecInfo.cbSize := SizeOf(ExecInfo);
+      ExecInfo.fMask := SEE_MASK_NOCLOSEPROCESS;
+      ExecInfo.Wnd := 0;
+      ExecInfo.lpVerb := 'open';
+      ExecInfo.lpFile := PChar(FExecutablePath);
+      ExecInfo.lpParameters := PChar(InputParams);
+      ExecInfo.nShow := SW_HIDE;
+      if ShellExecuteEx(@ExecInfo) and (ExecInfo.hProcess <> 0) then
+      begin
+        try
+          WaitForSingleObject(ExecInfo.hProcess, 30000);
+        finally
+          CloseHandle(ExecInfo.hProcess);
+        end;
+      end;
     except
       on e: exception do
       begin

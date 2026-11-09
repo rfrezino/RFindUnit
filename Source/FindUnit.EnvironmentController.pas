@@ -408,8 +408,8 @@ begin
     Exit;
   end;
 
-  FProjectUnits.Ready := True;
   FProjectUnits.Units := FindUnits;
+  FProjectUnits.Ready := True;
 end;
 
 procedure TEnvironmentController.OrganizeUses;
