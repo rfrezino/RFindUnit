@@ -170,6 +170,11 @@ var
   var
     Line: string;
     Position: Integer;
+
+    function IsIdentChar(C: Char): Boolean;
+    begin
+      Result := ((C >= 'A') and (C <= 'Z')) or ((C >= '0') and (C <= '9')) or (C = '_');
+    end;
   begin
     Result := False;
     for iStart := iStart to IEnd do
@@ -180,9 +185,11 @@ var
       if Position  = 0 then
         Continue;
 
+      // Keywords must be whole words; this skips identifiers that merely contain them
       if (SearchString <> ';')
-        and (Length(Line) > Length(SearchString))
-        and (Line[Length(Line)] <> '') then
+        and (((Position > 1) and IsIdentChar(Line[Position - 1]))
+          or ((Position + Length(SearchString) <= Length(Line))
+            and IsIdentChar(Line[Position + Length(SearchString)]))) then
         Continue;
 
       FoundLine := iStart;

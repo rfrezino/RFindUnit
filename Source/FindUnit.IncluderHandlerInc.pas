@@ -117,6 +117,7 @@ begin
       FileInc.LoadFromFile(ItemInc.FilePath);
       ItemInc.Content := FileInc.Text;
       ItemInc.Loaded := True;
+      FIncList.AddOrSetValue(UpperCase(FileName), ItemInc);
     except
       Result := '';
     end;

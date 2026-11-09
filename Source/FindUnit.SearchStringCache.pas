@@ -29,6 +29,7 @@ implementation
 
 function TSearchStringCache.AddItemOnCache(const SearchString: string; var FoundList: TStringList): Boolean;
 begin
+  Result := True;
   FRcFullCache.Acquire;
   try
     FFullMatchCache.AddOrSetValue(SearchString, FoundList);
@@ -46,7 +47,8 @@ end;
 destructor TSearchStringCache.Destroy;
 begin
   FFullMatchCache.Free;
-  FRcFullCache.Free;
+  if FRcFullCache <> nil then
+    FRcFullCache.Free;
   inherited;
 end;
 
@@ -54,7 +56,7 @@ function TSearchStringCache.GetMatch(const SearchString: string; out FoundList: 
 var
   Local: TStringList;
 begin
-  FRcFullCache := TCriticalSection.Create;
+  FRcFullCache.Acquire;
   try
     Result := FFullMatchCache.TryGetValue(SearchString, Local);
     if Result then
